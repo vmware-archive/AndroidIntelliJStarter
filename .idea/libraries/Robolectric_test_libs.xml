@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Robolectric test libs">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/submodules/robolectric/lib/test" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://$PROJECT_DIR$/submodules/robolectric/lib/test" recursive="false" />
+  </library>
+</component>

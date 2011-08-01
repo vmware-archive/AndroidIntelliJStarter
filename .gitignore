@@ -3,4 +3,5 @@
 bin/
 gen/
 out/
+tmp/
 local.properties
