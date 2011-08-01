@@ -1,0 +1,8 @@
+pairs:
+  foo: Foo User
+  bu:  Bar User; baruser2
+email:
+  # makes emails such as pair+baruser2+foo@example.com
+  prefix: pair
+  domain: example.com
+

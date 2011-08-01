@@ -1,0 +1,14 @@
+The following is a list of all software licenses for projects that we depend on.
+
+We "link" against Java and Android, but we don't ship it.
+
+We intend to include the following dependencies in the binary that we ship:
+
+    Google Roboguice/Guice - Apache 2.0 License
+    # list other production dependencies here
+
+The following are used during testing only, not shipped as part of the binary in the app store:
+
+    Android Google APIs (the Android maps extension from Google)
+    Pivotal Robolectric (MIT License) and all of its dependencies
+    # list other test-only dependencies here
