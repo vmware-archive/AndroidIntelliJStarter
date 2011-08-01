@@ -1,0 +1,6 @@
+.DS_Store
+.idea/
+bin/
+gen/
+out/
+local.properties
