@@ -1,4 +1,4 @@
-package com.example;
+package com.example.android.sampleapp;
 
 import com.google.inject.Module;
 import roboguice.application.RoboInjectableApplication;

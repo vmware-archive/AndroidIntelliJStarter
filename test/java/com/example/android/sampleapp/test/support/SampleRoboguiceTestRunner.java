@@ -1,7 +1,7 @@
-package com.example.test.support;
+package com.example.android.sampleapp.test.support;
 
-import com.example.MySampleApplication;
-import com.example.util.CurrentTime;
+import com.example.android.sampleapp.MySampleApplication;
+import com.example.android.sampleapp.util.CurrentTime;
 import com.xtremelabs.robolectric.Robolectric;
 import com.xtremelabs.robolectric.RobolectricTestRunner;
 import org.junit.runners.model.InitializationError;

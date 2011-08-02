@@ -1,6 +1,6 @@
-package com.example.test.support;
+package com.example.android.sampleapp.test.support;
 
-import com.example.util.CurrentTime;
+import com.example.android.sampleapp.util.CurrentTime;
 
 public class FakeCurrentTime extends CurrentTime {
     private long fakeTime;

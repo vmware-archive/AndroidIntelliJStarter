@@ -1,9 +1,9 @@
-package com.example;
+package com.example.android.sampleapp;
 
 import android.widget.TextView;
-import com.example.test.support.FakeCurrentTime;
-import com.example.test.support.SampleRoboguiceTestRunner;
-import com.example.util.CurrentTime;
+import com.example.android.sampleapp.test.support.FakeCurrentTime;
+import com.example.android.sampleapp.test.support.SampleRoboguiceTestRunner;
+import com.example.android.sampleapp.util.CurrentTime;
 import com.google.inject.Inject;
 import org.junit.Test;
 import org.junit.runner.RunWith;

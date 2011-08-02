@@ -1,4 +1,4 @@
-package com.example;
+package com.example.android.sampleapp;
 
 import android.widget.TextView;
 import com.xtremelabs.robolectric.RobolectricTestRunner;
