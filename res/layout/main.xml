@@ -8,7 +8,11 @@
     android:id="@+id/title"
     android:layout_width="fill_parent" 
     android:layout_height="wrap_content" 
-    android:text="Hello World, StarterActivity"
+    />
+<TextView
+    android:id="@+id/current_time"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
     />
 </LinearLayout>
 

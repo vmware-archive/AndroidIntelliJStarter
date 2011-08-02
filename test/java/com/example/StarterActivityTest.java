@@ -9,12 +9,11 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(RobolectricTestRunner.class)
 public class StarterActivityTest {
-
     @Test
     public void shouldHaveATitle() {
         final StarterActivity activity = new StarterActivity();
         activity.onCreate(null);
         TextView title = (TextView) activity.findViewById(R.id.title);
-        assertEquals("Hello World, StarterActivity", title.getText());
+        assertEquals("Hello World", title.getText());
     }
 }

@@ -15,3 +15,16 @@ cd submodules/robolectric
 - git rm --cached submodules/robolectric
 - rm -rf submodules
 - See "Robolectric" above, but use your own robolectric repository git uri.
+
+
+# Roboguice
+This project is set up by default to use Roboguice for dependency injection.  See MySampleApplication.ApplicationModule
+and SampleRoboguiceTestRunner.TestApplicationModule for injection configuration.  See StarterActivityWithRoboguiceTest
+for an example of injection usage.
+
+To remove Roboguice injection:
+- Delete MySampleApplication and remove references
+- Delete SampleRoboguiceTestRunner and remove references
+- Delete guice* and roboguice* jars in libs/main and libs-src/
+- Remove all uses of @Inject, @InjectView, etc.
+- Remove reference to MySampleApplication from AndroidManifest
