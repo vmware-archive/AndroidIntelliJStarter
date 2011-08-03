@@ -1,12 +1,12 @@
-# Android
+# Android Setup
 Download the latest Mac SDK from here: http://developer.android.com/sdk/index.html
 
 Unzip the archive and move the android-sdk-mac_x86 dir to ~/android-sdk-mac_x86. 
-*This project assumes that android lives in ~/android-sdk-mac_x86*  You will need to 
+*This project assumes that android lives in ~/android-sdk-mac_x86*. You will need to 
 fix some paths in several places if you deviate from this.
 
 Add the android tools to the PATH. Assuming the SDK Dir is in ~/android-sdk-mac_x86
-and that you are using .bash\_pivotal rather than .bash\_profile or .bashrc:
+and that you are using .bash_pivotal rather than .bash_profile or .bashrc:
 
     # Note: change .bash_pivotal to .bash_profile or .bashrc if needed
     echo "export PATH='$PATH:$HOME/android-sdk-mac_x86/tools'" >> $HOME/.bash_pivotal
@@ -24,19 +24,28 @@ Note: This project assumes you have SDK Platform Android 2.1 installed. You can 
 `default.properties`
 
 # Bootstrapping AndroidIntelliJStarter
+Clone the repository
+
+    git clone git://github.com/pivotal/AndroidIntelliJStarter
+    cd AndroidIntelliJStarter
+
 Create your local.properties
 
     android update project -p .
 
-*If this fails* with the following error then you do not have the SDK installed referenced
-in default.properties.  Update default.properties or install the SDK specified there.
+*If this fails* with the following error then either install the SDK referenced
+in default.properties or change the `target` within that file appropriately.
 
     Error: The project either has no target set or the target is invalid.
     Please provide a --target to the 'android update' command.
 
-## IntelliJ Platform SDKs
-IntelliJ stores Platform SDK configurations somewhere outside of individual projects. Upshot: IntelliJ 
-SDKs are not committed in git and you will need to manually add them.
+# IntelliJ: Some Manual Configuration
+Open the project in IntelliJ 10.5 or higher. 
+
+## Platform SDKs
+You will likely need to configure IntelliJ's Platform Android SDKs.  IntelliJ stores Platform SDK 
+configurations somewhere outside of individual projects. Upshot: IntelliJ SDKs are not committed 
+in git and you will need to manually add them.
 
 File => Project Structure
 
@@ -62,50 +71,36 @@ Module SDK: choose one.
 
 
 # Robolectric
-robolectric starts out as a read-only submodule of http://github.com/pivotal/robolectric (HEAD).
+By default, submodules/robolectric references the read-only repository http://github.com/pivotal/robolectric (HEAD).
+If you want to fork robolectric (recommended) skip to *Forking Robolectric* below.
 
-## Initializing Robolectric
+## Initializing Robolectric (HEAD by default)
     git submodule update --init
     (cd submodules/robolectric && git checkout master)
     (cd submodules/robolectric && ant clean test) # make sure it runs
 
-## Forking Robolectric
-We recommend forking robolectric for your project.
+## Forking Robolectric (Recommended)
+We recommend forking robolectric for your project. By forking you have the freedom to choose when (if ever) 
+to update to later versions of robolectric, make changes to your fork as needed, and contribute
+those changes back to pivotal/robolectric using the official github pull-request workflow: http://help.github.com/fork-a-repo/.
+Start by removing the default pivotal/robolectric:
 
-Start by removing the default pivotal/robolectric
+.gitmodules -- delete the '[submodule "submodules/robolectric"]' section if present.
 
-Delete the relevant line from the .gitmodules file.
-
-Delete the relevant section from .git/config.
+.git/config -- delete the '[submodule "robolectric"]' section if present.
 
 Clean up git and directories
 
     git rm --cached submodules/robolectric
     rm -rf submodules
 
-Add your own fork
+After forking robolectric on Github, configure the submodule with your fork:
 
     git submodule add git://github.com/***YOUR-REPO-HERE***/robolectric.git submodules/robolectric
     git submodule init
     (cd submodules/robolectric && ant clean test)
 
-
-## Contributing back to Robolectric
-Contributing back to pivotal/robolectric is accomplished by following the official Github fork
-model: http://help.github.com/fork-a-repo/
-
-    # add pivotal/robolectric HEAD as an upstream remote
-    cd submodules/robolectric
-    git remote add upstream git://github.com/pivotal/robolectric.git
-    git fetch upstream
-
-    # merge pivotal/robolectric into your fork
-    git merge upstream/master
-
-Next, make a pull request as your client user: http://help.github.com/send-pull-requests/
-
-The pull request can be handled by someone with commit right to robolectric, maybe even you!
-See "Managing Pull Requests" at http://help.github.com/send-pull-requests/.
+Also see *Contributing back to Robolectric* below.
 
 # Roboguice
 This project is set up by default to use Roboguice for dependency injection.  See MySampleApplication.ApplicationModule
@@ -139,3 +134,32 @@ To handle C2DM notifications you will need to implement C2DMReceiver, which is c
 - Remove C2DMReceiver and test
 - Delete com.google.android.c2dm
 - Remove the C2DM Section of AndroidManifest.xml
+
+--------------
+# Open Source Robolectric
+robolectric is open source and it continuously improves. We recommend that you merge with pivotal/robolectric
+often to both stay current with robolectric. We also recommend that you contribute your changes back 
+to the community. 
+
+## Merging in pivotal/robolectric
+The official Github workflow (http://help.github.com/fork-a-repo/) details how to merge another 
+repo's code into your own fork, such as merging pivotal/robolectric into yourproject/robolectric:
+
+    # add pivotal/robolectric HEAD as an upstream remote
+    cd submodules/robolectric
+    git remote add upstream git://github.com/pivotal/robolectric.git
+    git fetch upstream
+
+    # merge pivotal/robolectric into your fork
+    git merge upstream/master
+
+## Contributing
+***Note: get permission from your client before contributing code back to any open source project.***
+
+Contribute your project's robolectric changes back to pivotal/robolectric by following the official 
+Github workflow: http://help.github.com/fork-a-repo/
+
+First, make a pull request as your client user: http://help.github.com/send-pull-requests/
+
+The pull request can be handled by someone with commit right to robolectric, maybe even you!
+See "Managing Pull Requests" at http://help.github.com/send-pull-requests/.
