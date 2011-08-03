@@ -1,12 +1,32 @@
+# Android IntelliJ Starter
+This is a "template" IntelliJ project created to bootstrap Android development. 
+We have included as many of our go-too tools and as much hard earned 
+configuration knowledge as possible to aid new projects. This includes out-of-the-box support for 
+robolectric, robojuice, C2DM, great-expectations, android source Jars, and other important libraries.
+
+## Configuration By Deletion
+There is a lot of stuff in here, everything from android source jars to dependency injection; 
+we acknowledge that your project might not want all of it. We encourage your project to remove 
+whatever you don't want.
+
+## Assumptions
+We make the following assumptions. Feel free to deviate but you will likely need to fix some 
+things as you go.
+
+- You are working on a Mac
+- Your android SDK is in ~/android-sdk-mac_x86, or you are going to put it there, or create a symlink, etc.
+- Robolectric will live in submodules/robolectric
+
 ## Android Setup
-Download the latest Mac SDK from here: http://developer.android.com/sdk/index.html
+Don't open IntelliJ yet.
+
+Download the latest Mac SDK: http://developer.android.com/sdk/index.html
 
 Unzip the archive and move the android-sdk-mac_x86 dir to ~/android-sdk-mac_x86. 
 *This project assumes that android lives in ~/android-sdk-mac_x86*. You will need to 
 fix paths in several places if you choose a different location.
 
-Add the android tools to the PATH. Assuming the SDK directory is ~/android-sdk-mac_x86
-and that you are using `.bash_pivotal` rather than `.bash_profile` or `.bashrc`:
+Add the android tools to the PATH. 
 
     # Note: change .bash_pivotal to .bash_profile or .bashrc if needed
     echo "export PATH='$PATH:$HOME/android-sdk-mac_x86/tools'" >> $HOME/.bash_pivotal
@@ -24,6 +44,8 @@ Note: This project assumes you have SDK Platform Android 2.1 installed. You can 
 `default.properties`
 
 ## Bootstrapping AndroidIntelliJStarter
+Don't open IntelliJ yet.
+
 You will likely fork and rename this repository on Github. If you clone this repo be sure to use the *read-only* url
 to avoid accidentally making changes to this template project.
 
@@ -41,6 +63,8 @@ in `default.properties` or change the "target" within that file appropriately.
     Please provide a --target to the 'android update' command.
 
 ## Robolectric
+Don't open IntelliJ yet.
+
 Robolectric is a git submodule in this project. By default, submodules/robolectric is a read-only clone of
 http://github.com/pivotal/robolectric (HEAD). If you want to fork robolectric 
 (recommended) skip to *Forking Robolectric* below.
@@ -139,7 +163,6 @@ To handle C2DM notifications you will need to implement C2DMReceiver, which is s
 - Delete com.google.android.c2dm
 - Remove the C2DM Section of AndroidManifest.xml
 
---------------
 ## Open Source Robolectric
 Robolectric is open source and it continuously improves. We recommend that you merge with pivotal/robolectric
 often to both stay current. We also recommend you contribute your projects's changes back to the community. 
@@ -165,3 +188,10 @@ Assuming you forked as detailed above, make a pull request as your client user: 
 
 The pull request can be handled by someone with commit right to robolectric, maybe even you!
 See "Managing Pull Requests" at http://help.github.com/send-pull-requests/.
+
+## Helpful Tools:
+
+- script/gp -- "Git Pull" script. This pulls and rebases your project and robolectric
+- script/gpp -- "Git Pull Push" script. Same as script/gp but also runs all tests in robolectric
+and your project. If they pass it will `git push`.
+
