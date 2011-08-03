@@ -7,9 +7,9 @@ import com.xtremelabs.robolectric.RobolectricTestRunner;
 import org.junit.runners.model.InitializationError;
 import roboguice.config.AbstractAndroidModule;
 
-public class SampleRoboguiceTestRunner extends RobolectricTestRunner {
+public class RobolectricTestRunnerWithInjection extends RobolectricTestRunner {
 
-    public SampleRoboguiceTestRunner(Class<?> testClass) throws InitializationError {
+    public RobolectricTestRunnerWithInjection(Class<?> testClass) throws InitializationError {
         super(testClass);
     }
 

@@ -14,6 +14,7 @@ We intend to include the following dependencies in the binary that we ship:
     Apache Commons (Lang): Apache License 2.0, http://commons.apache.org/
     Jackson Java JSON-processor (core): Apache License 2.0, http://jackson.codehaus.org/
     Jackson Java JSON-processor (mapper): Apache License 2.0, http://jackson.codehaus.org/
+    chometophone C2DM libraries, Apache License 2.0, http://code.google.com/p/chrometophone/
     # list other production dependencies here
 
 The following are used during testing only, not redistributed as part of any binary:

@@ -2,7 +2,7 @@ package com.example.android.sampleapp;
 
 import android.widget.TextView;
 import com.example.android.sampleapp.test.support.FakeCurrentTime;
-import com.example.android.sampleapp.test.support.SampleRoboguiceTestRunner;
+import com.example.android.sampleapp.test.support.RobolectricTestRunnerWithInjection;
 import com.example.android.sampleapp.util.CurrentTime;
 import com.google.inject.Inject;
 import org.junit.Test;
@@ -10,7 +10,7 @@ import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertEquals;
 
-@RunWith(SampleRoboguiceTestRunner.class)
+@RunWith(RobolectricTestRunnerWithInjection.class)
 public class StarterActivityWithRoboguiceTest {
     @Inject
     CurrentTime currentTime;
