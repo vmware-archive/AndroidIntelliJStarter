@@ -39,37 +39,6 @@ in default.properties or change the `target` within that file appropriately.
     Error: The project either has no target set or the target is invalid.
     Please provide a --target to the 'android update' command.
 
-# IntelliJ: Some Manual Configuration
-Open the project in IntelliJ 10.5 or higher. 
-
-## Platform SDKs
-You will likely need to configure IntelliJ's Platform Android SDKs.  IntelliJ stores Platform SDK 
-configurations somewhere outside of individual projects. Upshot: IntelliJ SDKs are not committed 
-in git and you will need to manually add them.
-
-File => Project Structure
-
-Platform Settings => SDKs
-
-Add (plus sign) => Android SDK
-
-locate and choose ~/android-sdk-mac_x86
-
-Choose Java SDK 1.6
-
-Choose your Android SDK. If you don't see it there you will need to install it via the 
-Android SDK and AVD Manager. See "Android" above.
-
-## Setting AndroidIntelliJStarter's SDK
-Now you need to set the app's SDK.
-
-File => Project Structure
-
-Modules => AndroidIntelliJStarter => Dependencies
-
-Module SDK: choose one.
-
-
 # Robolectric
 By default, submodules/robolectric references the read-only repository http://github.com/pivotal/robolectric (HEAD).
 If you want to fork robolectric (recommended) skip to *Forking Robolectric* below.
@@ -101,6 +70,36 @@ After forking robolectric on Github, configure the submodule with your fork:
     (cd submodules/robolectric && ant clean test)
 
 Also see *Contributing back to Robolectric* below.
+
+# IntelliJ: Some Manual Configuration
+Open the project in IntelliJ 10.5 or higher.
+
+## Platform SDKs
+You will likely need to configure IntelliJ's Platform Android SDKs.  IntelliJ stores Platform SDK
+configurations somewhere outside of individual projects. Upshot: IntelliJ SDKs are not committed
+in git and you will need to manually add them.
+
+File => Project Structure
+
+Platform Settings => SDKs
+
+Add (plus sign) => Android SDK
+
+locate and choose ~/android-sdk-mac_x86
+
+Choose Java SDK 1.6
+
+Choose your Android SDK. If you don't see it there you will need to install it via the
+Android SDK and AVD Manager. See above.
+
+## Setting AndroidIntelliJStarter's SDK
+Now you need to set the app's SDK.
+
+File => Project Structure
+
+Modules => AndroidIntelliJStarter => Dependencies
+
+Module SDK: choose one.
 
 # Roboguice
 This project is set up by default to use Roboguice for dependency injection.  See MySampleApplication.ApplicationModule
