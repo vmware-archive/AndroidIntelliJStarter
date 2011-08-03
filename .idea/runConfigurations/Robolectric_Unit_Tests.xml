@@ -10,14 +10,14 @@
     <option name="TEST_OBJECT" value="package" />
     <option name="VM_PARAMETERS" value="" />
     <option name="PARAMETERS" value="" />
-    <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/submodules/robolectric" />
+    <option name="WORKING_DIRECTORY" value="file://$MODULE_DIR$/submodules/robolectric" />
     <option name="ENV_VARIABLES" />
     <option name="PASS_PARENT_ENVS" value="true" />
     <option name="TEST_SEARCH_SCOPE">
       <value defaultName="singleModule" />
     </option>
     <envs>
-      <env name="ANDROID_HOME" value="$USER_HOME$/android" />
+      <env name="ANDROID_HOME" value="$USER_HOME$/android-sdk-mac_x86" />
     </envs>
     <patterns />
     <RunnerSettings RunnerId="Run" />

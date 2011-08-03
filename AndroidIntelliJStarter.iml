@@ -31,7 +31,7 @@
     </content>
     <orderEntry type="library" scope="TEST" name="Test libs" level="project" />
     <orderEntry type="module" module-name="Robolectric" scope="TEST" />
-    <orderEntry type="jdk" jdkName="Android 2.1-update1 Google APIs" jdkType="Android SDK" />
+    <orderEntry type="jdk" jdkName="Android 2.3.3 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Production Libs" level="project" />
   </component>

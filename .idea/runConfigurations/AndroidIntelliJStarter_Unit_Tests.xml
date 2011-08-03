@@ -4,7 +4,7 @@
     <module name="AndroidIntelliJStarter" />
     <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
     <option name="ALTERNATIVE_JRE_PATH" value="" />
-    <option name="PACKAGE_NAME" value="com.xtremelabs" />
+    <option name="PACKAGE_NAME" value="" />
     <option name="MAIN_CLASS_NAME" value="" />
     <option name="METHOD_NAME" value="" />
     <option name="TEST_OBJECT" value="package" />
@@ -16,9 +16,7 @@
     <option name="TEST_SEARCH_SCOPE">
       <value defaultName="singleModule" />
     </option>
-    <envs>
-      <env name="ANDROID_HOME" value="$USER_HOME$/android" />
-    </envs>
+    <envs />
     <patterns />
     <RunnerSettings RunnerId="Run" />
     <ConfigurationWrapper RunnerId="Run" />

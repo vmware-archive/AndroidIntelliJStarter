@@ -1,20 +1,24 @@
-Instructions on installing pivotal's git scripts for supporting `git pair xx yy`, for example.
-
-Based on IntelliJ 10.5
-
-#Android
+# Android
 Download the latest Mac SDK from here: http://developer.android.com/sdk/index.html
-Unzip to ~/
-Add the android tools to the PATH. Assuming th SDK Dir is in ~/android-sdk-mac_x86:
 
-     echo "export PATH='$PATH:$HOME/android-sdk-mac_x86/tools'" >> $HOME/.bash_pivotal
+Unzip the archive and move the android-sdk-mac_x86 dir to ~/android-sdk-mac_x86. 
+*This project assumes that android lives in ~/android-sdk-mac_x86*  You will need to 
+fix some paths in several places if you deviate from this.
 
-Make sure it works by running the `android` command:
+Add the android tools to the PATH. Assuming the SDK Dir is in ~/android-sdk-mac_x86
+and that you are using .bash\_pivotal rather than .bash\_profile or .bashrc:
 
-     android 
+    # Note: change .bash_pivotal to .bash_profile or .bashrc if needed
+    echo "export PATH='$PATH:$HOME/android-sdk-mac_x86/tools'" >> $HOME/.bash_pivotal
 
-Download all of the SDKs you think you need, with or without the Google APIs.  
-If you think you will use Google Maps then install the Google APIs.
+Open a new Terminal window and make you can run the `android` command:
+ 
+    # in a new Terminal window:
+    android 
+
+Use the Android SDK and AVD Manager to download all of the SDKs you think you need.
+If you need Google Maps then install the Google APIs under 
+Available packages => Third party Add-ons.
 
 Note: This project assumes you have SDK Platform Android 2.1 installed. You can change this in 
 `default.properties`
@@ -22,13 +26,39 @@ Note: This project assumes you have SDK Platform Android 2.1 installed. You can 
 # Bootstrapping AndroidIntelliJStarter
 Create your local.properties
 
-     android update project -p .
+    android update project -p .
 
 *If this fails* with the following error then you do not have the SDK installed referenced
 in default.properties.  Update default.properties or install the SDK specified there.
 
-     Error: The project either has no target set or the target is invalid.
-     Please provide a --target to the 'android update' command.
+    Error: The project either has no target set or the target is invalid.
+    Please provide a --target to the 'android update' command.
+
+## IntelliJ Platform SDKs
+IntelliJ stores Platform SDK configurations somewhere outside of individual projects. Upshot: IntelliJ 
+SDKs are not committed in git and you will need to manually add them.
+
+File => Project Structure
+
+Platform Settings => SDKs
+
+Add (plus sign) => Android SDK
+
+locate and choose ~/android-sdk-mac_x86
+
+Choose Java SDK 1.6
+
+Choose your Android SDK. If you don't see it there you will need to install it via the 
+Android SDK and AVD Manager. See "Android" above.
+
+## Setting AndroidIntelliJStarter's SDK
+Now you need to set the app's SDK.
+
+File => Project Structure
+
+Modules => AndroidIntelliJStarter => Dependencies
+
+Module SDK: choose one.
 
 
 # Robolectric
@@ -45,11 +75,13 @@ We recommend forking robolectric for your project.
 Start by removing the default pivotal/robolectric
 
 Delete the relevant line from the .gitmodules file.
+
 Delete the relevant section from .git/config.
+
 Clean up git and directories
 
-     git rm --cached submodules/robolectric
-     rm -rf submodules
+    git rm --cached submodules/robolectric
+    rm -rf submodules
 
 Add your own fork
 
