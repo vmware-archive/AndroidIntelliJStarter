@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/AndroidIntelliJStarter.iml" filepath="$PROJECT_DIR$/AndroidIntelliJStarter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Robolectric.iml" filepath="$PROJECT_DIR$/Robolectric.iml" />
+    </modules>
+  </component>
+</project>
+
