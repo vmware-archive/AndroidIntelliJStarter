@@ -2,31 +2,59 @@ Instructions on installing pivotal's git scripts for supporting `git pair xx yy`
 
 Based on IntelliJ 10.5
 
-# Robolectric:
-robolectric starts out as a read-only submodule of pivotal/robolectric (HEAD).
+#Android
+Download the latest Mac SDK from here: http://developer.android.com/sdk/index.html
+Unzip to ~/
+Add the android tools to the PATH. Assuming th SDK Dir is in ~/android-sdk-mac_x86:
 
-## To initialize robolectric:
-    git submodule init
+     echo "export PATH='$PATH:$HOME/android-sdk-mac_x86/tools'" >> $HOME/.bash_pivotal
+
+Make sure it works by running the `android` command:
+
+     android 
+
+Download all of the SDKs you think you need, with or without the Google APIs.  
+If you think you will use Google Maps then install the Google APIs.
+
+Note: This project assumes you have SDK Platform Android 2.1 installed. You can change this in 
+`default.properties`
+
+# Bootstrapping AndroidIntelliJStarter
+Create your local.properties
+
+     android update project -p .
+
+*If this fails* with the following error then you do not have the SDK installed referenced
+in default.properties.  Update default.properties or install the SDK specified there.
+
+     Error: The project either has no target set or the target is invalid.
+     Please provide a --target to the 'android update' command.
+
+
+# Robolectric
+robolectric starts out as a read-only submodule of http://github.com/pivotal/robolectric (HEAD).
+
+## Initializing Robolectric
+    git submodule update --init
+    (cd submodules/robolectric && git checkout master)
     (cd submodules/robolectric && ant clean test) # make sure it runs
 
 ## Forking Robolectric
-At this time we recommend forking robolectric for your project.
+We recommend forking robolectric for your project.
 
 Start by removing the default pivotal/robolectric
 
-1. Delete the relevant line from the .gitmodules file.
-2. Delete the relevant section from .git/config.
-3. Clean up git and directories:
+Delete the relevant line from the .gitmodules file.
+Delete the relevant section from .git/config.
+Clean up git and directories
 
-    git rm --cached submodules/robolectric
-    rm -rf submodules
-    See "Robolectric" above, but use your own robolectric repository git uri.
+     git rm --cached submodules/robolectric
+     rm -rf submodules
 
 Add your own fork
 
     git submodule add git://github.com/***YOUR-REPO-HERE***/robolectric.git submodules/robolectric
     git submodule init
-    cd submodules/robolectric
     (cd submodules/robolectric && ant clean test)
 
 
