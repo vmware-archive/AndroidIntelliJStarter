@@ -34,7 +34,6 @@
     <orderEntry type="jdk" jdkName="Android 2.3.3 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Production Libs" level="project" />
-    <orderEntry type="library" name="Android 2.3.3 Google API libs" level="project" />
   </component>
 </module>
 

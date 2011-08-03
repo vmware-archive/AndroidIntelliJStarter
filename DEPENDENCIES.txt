@@ -4,11 +4,18 @@ We "link" against Java and Android, but we don't ship it.
 
 We intend to include the following dependencies in the binary that we ship:
 
-    Google Roboguice/Guice - Apache 2.0 License
+    guava-libraries: Apache License 2.0, http://code.google.com/p/guava-libraries/
+    guice-2.0-no_aop.jar
+    httpmime-4.1.jar
+    jackson-core-asl-1.8.4.jar
+    jackson-mapper-asl-1.8.4.jar
+    roboguice-1.1.2.jar
     # list other production dependencies here
 
 The following are used during testing only, not shipped as part of the binary in the app store:
 
-    Android Google APIs (the Android maps extension from Google)
-    Pivotal Robolectric (MIT License) and all of its dependencies
-    # list other test-only dependencies here
+    submodules/robolectric
+    asm-3.3.1.jar
+    asm-commons-3.3.1.jar
+    great-expectations-0.10.jar
+    junit-4.8.2.jar
