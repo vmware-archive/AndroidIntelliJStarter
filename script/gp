@@ -1,0 +1,33 @@
+#!/usr/bin/ruby
+
+puts <<ART
+
+     ,o888888o.    8 888888888o
+    8888     `88.  8 8888    `88.
+ ,8 8888       `8. 8 8888     `88
+ 88 8888           8 8888     ,88
+ 88 8888           8 8888.   ,88'
+ 88 8888           8 888888888P'
+ 88 8888   8888888 8 8888
+ `8 8888       .8' 8 8888
+    8888     ,88'  8 8888
+     `8888888P'    8 8888
+
+That's git pull --rebase on everything you need!
+ART
+
+def bail(project)
+    puts ">>>> #{project} failed! <<<<"
+    exit(1)
+end
+
+puts "\n[Robolectric]"
+okay = system "(cd submodules/robolectric && git pull --rebase)"
+
+bail "Robolectric" unless okay
+
+puts "\n[Project]"
+okay = system " git pull --rebase"
+
+bail "Project" unless okay
+
