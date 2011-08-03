@@ -5,17 +5,22 @@ We "link" against Java and Android, but we don't ship it.
 We intend to include the following dependencies in the binary that we ship:
 
     guava-libraries: Apache License 2.0, http://code.google.com/p/guava-libraries/
-    guice-2.0-no_aop.jar
-    httpmime-4.1.jar
-    jackson-core-asl-1.8.4.jar
-    jackson-mapper-asl-1.8.4.jar
-    roboguice-1.1.2.jar
+    google-guice: Apache License 2.0, http://code.google.com/p/guava-libraries/
+    roboguice: Apache License 2.0, http://code.google.com/p/roboguice/
+    HttpComponents: Apache License 2.0, http://hc.apache.org/
+    Apache Commons (Logging): Apache License 2.0, http://commons.apache.org/
+    Apache Commons (Codec): Apache License 2.0, http://commons.apache.org/
+    Apache Commons (HttpMime): Apache License 2.0, http://commons.apache.org/
+    Apache Commons (Lang): Apache License 2.0, http://commons.apache.org/
+    Jackson Java JSON-processor (core): Apache License 2.0, http://jackson.codehaus.org/
+    Jackson Java JSON-processor (mapper): Apache License 2.0, http://jackson.codehaus.org/
     # list other production dependencies here
 
-The following are used during testing only, not shipped as part of the binary in the app store:
+The following are used during testing only, not redistributed as part of any binary:
 
-    submodules/robolectric
-    asm-3.3.1.jar
-    asm-commons-3.3.1.jar
-    great-expectations-0.10.jar
-    junit-4.8.2.jar
+    submodules/robolectric, MIT License, https://github.com/pivotal/robolectric
+    ASM (core), Copyright (c) 2000-2005 INRIA, France Telecom, http://asm.ow2.org/license.html
+    ASM (commons), Copyright (c) 2000-2005 INRIA, France Telecom, http://asm.ow2.org/license.html
+    great-expectations, MIT License, https://github.com/xian/great-expectations
+    JUnit, Common Public License - v 1.0, http://www.junit.org/
+
