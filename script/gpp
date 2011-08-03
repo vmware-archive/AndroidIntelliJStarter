@@ -1,4 +1,6 @@
 #!/usr/bin/ruby
+require "script/helpers"
+
 puts <<ART
 
       # ###          ##### ##         ##### ##
@@ -24,17 +26,12 @@ puts <<ART
 That's git pull, rebase, push, and all that stuff!
 ART
 
-def bail(project)
-    puts ">>>> #{project} failed! <<<<"
-    exit(1)
-end
-
 puts "\n[Robolectric]"
 okay = system "(cd submodules/robolectric && git pull --rebase && ant clean test && git push)"
 
-bail "Robolectric" unless okay
+bail_with "Robolectric" unless okay
 
 puts "\n[Project]"
 
 okay = system "git pull --rebase && ant clean test && git push"
-bail "Project" unless okay
+bail_with "Project" unless okay

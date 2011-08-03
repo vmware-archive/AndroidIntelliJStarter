@@ -1,5 +1,7 @@
 #!/usr/bin/ruby
 
+require "script/helpers"
+
 puts <<ART
 
      ,o888888o.    8 888888888o
@@ -16,18 +18,13 @@ puts <<ART
 That's git pull --rebase on everything you need!
 ART
 
-def bail(project)
-    puts ">>>> #{project} failed! <<<<"
-    exit(1)
-end
-
 puts "\n[Robolectric]"
 okay = system "(cd submodules/robolectric && git pull --rebase)"
 
-bail "Robolectric" unless okay
+bail_with "Robolectric" unless okay
 
 puts "\n[Project]"
 okay = system " git pull --rebase"
 
-bail "Project" unless okay
+bail_with "Project" unless okay
 
