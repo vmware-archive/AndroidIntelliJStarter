@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Android 2.1 Google API libs">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/android-sdk-mac_x86/platforms/android-7/android.jar!/" />
+      <root url="jar://$USER_HOME$/android-sdk-mac_x86/add-ons/addon_google_apis_google_inc_7/libs/maps.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/libs-src/android-src/7/sources.zip!/" />
+    </SOURCES>
+  </library>
+</component>
