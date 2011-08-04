@@ -1,0 +1,37 @@
+#!/usr/bin/ruby
+require "script/helpers"
+
+puts <<ART
+
+      # ###          ##### ##         ##### ##
+    /  /###  /    ######  /###     ######  /###
+   /  /  ###/    /#   /  /  ###   /#   /  /  ###
+  /  ##   ##    /    /  /    ### /    /  /    ###
+ /  ###             /  /      ##     /  /      ##
+##   ##            ## ##      ##    ## ##      ##
+##   ##   ###      ## ##      ##    ## ##      ##
+##   ##  /###  / /### ##      /   /### ##      /
+##   ## /  ###/ / ### ##     /   / ### ##     /
+##   ##/    ##     ## ######/       ## ######/
+ ##  ##     #      ## ######        ## ######
+  ## #      /      ## ##            ## ##
+   ###     /       ## ##            ## ##
+    ######/        ## ##            ## ##
+      ###     ##   ## ##       ##   ## ##
+             ###   #  /       ###   #  /
+              ###    /         ###    /
+               #####/           #####/
+                 ###              ###
+
+That's git pull, rebase, push, and all that stuff!
+ART
+
+puts "\n[Robolectric]"
+okay = system "(cd submodules/robolectric && git pull --rebase && ant clean test && git push)"
+
+bail_with "Robolectric" unless okay
+
+puts "\n[Project]"
+
+okay = system "git pull --rebase && ant clean test && git push"
+bail_with "Project" unless okay
