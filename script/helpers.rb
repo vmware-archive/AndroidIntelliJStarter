@@ -4,18 +4,12 @@ def bail_with(project)
 end
 
 
-def rename_to(name)
+def rename_project_to(name)
   Dir.glob('.idea/**/*.xml').each do |filename|
-    File.open(filename, File::RDWR) do |file|
-      line 
-      p line.gsub!("AndroidIntelliJStarter", "AndroidNapikins")
-    end
+      text = File.read(filename).gsub("AndroidIntelliJStarter", "AndroidNapikins")
+      File.open(filename, "w") {|file| file.puts text}
   end
-end
-
-File.open("readfile.rb", "r") do |infile|
-    while (line = infile.gets)
-      puts "#{counter}: #{line}"
-        counter = counter + 1
-    end
+  
+  text = File.read(".idea/.name").gsub("AndroidIntelliJStarter", "AndroidNapikins")
+  File.open(".idea/.name", "w") {|file| file.puts text}
 end

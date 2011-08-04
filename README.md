@@ -101,6 +101,13 @@ Also see *Contributing back to Robolectric* below.
 Open the project in IntelliJ 10.5 or higher.
 
 ### Platform SDKs
+
+#### JSDK
+if you are missing a java SDK.  accept the default
+
+
+
+
 You will likely need to configure IntelliJ's Platform Android SDKs.  IntelliJ stores Platform SDK
 configurations somewhere outside of individual projects. Upshot: IntelliJ SDKs are not committed
 in git and you will need to manually add them.
@@ -115,8 +122,12 @@ locate and choose ~/android-sdk-mac_x86
 
 Choose Java SDK 1.6
 
-Choose your Android SDK. If you don't see it there you will need to install it via the
+Select the build target Android SDK. If you don't see it there you will need to install it via the
 Android SDK and AVD Manager. See above.
+
+Attache source
+
+Do the same for Robolectric: 2.3.3
 
 ### Setting AndroidIntelliJStarter's SDK
 Now you need to set the app's SDK.
@@ -171,15 +182,28 @@ often to both stay current. We also recommend you contribute your projects's cha
 The official Github workflow (http://help.github.com/fork-a-repo/) details how to merge another 
 repo's code into your own fork, such as merging pivotal/robolectric into yourproject/robolectric:
 
+Do the following once per machine:
+
     # add pivotal/robolectric HEAD as an upstream remote
-    cd submodules/robolectric
     git remote add upstream git://github.com/pivotal/robolectric.git
-    git fetch upstream
+
+When you want to merge in upstream:
 
     # merge pivotal/robolectric into your fork
-    git merge upstream/master
+    cd submodules/robolectric
+    git fetch upstream
+    git merge --no-commit upstream/master
+
+fix merge conflicts
+run robolectric tests
+run project test
+commit robolectric and push
+commit project and push
+
 
 Resolve conflicts, fix test, commit, and push.
+
+
 
 ### Contributing
 ***Note: get permission from your client before contributing code back to any open source project.***
