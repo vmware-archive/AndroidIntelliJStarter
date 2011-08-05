@@ -24,11 +24,11 @@ things as you go.
 ## 0. Power User Instructions
 **Don't open IntelliJ yet.**
 
-So you know what you're doing, eh?  Fine, let's do this thing.
+So you know what you're doing, eh? Let's do this thing!
 
 - **Don't open IntelliJ yet.** Seriously, did you already launch it? Close it.
--  Install android to ~/android-sdk-mac_x86/ and install a bunch of SDKs
--  Clone and reconfigure this project as YourProject by running this stuff:
+-  Install android to ~/android-sdk-mac_x86/ and install a bunch of SDKs with Google APIs.
+-  Clone and reconfigure this project as YourProject by running:
 
         git clone git://github.com/pivotal/AndroidIntelliJStarter YourProject # or your fork
         cd YourProject
@@ -36,8 +36,9 @@ So you know what you're doing, eh?  Fine, let's do this thing.
 
 - Set up robolectric either by keeping the read-only submodule for HEAD or forking. See "3. Robolectric" below
 - **Open IntelliJ 10.5 or higher**
-- Set up or fix the global SDKs if they are broken
-- Set up or fix the Module SKDs for YourProject and Robolectric if they are broken.
+- Import IntelliJ Settings: File => Import Settings => YourProject/support/IntellijSettings.jar. Restart IntelliJ.
+- Import Settings should have fixed the globals Project SDKs. Fix them if they are still broken.
+- Import Settings should have fixed the Module SDKs. Fix them if they are still broken.
 - Run Unit Tests, Robolectric Unit Tests, and launch StarterApp and make sure they work.
 - At least glace at the stuff below about robojuice, C2DM, gp and gpp, forking robolectric, etc.
 
