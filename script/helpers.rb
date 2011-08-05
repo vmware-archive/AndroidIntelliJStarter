@@ -8,7 +8,9 @@ end
 def rename_project_to(name)
   files = [ "AndroidIntelliJStarter.iml",
             ".idea/.name",
-            "AndroidManifest.xml"] + Dir.glob('.idea/**/*.xml')
+            "AndroidManifest.xml",
+            "build.xml",
+            "res/values/strings.xml"] + Dir.glob('.idea/**/*.xml')
   puts "Searching: #{files.join(",")}\n"          
   files.each do |filename|
     replace(filename, "AndroidIntelliJStarter", name)

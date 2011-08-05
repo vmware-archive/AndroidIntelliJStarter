@@ -28,7 +28,7 @@ things as you go.
 So you know what you're doing, eh? Let's do this thing!
 
 - **Don't open IntelliJ yet.** Seriously, did you already launch it? Close it.
--  Install android to ~/android-sdk-mac_x86/ and install a bunch of SDKs with Google APIs.
+-  Install android to ~/android-sdk-mac_x86/ and install a bunch of SDKs and emulators with Google APIs.
 -  Clone and reconfigure this project as YourProject by running:
 
         git clone git://github.com/pivotal/AndroidIntelliJStarter YourProject # or your fork
@@ -75,6 +75,9 @@ Open a new Terminal window and run `android`:
 Use the "Android SDK and AVD Manager" to download all of the SDKs you think you need.
 If you need Google Maps then install the Google APIs under 
 Available packages => Third party Add-ons.
+
+### Virtual Devices
+Make at least one Virtual Device (emulator) for the SDK(s) you installed above.
 
 Note: This project assumes you have SDK Platform Android 2.1 installed. You can change this in 
 `default.properties`
@@ -177,7 +180,7 @@ Did you come here from the *Power User Instructions?* You might want to go back 
 pick up where you left off.
 
 ## 4. IntelliJ: Settings, Libraries, and SDKs
-** Open YourProject in IntelliJ 10.5 or higher.** 
+**Open YourProject in IntelliJ 10.5 or higher.**
 
 ### Import IntellijSettings.jar 
 Import support/IntellijSettings.jar to automatically configure your SDKs and other important settings:
