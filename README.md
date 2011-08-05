@@ -2,7 +2,7 @@
 
 # Android IntelliJ Starter
 This is a "template" IntelliJ project created to bootstrap Android development. 
-We have included as many of our go-too tools and as much hard earned 
+We have included as many of our go-to tools and as much hard earned 
 configuration knowledge as possible to aid new projects. This includes out-of-the-box support for 
 robolectric, robojuice, C2DM, great-expectations, android source Jars, and other important libraries.
 
@@ -30,17 +30,20 @@ So you know what you're doing, eh? Let's do this thing!
 -  Install android to ~/android-sdk-mac_x86/ and install a bunch of SDKs with Google APIs.
 -  Clone and reconfigure this project as YourProject by running:
 
-        git clone git://github.com/pivotal/AndroidIntelliJStarter YourProject # or your fork
+        git clone git://github.com/pivotal/AndroidIntelliJStarter XXX-YourProject-XXX # or your fork
         cd YourProject
         ./script/project_setup YourProject #or ruby script/project_setup
 
 - Set up robolectric either by keeping the read-only submodule for HEAD or forking. See "3. Robolectric" below
 - **Open IntelliJ 10.5 or higher**
 - Import IntelliJ Settings: File => Import Settings => YourProject/support/IntellijSettings.jar. Restart IntelliJ.
-- Import Settings should have fixed the globals Project SDKs. Fix them if they are still broken.
-- Import Settings should have fixed the Module SDKs. Fix them if they are still broken.
-- Run Unit Tests, Robolectric Unit Tests, and launch StarterApp and make sure they work.
-- At least glace at the stuff below about robojuice, C2DM, gp and gpp, forking robolectric, etc.
+
+"Import Settings" should have fixed the global Project SDKs and Module SDKs. Fix them if they are still broken.
+See "4. IntelliJ: Some Manual Configuration" below.
+
+Run Unit Tests, Robolectric Unit Tests, and launch StarterApp and make sure they work.
+
+At least glace at the stuff below about robojuice, C2DM, gp and gpp, forking robolectric, etc.
 
 Stuck? Keep reading!
 
@@ -70,7 +73,7 @@ Available packages => Third party Add-ons.
 Note: This project assumes you have SDK Platform Android 2.1 installed. You can change this in 
 `default.properties`
 
-## 2. Copying AndroidIntelliJStarter
+## 2. New Project based on AndroidIntelliJStarter
 **Don't open IntelliJ yet.**
 
 You will likely fork and rename this repository on Github. 
@@ -80,14 +83,15 @@ changes to this template project.
     git clone git://github.com/pivotal/AndroidIntelliJStarter YourProject # or your fork
     cd YourProject
 
-### Bootstrap YourProject
+### Project Setup Script
 Many files and file contents need to change from AndroidIntelliJStarter to YourProject. We have a 
 script for this:
 
     pivotal$ ./script/project_setup YourProject
 
 Follow the instructions. The output will look like this:
-
+	
+	pivotal$ ./script/project_setup YourProject
 	Searching: AndroidIntelliJStarter.iml,.idea/.name, [snip... lots of files here]
 	>>> Replaced 'AndroidIntelliJStarter' in .idea/.name with 'YourProject'
 	>>> Replaced 'AndroidIntelliJStarter' in .idea/modules.xml with 'YourProject'
@@ -104,7 +108,7 @@ Follow the instructions. The output will look like this:
 	
 	pivotal$
 
-### Automatic New Git Repo
+### New Git Repository Script
 Notice the the output from above: 
 
     !!! Do you want to create a new git repository? 
@@ -114,6 +118,8 @@ Notice the the output from above:
 You can rerun this command if you want to: 
 
     ./script/init_git # or ruby script/init_git 
+
+You will still need to push this to some external repository URI.
 
 ### Generate local.properties
 Run this:
@@ -139,11 +145,7 @@ http://github.com/pivotal/robolectric (HEAD). If you want to fork robolectric
     (cd submodules/robolectric && ant clean test) # make sure it runs
 
 ### Forking Robolectric (Recommended)
-We recommend forking robolectric for your project. By forking you have the freedom to choose when (if ever) 
-to update to later versions of robolectric, make changes to your fork as needed, and contribute
-those changes back to pivotal/robolectric using the official github pull-request workflow (http://help.github.com/fork-a-repo/.)
-Start by removing the default pivotal/robolectric:
-
+We recommend forking robolectric for your project. 
 .gitmodules -- delete the '[submodule "submodules/robolectric"]' section if present.
 
 .git/config -- delete the '[submodule "robolectric"]' section if present.
@@ -161,13 +163,21 @@ After forking robolectric on Github, add a submodule that points to your robolec
 
 Also see *Contributing back to Robolectric* below.
 
-## 4. IntelliJ: Some Manual Configuration
-Open the project in IntelliJ 10.5 or higher.
+## 4. IntelliJ: Settings, Libraries, and SDKs
+Open YourProject in IntelliJ 10.5 or higher.
 
-### Platform SDKs
+YourProject is likely broken. You can import the provided IntelliJ settings to fix this:
+
+File => Import Settings => YourProject/support/IntellijSettings.jar
+
+### But It's still Broken!
+Something about your machine's configuration does not match our settings. 
+
+Platform SDKs
 
 #### JSDK
 if you are missing a java SDK.  accept the default
+
 
 
 
@@ -242,8 +252,10 @@ To handle C2DM notifications you will need to implement C2DMReceiver, which is s
 Other things you might might consider.
 
 ## Open Source Robolectric
-Robolectric is open source and it continuously improves. We recommend that you merge with pivotal/robolectric
-often to both stay current. We also recommend you contribute your projects's changes back to the community. 
+Robolectric is open source and it continuously improves. We recommend that your project fork robolectric. 
+By forking you have the freedom to choose when (if ever) to update to later versions of robolectric, 
+make changes to your fork as needed, and contributethose changes back to pivotal/robolectric using 
+the official github pull-request workflow.
 
 ### Merging in pivotal/robolectric
 The official Github workflow (http://help.github.com/fork-a-repo/) details how to merge another 
@@ -261,16 +273,11 @@ When you want to merge in upstream:
     git fetch upstream
     git merge --no-commit upstream/master
 
-fix merge conflicts
-run robolectric tests
-run project test
-commit robolectric and push
-commit project and push
-
-
-Resolve conflicts, fix test, commit, and push.
-
-
+- Fix merge conflicts
+- Run robolectric tests
+- Run project test
+- Commit robolectric and push
+- Commit project and push
 
 ### Contributing
 ***Note: get permission from your client before contributing code back to any open source project.***
