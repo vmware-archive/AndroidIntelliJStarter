@@ -21,6 +21,8 @@ def rename_project_to(name)
   File.delete ".idea/workspace.xml" if File.exists? ".idea/workspace.xml" 
   
   init_git_repo
+  
+  syste "android update project -p ."
 end
 
 def replace(filename, original_name, new_name) 
@@ -41,25 +43,37 @@ def init_git_repo
     puts "!!! Moving .git to .git.bak. Delete this if you don't want it."
     FileUtils.mv ".git", ".git.bak"
     puts "!!! Initializing a new git repository!"
-    system "git init ."    
+    system "git init ."
 
     reset_robolectric
 
     system "git add ."
     system "git ci -am 'Initial Commit'"
+    system "\nRepository created. It is a local repo only. Add a remote and push it somewhere."
   else 
     puts "!!! You typed '#{should_init}'. Leaving existing git repository."
     puts "!!! Run ./script/init_git (or ruby script/init_git) to try again."
+    init_robolectric_default
   end  
 end
 
 def reset_robolectric
   puts "Add Robolectric as a non-pushable submodule pointing at HEAD"
   
-  system "git rm --cached submodules/robolectric"
   FileUtils.rm_rf "submodules"
   system "echo ''> .gitmodules"
   
   system "git submodule add git://github.com/pivotal/robolectric.git submodules/robolectric"
   system "git submodule update --init"
-end  
+end
+
+
+def init_robolectric_default
+  puts "initializing default robolectric"
+  system "git submodule update --init"
+  system "(cd submodules/robolectric && git checkout master)"
+  system "(cd submodules/robolectric && ant compile)"
+  puts ">>>> Default robolectric initialized. Change to your fork later."
+end
+
+

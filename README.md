@@ -30,18 +30,20 @@ So you know what you're doing, eh? Let's do this thing!
 -  Install android to ~/android-sdk-mac_x86/ and install a bunch of SDKs with Google APIs.
 -  Clone and reconfigure this project as YourProject by running:
 
-        git clone git://github.com/pivotal/AndroidIntelliJStarter XXX-YourProject-XXX # or your fork
+        git clone git://github.com/pivotal/AndroidIntelliJStarter YourProject # or your fork
         cd YourProject
         ./script/project_setup YourProject #or ruby script/project_setup
 
-- Set up robolectric either by keeping the read-only submodule for HEAD or forking. See "3. Robolectric" below
 - **Open IntelliJ 10.5 or higher**
-- Import IntelliJ Settings: File => Import Settings => YourProject/support/IntellijSettings.jar.
+- Import IntelliJ Settings: File => Import Settings => YourProject/support/IntellijSettings.jar. 
+NOTE: this will destroy your existing IntelliJ settings!
 
 "Import Settings" should have fixed the global Project SDKs and Module SDKs. Fix them if they are still broken.
 See "4. IntelliJ: Some Manual Configuration" below.
 
 Run Unit Tests, Robolectric Unit Tests, and launch StarterApp and make sure they work.
+
+*** We recommend that you fork robolectric. See "3. Robolectric" below. ***
 
 At least glace at the stuff below about robojuice, C2DM, gp and gpp, forking robolectric, etc.
 
@@ -150,7 +152,8 @@ http://github.com/pivotal/robolectric (HEAD). If you want to fork robolectric
     (cd submodules/robolectric && ant clean test) # make sure it runs
 
 ### Forking Robolectric (Recommended)
-We recommend forking robolectric for your project. See "Open Source Robolectric" below for reasons why.
+We recommend that you fork robolectric for your project. For details on how to set up your fork 
+to easily sync with pivotal/robolectric, see "Open Source Robolectric" below.
 
 .gitmodules -- delete the '[submodule "submodules/robolectric"]' section if present.
 
@@ -169,8 +172,11 @@ After forking robolectric on Github, add a submodule that points to your robolec
 
 Also see *Contributing back to Robolectric* below.
 
+Did you come here from the *Power User Instructions?* You might want to go back and 
+pick up where you left off.
+
 ## 4. IntelliJ: Settings, Libraries, and SDKs
-Open YourProject in IntelliJ 10.5 or higher.
+** Open YourProject in IntelliJ 10.5 or higher.** 
 
 ### Import IntellijSettings.jar 
 Import support/IntellijSettings.jar to automatically configure your SDKs and other important settings:
@@ -181,40 +187,55 @@ If everything goes well everything will be fixed when IntelliJ restarts.
 
 ### My IntelliJ SDKs are Broken!
 Something about your machine's configuration does not match our settings. Manually fix all 
-using the following instructions.
+using the following instructions. Likely issues include: 
+
+- Are you are not running IntelliJ 10.5
+- Android SDKs are not installed in ~/android-sdk-mac_x86/. Check out that "x"! It's "mac_x86", not "mac_86".
 
 #### Platform Settings: SDKs -- JSDK
 
 - File => Project Structure
 - Platform Settings => SDKs
+
+If 1.6 is not listed, add it: 
+
 - Add (plus sign) => JSDK
 - Take the default if you can, deep in /System/Library/.../CurrentJDK/Home
 
 #### Platform Settings: SDKs -- Android SDKs
-You will need to at 2.3.3 Google APIs if you want to use robolectric.
+Check your Android SDKs:
 
 - File => Project Structure
 - Platform Settings => SDKs
+
+Your Android SDKs are listed here. You might need to add a few. Note that if you want to run Robolectric
+tests in IntelliJ you will need to add Google APIs (2.3.3). For example: 
+
 - Add (plus sign) => Android SDK
 - locate and choose ~/android-sdk-mac_x86
 - Select internal Java Platform: 1.6
 - Create new Android SDK: Google APIs (2.3.3)
   
-Add more if needed. If you need SDKs that are not listed you will need to install it via the
+If you need SDKs that are not listed you will need to install it via the
 Android SDK and AVD Manager. See above.
 
 #### Module SDKs
-YourProject and Robolectric might need their Module SDK fixed.
+You might need to fix the Module SDKs for YourProject and Robolectric:
 
 - File => Project Structure
 - Modules => YourProject => Dependencies
 - Module SDK: choose one.
 - Repeat for Modules => Robolectric => Dependencies
 
-## 5. Roboguice
-By default this project uses Roboguice for dependency injection. 
+# Highlighted Libraries
+We have included several libraries and configurations that we use on most projects. You are free to 
+keep them or remove them.
 
-Configure dependency injection in MySampleApplication.ApplicationModule and RobolectricTestRunnerWithInjection.TestApplicationModule.
+## Roboguice
+By default this project uses Roboguice for dependency injection. http://code.google.com/p/roboguice/
+
+Configure dependency injection in MySampleApplication.ApplicationModule and 
+RobolectricTestRunnerWithInjection.TestApplicationModule.
 
 RobolectricTestRunnerWithInjection is a test runner configured to use Roboguice. 
 See StarterActivityWithRoboguiceTest for example usage.
@@ -226,9 +247,10 @@ See StarterActivityWithRoboguiceTest for example usage.
 - Remove all uses of @Inject, @InjectView, etc.
 - Remove reference to MySampleApplication from AndroidManifest
 
-## 6. C2DM Support
-We have added base support for C2DM. C2DM is Google's push notification service for Android and is available in
-API v. 2.2 and above, though it is safely ignored in lower versions.
+## C2DM
+We have added base support for C2DM - http://code.google.com/android/c2dm/. C2DM is Google's push 
+notification service used for Android and is available in API v. 2.2 and above, though it is 
+safely ignored in lower versions.
 
 While 2.2 devices support C2DM, Android SKDs do not provide hooks for integrating with the service -- no
 registration, unregistration, or notification-receipt handling code. Google suggests copying code from one of
@@ -247,6 +269,10 @@ To handle C2DM notifications you will need to implement C2DMReceiver, which is s
 - Delete com.google.android.c2dm
 - Remove the C2DM Section of AndroidManifest.xml
 
+## Lots of Jars
+We have added many handy Jars, such as apache commons, google's Guava, the Jackson JSON parsing libraries,
+and more. Check them out in `libs/main/` and `libs/test`-- keep them or delete them.
+
 # Miscellaneous and Tools
 Other things you might might consider.
 
@@ -263,6 +289,7 @@ repo's code into your own fork, such as merging pivotal/robolectric into yourpro
 Do the following once per machine:
 
     # add pivotal/robolectric HEAD as an upstream remote
+	cd submodules/robolectric
     git remote add upstream git://github.com/pivotal/robolectric.git
 
 When you want to merge in upstream:
@@ -274,7 +301,7 @@ When you want to merge in upstream:
 
 - Fix merge conflicts
 - Run robolectric tests
-- Run project test
+- Run main project tests
 - Commit robolectric and push
 - Commit project and push
 
