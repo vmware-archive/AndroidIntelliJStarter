@@ -49,7 +49,7 @@ def init_git_repo
 
     system "git add ."
     system "git ci -am 'Initial Commit'"
-    system "\nRepository created. It is a local repo only. Add a remote and push it somewhere."
+    puts "\nNew repository created. It is a local repo only. Add a remote and push it somewhere."
   else 
     puts "!!! You typed '#{should_init}'. Leaving existing git repository."
     puts "!!! Run ./script/init_git (or ruby script/init_git) to try again."
