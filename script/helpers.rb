@@ -41,6 +41,8 @@ def init_git_repo
     FileUtils.mv ".git", ".git.bak"
     puts "!!! Initializing a new git repository!"
     system "git init ."
+    system "git add ."
+    system "git ci -am 'Initial Commit'"
   else 
     puts "!!! You typed '#{should_init}'. Leaving existing git repository."
     puts "!!! Run ./script/init_git (or ruby script/init_git) to try again."
