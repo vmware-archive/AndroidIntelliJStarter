@@ -21,7 +21,7 @@ things as you go.
 - You have ruby installed
 
 
-## 0. Power User Instructions
+# Power User Instructions
 **Don't open IntelliJ yet.**
 
 So you know what you're doing, eh? Let's do this thing!
@@ -46,6 +46,9 @@ Run Unit Tests, Robolectric Unit Tests, and launch StarterApp and make sure they
 At least glace at the stuff below about robojuice, C2DM, gp and gpp, forking robolectric, etc.
 
 Stuck? Keep reading!
+
+# Super Detailed Instructions
+Salvation lies within.
 
 ## 1. Android Setup
 **Don't open IntelliJ yet.**
