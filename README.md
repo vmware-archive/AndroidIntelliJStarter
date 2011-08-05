@@ -146,6 +146,7 @@ http://github.com/pivotal/robolectric (HEAD). If you want to fork robolectric
 
 ### Forking Robolectric (Recommended)
 We recommend forking robolectric for your project. 
+
 .gitmodules -- delete the '[submodule "submodules/robolectric"]' section if present.
 
 .git/config -- delete the '[submodule "robolectric"]' section if present.

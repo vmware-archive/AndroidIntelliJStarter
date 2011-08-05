@@ -41,10 +41,24 @@ def init_git_repo
     FileUtils.mv ".git", ".git.bak"
     puts "!!! Initializing a new git repository!"
     system "git init ."
+    system "echo '' > .gitmodules"
     system "git add ."
     system "git ci -am 'Initial Commit'"
+    
+    reset_robolectric
   else 
     puts "!!! You typed '#{should_init}'. Leaving existing git repository."
     puts "!!! Run ./script/init_git (or ruby script/init_git) to try again."
   end  
 end
+
+def reset_robolectric
+  puts "Add Robolectric as a non-pushable submodule pointing at HEAD"
+  
+  system "git rm --cached submodules/robolectric"
+  FileUtils.rm_rf "submodules"
+  system "echo ''> .gitmodules"
+  
+  system "git submodule add git://github.com/pivotal/robolectric.git submodules/robolectric"
+  system "git submodule update --init"
+end  
