@@ -14,8 +14,8 @@ def rename_project_to(name)
     replace(filename, "AndroidIntelliJStarter", name)
   end
   
+  File.rename("AndroidIntelliJStarter.iml", "#{name}.iml") if File.exists? "AndroidIntelliJStarter.iml"
   puts ">>> Renamed 'AndroidIntelliJStarter.iml' to '#{name}.iml'"
-  File.rename "AndroidIntelliJStarter.iml", "#{name}.iml"
 
   # delete workspace.xml, which might hold bad references. It will be regenerated.
   File.delete ".idea/workspace.xml" if File.exists? ".idea/workspace.xml" 
@@ -24,6 +24,7 @@ def rename_project_to(name)
 end
 
 def replace(filename, original_name, new_name) 
+  return unless File.exists? filename
   text = File.read(filename)
   replaced = text.gsub!(original_name, new_name)
   File.open(filename, "w") {|file| file.puts text}

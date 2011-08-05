@@ -36,7 +36,7 @@ So you know what you're doing, eh? Let's do this thing!
 
 - Set up robolectric either by keeping the read-only submodule for HEAD or forking. See "3. Robolectric" below
 - **Open IntelliJ 10.5 or higher**
-- Import IntelliJ Settings: File => Import Settings => YourProject/support/IntellijSettings.jar. Restart IntelliJ.
+- Import IntelliJ Settings: File => Import Settings => YourProject/support/IntellijSettings.jar.
 
 "Import Settings" should have fixed the global Project SDKs and Module SDKs. Fix them if they are still broken.
 See "4. IntelliJ: Some Manual Configuration" below.
@@ -109,16 +109,18 @@ Follow the instructions. The output will look like this:
 	!!! Initializing a new git repository!
 	Initialized empty Git repository in /Users/pivotal/workspace/YourProject/.git/
 	
+	[snip... lots of git output here.]
+	
 	pivotal$
 
 ### New Git Repository Script
-Notice the the output from above: 
+Notice the the output from above `script/project_setup`: 
 
     !!! Do you want to create a new git repository? 
     !!! Type 'yes' to back up your .git directory and create a new git repository
     > 
 
-You can rerun this command if you want to: 
+You can rerun this command if need to: 
 
     ./script/init_git # or ruby script/init_git 
 
@@ -138,7 +140,7 @@ in `default.properties` or change the "target" within that file appropriately.
 ## 3. Robolectric
 **Don't open IntelliJ yet.**
 
-Robolectric is a git submodule in this project. By default, submodules/robolectric is a read-only clone of
+Robolectric is a git submodule in this project. By default, submodules/robolectric is a non-pushable clone of
 http://github.com/pivotal/robolectric (HEAD). If you want to fork robolectric 
 (recommended) skip to *Forking Robolectric* below.
 
@@ -148,7 +150,7 @@ http://github.com/pivotal/robolectric (HEAD). If you want to fork robolectric
     (cd submodules/robolectric && ant clean test) # make sure it runs
 
 ### Forking Robolectric (Recommended)
-We recommend forking robolectric for your project. 
+We recommend forking robolectric for your project. See "Open Source Robolectric" below for reasons why.
 
 .gitmodules -- delete the '[submodule "submodules/robolectric"]' section if present.
 
@@ -170,51 +172,44 @@ Also see *Contributing back to Robolectric* below.
 ## 4. IntelliJ: Settings, Libraries, and SDKs
 Open YourProject in IntelliJ 10.5 or higher.
 
-YourProject is likely broken. You can import the provided IntelliJ settings to fix this:
+### Import IntellijSettings.jar 
+Import support/IntellijSettings.jar to automatically configure your SDKs and other important settings:
 
 File => Import Settings => YourProject/support/IntellijSettings.jar
 
-### But It's still Broken!
-Something about your machine's configuration does not match our settings. 
+If everything goes well everything will be fixed when IntelliJ restarts.
 
-Platform SDKs
+### My IntelliJ SDKs are Broken!
+Something about your machine's configuration does not match our settings. Manually fix all 
+using the following instructions.
 
-#### JSDK
-if you are missing a java SDK.  accept the default
+#### Platform Settings: SDKs -- JSDK
 
+- File => Project Structure
+- Platform Settings => SDKs
+- Add (plus sign) => JSDK
+- Take the default if you can, deep in /System/Library/.../CurrentJDK/Home
 
+#### Platform Settings: SDKs -- Android SDKs
+You will need to at 2.3.3 Google APIs if you want to use robolectric.
 
-
-
-You will likely need to configure IntelliJ's Platform Android SDKs.  IntelliJ stores Platform SDK
-configurations somewhere outside of individual projects. Upshot: IntelliJ SDKs are not committed
-in git and you will need to manually add them.
-
-File => Project Structure
-
-Platform Settings => SDKs
-
-Add (plus sign) => Android SDK
-
-locate and choose ~/android-sdk-mac_x86
-
-Choose Java SDK 1.6
-
-Select the build target Android SDK. If you don't see it there you will need to install it via the
+- File => Project Structure
+- Platform Settings => SDKs
+- Add (plus sign) => Android SDK
+- locate and choose ~/android-sdk-mac_x86
+- Select internal Java Platform: 1.6
+- Create new Android SDK: Google APIs (2.3.3)
+  
+Add more if needed. If you need SDKs that are not listed you will need to install it via the
 Android SDK and AVD Manager. See above.
 
-Attache source
+#### Module SDKs
+YourProject and Robolectric might need their Module SDK fixed.
 
-Do the same for Robolectric: 2.3.3
-
-### Setting AndroidIntelliJStarter's SDK
-Now you need to set the app's SDK.
-
-File => Project Structure
-
-Modules => YourProject => Dependencies
-
-Module SDK: choose one.
+- File => Project Structure
+- Modules => YourProject => Dependencies
+- Module SDK: choose one.
+- Repeat for Modules => Robolectric => Dependencies
 
 ## 5. Roboguice
 By default this project uses Roboguice for dependency injection. 
