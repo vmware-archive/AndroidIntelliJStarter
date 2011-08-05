@@ -40,12 +40,12 @@ def init_git_repo
     puts "!!! Moving .git to .git.bak. Delete this if you don't want it."
     FileUtils.mv ".git", ".git.bak"
     puts "!!! Initializing a new git repository!"
-    system "git init ."
-    system "echo '' > .gitmodules"
+    system "git init ."    
+
+    reset_robolectric
+
     system "git add ."
     system "git ci -am 'Initial Commit'"
-    
-    reset_robolectric
   else 
     puts "!!! You typed '#{should_init}'. Leaving existing git repository."
     puts "!!! Run ./script/init_git (or ruby script/init_git) to try again."
