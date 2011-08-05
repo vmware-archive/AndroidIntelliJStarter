@@ -1,0 +1,12 @@
+#!/usr/bin/ruby
+require "script/helpers"
+def usage
+  puts "Please provide a new ProjectName"
+  puts "Usage: "
+  puts "> setup_project [NewProjectName"
+  exit(1)
+end
+
+new_project_name = ARGV.shift
+usage unless new_project_name
+rename_project_to(new_project_name)

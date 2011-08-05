@@ -1,3 +1,5 @@
+**Don't open IntelliJ yet.**
+
 # Android IntelliJ Starter
 This is a "template" IntelliJ project created to bootstrap Android development. 
 We have included as many of our go-too tools and as much hard earned 
@@ -16,9 +18,33 @@ things as you go.
 - You are working on a Mac
 - Your android SDK is in ~/android-sdk-mac_x86, or you are going to put it there, or create a symlink, etc.
 - Robolectric will live in submodules/robolectric
+- You have ruby installed
 
-## Android Setup
-Don't open IntelliJ yet.
+
+## 0. Power User Instructions
+**Don't open IntelliJ yet.**
+
+So you know what you're doing, eh?  Fine, let's do this thing.
+
+- **Don't open IntelliJ yet.** Seriously, did you already launch it? Close it.
+-  Install android to ~/android-sdk-mac_x86/ and install a bunch of SDKs
+-  Clone and reconfigure this project as YourProject by running this stuff:
+
+        git clone git://github.com/pivotal/AndroidIntelliJStarter YourProject # or your fork
+        cd YourProject
+        ./script/project_setup YourProject #or ruby script/project_setup
+
+- Set up robolectric either by keeping the read-only submodule for HEAD or forking. See "3. Robolectric" below
+- **Open IntelliJ 10.5 or higher**
+- Set up or fix the global SDKs if they are broken
+- Set up or fix the Module SKDs for YourProject and Robolectric if they are broken.
+- Run Unit Tests, Robolectric Unit Tests, and launch StarterApp and make sure they work.
+- At least glace at the stuff below about robojuice, C2DM, gp and gpp, forking robolectric, etc.
+
+Stuck? Keep reading!
+
+## 1. Android Setup
+**Don't open IntelliJ yet.**
 
 Download the latest Mac SDK: http://developer.android.com/sdk/index.html
 
@@ -43,16 +69,53 @@ Available packages => Third party Add-ons.
 Note: This project assumes you have SDK Platform Android 2.1 installed. You can change this in 
 `default.properties`
 
-## Bootstrapping AndroidIntelliJStarter
-Don't open IntelliJ yet.
+## 2. Copying AndroidIntelliJStarter
+**Don't open IntelliJ yet.**
 
-You will likely fork and rename this repository on Github. If you clone this repo be sure to use the *read-only* url
-to avoid accidentally making changes to this template project.
+You will likely fork and rename this repository on Github. 
+If you clone this repo be sure to use the *read-only* url to avoid accidentally making 
+changes to this template project.
 
-    git clone git://github.com/pivotal/AndroidIntelliJStarter # or your fork
-    cd AndroidIntelliJStarter
+    git clone git://github.com/pivotal/AndroidIntelliJStarter YourProject # or your fork
+    cd YourProject
 
-Generate local.properties
+### Bootstrap YourProject
+Many files and file contents need to change from AndroidIntelliJStarter to YourProject. We have a 
+script for this:
+
+    pivotal$ ./script/project_setup YourProject
+
+Follow the instructions. The output will look like this:
+
+	Searching: AndroidIntelliJStarter.iml,.idea/.name, [snip... lots of files here]
+	>>> Replaced 'AndroidIntelliJStarter' in .idea/.name with 'YourProject'
+	>>> Replaced 'AndroidIntelliJStarter' in .idea/modules.xml with 'YourProject'
+	>>> Replaced 'AndroidIntelliJStarter' in .idea/runConfigurations/StarterApp.xml with 'YourProject'
+	>>> Replaced 'AndroidIntelliJStarter' in .idea/runConfigurations/Unit_Tests.xml with 'YourProject'
+	>>> Renamed 'AndroidIntelliJStarter.iml' to 'YourProject.iml'
+
+	!!! Do you want to create a new git repository? 
+	!!! Type 'yes' to back up your .git directory and create a new git repository
+	> yes
+	!!! Moving .git to .git.bak. Delete this if you don't want it.
+	!!! Initializing a new git repository!
+	Initialized empty Git repository in /Users/pivotal/workspace/YourProject/.git/
+	
+	pivotal$
+
+### Automatic New Git Repo
+Notice the the output from above: 
+
+    !!! Do you want to create a new git repository? 
+    !!! Type 'yes' to back up your .git directory and create a new git repository
+    > 
+
+You can rerun this command if you want to: 
+
+    ./script/init_git # or ruby script/init_git 
+
+### Generate local.properties
+Run this:
 
     android update project -p .
 
@@ -62,8 +125,8 @@ in `default.properties` or change the "target" within that file appropriately.
     Error: The project either has no target set or the target is invalid.
     Please provide a --target to the 'android update' command.
 
-## Robolectric
-Don't open IntelliJ yet.
+## 3. Robolectric
+**Don't open IntelliJ yet.**
 
 Robolectric is a git submodule in this project. By default, submodules/robolectric is a read-only clone of
 http://github.com/pivotal/robolectric (HEAD). If you want to fork robolectric 
@@ -97,7 +160,7 @@ After forking robolectric on Github, add a submodule that points to your robolec
 
 Also see *Contributing back to Robolectric* below.
 
-## IntelliJ: Some Manual Configuration
+## 4. IntelliJ: Some Manual Configuration
 Open the project in IntelliJ 10.5 or higher.
 
 ### Platform SDKs
@@ -134,11 +197,11 @@ Now you need to set the app's SDK.
 
 File => Project Structure
 
-Modules => AndroidIntelliJStarter => Dependencies
+Modules => YourProject => Dependencies
 
 Module SDK: choose one.
 
-## Roboguice
+## 5. Roboguice
 By default this project uses Roboguice for dependency injection. 
 
 Configure dependency injection in MySampleApplication.ApplicationModule and RobolectricTestRunnerWithInjection.TestApplicationModule.
@@ -153,7 +216,7 @@ See StarterActivityWithRoboguiceTest for example usage.
 - Remove all uses of @Inject, @InjectView, etc.
 - Remove reference to MySampleApplication from AndroidManifest
 
-## C2DM Support
+## 6. C2DM Support
 We have added base support for C2DM. C2DM is Google's push notification service for Android and is available in
 API v. 2.2 and above, though it is safely ignored in lower versions.
 
@@ -173,6 +236,9 @@ To handle C2DM notifications you will need to implement C2DMReceiver, which is s
 - Remove C2DMReceiver and test
 - Delete com.google.android.c2dm
 - Remove the C2DM Section of AndroidManifest.xml
+
+# Miscellaneous and Tools
+Other things you might might consider.
 
 ## Open Source Robolectric
 Robolectric is open source and it continuously improves. We recommend that you merge with pivotal/robolectric

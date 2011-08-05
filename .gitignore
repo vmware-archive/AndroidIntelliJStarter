@@ -1,5 +1,7 @@
 .DS_Store
+.git.bak/
 .idea/workspace.xml
+.idea/uiDesigner.xml
 bin/
 gen/
 out/

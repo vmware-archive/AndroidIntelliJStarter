@@ -1,10 +1,7 @@
 #!/usr/bin/ruby
 require "script/helpers"
-
 puts <<ART
-
-rename project!
-
+Initialize a new git repository
 ART
 
-rename_project_to("foobar")
+init_git_repo
