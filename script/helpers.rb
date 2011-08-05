@@ -18,11 +18,11 @@ def rename_project_to(name)
   puts ">>> Renamed 'AndroidIntelliJStarter.iml' to '#{name}.iml'"
 
   # delete workspace.xml, which might hold bad references. It will be regenerated.
-  File.delete ".idea/workspace.xml" if File.exists? ".idea/workspace.xml" 
-  
+  File.delete ".idea/workspace.xml" if File.exists? ".idea/workspace.xml"
+
+  system "android update project -p ."
+
   init_git_repo
-  
-  syste "android update project -p ."
 end
 
 def replace(filename, original_name, new_name) 
