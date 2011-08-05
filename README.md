@@ -1,4 +1,6 @@
-**Don't open IntelliJ yet.**
+### Current Issues/ToDos
+
+- A working build.xml. Building via ant not working.
 
 # Android IntelliJ Starter
 This is a "template" IntelliJ project created to bootstrap Android development. 
@@ -19,7 +21,6 @@ things as you go.
 - Your android SDK is in ~/android-sdk-mac_x86, or you are going to put it there, or create a symlink, etc.
 - Robolectric will live in submodules/robolectric
 - You have ruby installed
-
 
 # Power User Instructions
 **Don't open IntelliJ yet.**
@@ -63,8 +64,8 @@ fix paths in several places if you choose a different location.
 
 Add the android tools to the PATH. 
 
-    # Note: change .bash_pivotal to .bash_profile or .bashrc if needed
-    echo "export PATH='$PATH:$HOME/android-sdk-mac_x86/tools'" >> $HOME/.bash_pivotal
+    # Note: change .bash_profile to .bashrc or something else if needed
+    echo "export PATH='$PATH:$HOME/android-sdk-mac_x86/tools'" >> $HOME/.bash_profile
 
 Open a new Terminal window and run `android`:
  
