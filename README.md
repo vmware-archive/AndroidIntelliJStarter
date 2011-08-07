@@ -65,7 +65,7 @@ fix paths in several places if you choose a different location.
 Add the android tools to the PATH. 
 
     # Note: change .bash_profile to .bashrc or something else if needed
-    echo "export PATH='$PATH:$HOME/android-sdk-mac_x86/tools'" >> $HOME/.bash_profile
+    echo "export PATH='$PATH:$HOME/android-sdk-mac_x86/tools:$HOME/android-sdk-mac_x86/platform-tools'" >> $HOME/.bash_profile
 
 Open a new Terminal window and run `android`:
  
