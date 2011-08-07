@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="Production Libs">
     <CLASSES>
-      <root url="file://$PROJECT_DIR$/libs/main" />
+      <root url="file://$PROJECT_DIR$/libs" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
@@ -37,6 +37,7 @@
       <root url="jar://$PROJECT_DIR$/libs-src/jackson-src-1.8.4-min.zip!/jackson-src-1.8.4/src/mapper/java" />
       <root url="jar://$PROJECT_DIR$/libs-src/jackson-src-1.8.4-min.zip!/jackson-src-1.8.4/src/test" />
     </SOURCES>
+    <jarDirectory url="file://$PROJECT_DIR$/libs" recursive="false" />
     <jarDirectory url="file://$PROJECT_DIR$/libs/main" recursive="false" />
   </library>
 </component>
