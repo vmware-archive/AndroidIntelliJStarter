@@ -5,6 +5,19 @@ def bail_with(project)
     exit(1)
 end
 
+def project_setup(name)
+  init_android
+  rename_project_to(name)
+  init_git_repo
+end
+
+def init_android
+  system "android update project -p ."
+
+  # android update wrongly stomps build.xml
+  system "git checkout build.xml"
+end
+
 def rename_project_to(name)
   files = [ "AndroidIntelliJStarter.iml",
             ".idea/.name",
@@ -21,10 +34,6 @@ def rename_project_to(name)
 
   # delete workspace.xml, which might hold bad references. It will be regenerated.
   File.delete ".idea/workspace.xml" if File.exists? ".idea/workspace.xml"
-
-  system "android update project -p ."
-
-  init_git_repo
 end
 
 def replace(filename, original_name, new_name) 

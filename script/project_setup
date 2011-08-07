@@ -9,4 +9,4 @@ end
 
 new_project_name = ARGV.shift
 usage unless new_project_name
-rename_project_to(new_project_name)
+project_setup(new_project_name)
