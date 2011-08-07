@@ -44,7 +44,7 @@ See "4. IntelliJ: Some Manual Configuration" below.
 
 Run Unit Tests, Robolectric Unit Tests, and launch StarterApp and make sure they work.
 
-*** We recommend that you fork robolectric. See "3. Robolectric" below. ***
+***We recommend that you fork robolectric. See "3. Robolectric" below.***
 
 At least glace at the stuff below about robojuice, C2DM, gp and gpp, forking robolectric, etc.
 
@@ -174,7 +174,7 @@ After forking robolectric on Github, add a submodule that points to your robolec
     git submodule init
     (cd submodules/robolectric && ant clean test)
 
-Also see *Contributing back to Robolectric* below.
+Also see *Open Source Robolectric* below.
 
 Did you come here from the *Power User Instructions?* You might want to go back and 
 pick up where you left off.
@@ -278,8 +278,8 @@ We have added many handy Jars, such as apache commons, google's Guava, the Jacks
 and more. Check them out in `libs/main/` and `libs/test`-- keep them or delete them.
 
 ## Scripts
-These Ruby scripts should help make your life easier. Feel free to edit, delete, add to thise scripts. They assume ruby 
-lives in `/usr/bin/ruby` so you mightneed to change the `#!/usr/bin/ruby` if yours is different. 
+These Ruby scripts should help make your life easier. Feel free to edit and to these scripts. They assume ruby 
+lives in `/usr/bin/ruby` so you might need to edit their `#!/usr/bin/ruby` if yours is different. 
 
 - `script/gp` -- "Git Pull" script. This pulls and rebases your project and robolectric.
 - `script/gpp` -- "Git Pull Push" script. Same as script/gp but also runs all tests in robolectric.
@@ -292,13 +292,13 @@ AndroidIntelliJStarter to YourProject, including a creating a new local git repo
 In addition to the build-in Android `ant` tasks you will likely use the following additions often. 
 You can chain them, such as `ant clean test`. Edit `build.xml` at will. In addition to the 
 
-- ant clean -- cleans up all output dirs
-- ant test -- executes the project tests
+- `ant clean` -- deletes up all output dirs
+- `ant test` -- executes the project tests
 
 ## Open Source Robolectric
 Robolectric is open source and it continuously improves. We recommend that your project fork robolectric. 
 By forking you have the freedom to choose when (if ever) to update to later versions of robolectric, 
-make changes to your fork as needed, and contributethose changes back to pivotal/robolectric using 
+make changes to your fork as needed, and contribute those changes back to pivotal/robolectric using 
 the official github pull-request workflow.
 
 ### Merging in pivotal/robolectric
@@ -324,7 +324,7 @@ When you want to merge in upstream:
 - Commit robolectric and push
 - Commit project and push
 
-### Contributing
+### Contributing Back
 ***Note: get permission from your client before contributing code back to any open source project.***
 
 Assuming you forked as detailed above, make a pull request as your client user: http://help.github.com/send-pull-requests/
