@@ -2,6 +2,7 @@
 .git.bak/
 .idea/workspace.xml
 .idea/uiDesigner.xml
+ant_build/
 bin/
 gen/
 out/
