@@ -1,6 +1,6 @@
 ### Current Issues/ToDos
 
-- A working build.xml. Building via ant not working.
+- Build release apks without requiring a password. This will enable auto-generation of apks in continuous integration.
 
 # Android IntelliJ Starter
 This is a "template" IntelliJ project created to bootstrap Android development. 
@@ -231,7 +231,7 @@ You might need to fix the Module SDKs for YourProject and Robolectric:
 - Module SDK: choose one.
 - Repeat for Modules => Robolectric => Dependencies
 
-# Highlighted Libraries
+# Highlighted Libraries And Tools
 We have included several libraries and configurations that we use on most projects. You are free to 
 keep them or remove them.
 
@@ -277,8 +277,23 @@ To handle C2DM notifications you will need to implement C2DMReceiver, which is s
 We have added many handy Jars, such as apache commons, google's Guava, the Jackson JSON parsing libraries,
 and more. Check them out in `libs/main/` and `libs/test`-- keep them or delete them.
 
-# Miscellaneous and Tools
-Other things you might might consider.
+## Scripts
+These Ruby scripts should help make your life easier. Feel free to edit, delete, add to thise scripts. They assume ruby 
+lives in `/usr/bin/ruby` so you mightneed to change the `#!/usr/bin/ruby` if yours is different. 
+
+- `script/gp` -- "Git Pull" script. This pulls and rebases your project and robolectric.
+- `script/gpp` -- "Git Pull Push" script. Same as script/gp but also runs all tests in robolectric.
+and your project. If they pass it will `git push`.
+- `script/project_setup [YourProject]` -- changes this project from being configured for 
+AndroidIntelliJStarter to YourProject, including a creating a new local git repo if desired.
+- `script/init_git_repo` -- create a new local git repository. Existing `.git` directory safely moved to `.git.bak`.
+
+## ant
+In addition to the build-in Android `ant` tasks you will likely use the following additions often. 
+You can chain them, such as `ant clean test`. Edit `build.xml` at will. In addition to the 
+
+- ant clean -- cleans up all output dirs
+- ant test -- executes the project tests
 
 ## Open Source Robolectric
 Robolectric is open source and it continuously improves. We recommend that your project fork robolectric. 
@@ -316,10 +331,3 @@ Assuming you forked as detailed above, make a pull request as your client user: 
 
 The pull request can be handled by someone with commit right to robolectric, maybe even you!
 See "Managing Pull Requests" at http://help.github.com/send-pull-requests/.
-
-## Helpful Tools:
-
-- script/gp -- "Git Pull" script. This pulls and rebases your project and robolectric
-- script/gpp -- "Git Pull Push" script. Same as script/gp but also runs all tests in robolectric
-and your project. If they pass it will `git push`.
-
