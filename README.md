@@ -20,31 +20,37 @@ things as you go.
 - You are working on a Mac
 - Your android SDK is in ~/android-sdk-mac_x86, or you are going to put it there, or create a symlink, etc.
 - Robolectric will live in submodules/robolectric
-- You have ruby installed
+- You have java, ruby and git installed
 
 # Power User Instructions
 **Don't open IntelliJ yet.**
 
 So you know what you're doing, eh? Let's do this thing!
 
-- **Don't open IntelliJ yet.** Seriously, did you already launch it? Close it.
--  Install android to ~/android-sdk-mac_x86/ and install a bunch of SDKs and emulators with Google APIs.
+- **Don't open IntelliJ yet.** Did you already launch it? Close it.
+- Install android to ~/android-sdk-mac_x86/
+- Install SDKs -- this project assumes SDK 10 with Google APIs (2.3.3). You change this later.
 -  Clone and reconfigure this project as YourProject by running:
 
         git clone git://github.com/pivotal/AndroidIntelliJStarter YourProject # or your fork
         cd YourProject
         ./script/project_setup YourProject #or ruby script/project_setup
 
-- **Open IntelliJ 10.5 or higher**
+		# Run tests: 
+    	(cd submodules/robolectric && ant clean test) && ant clean test
+
+- **Open YourProject in IntelliJ 10.5 or higher**.
 - Import IntelliJ Settings: File => Import Settings => YourProject/support/IntellijSettings.jar. 
-NOTE: this will destroy your existing IntelliJ settings!
+This will destroy your existing IntelliJ settings!
 
-"Import Settings" should have fixed the global Project SDKs and Module SDKs. Fix them if they are still broken.
+Notes:
+- "Import Settings" should have fixed the global Project SDKs and Module SDKs. Fix them if they are still broken.
 See "4. IntelliJ: Some Manual Configuration" below.
+- Robolectric's unit test suite requires SDK 10 with Google APIs (2.3.3). If you do not install this SDK you cannot run Robolectric's tests.
+- ***We recommend that you fork robolectric. See "3. Robolectric" below.***
 
-Run Unit Tests, Robolectric Unit Tests, and launch StarterApp and make sure they work.
 
-***We recommend that you fork robolectric. See "3. Robolectric" below.***
+In IntelliJ, Run Unit Tests, Robolectric Unit Tests, and launch StarterApp and make sure they work.
 
 At least glace at the stuff below about robojuice, C2DM, gp and gpp, forking robolectric, etc.
 
@@ -72,15 +78,21 @@ Open a new Terminal window and run `android`:
     # in a new Terminal window:
     android 
 
-Use the "Android SDK and AVD Manager" to download all of the SDKs you think you need.
-If you need Google Maps then install the Google APIs under 
-Available packages => Third party Add-ons.
+Use the "Android SDK and AVD Manager" to download all of the SDKs. This project assumes SDK v10 (2.3.3) with Google APIs.
+You can change this later.
+
+To install:
+
+- Available packages => Android Repository => SDK Platform 2.3.3
+- Available packages => Third party Add-ons => Google Inc => Google APIs by Google Inc., Android API 10
+
+Install other SDKs using this method.
 
 ### Virtual Devices
 Make at least one Virtual Device (emulator) for the SDK(s) you installed above.
 
-Note: This project assumes you have SDK Platform Android 2.1 installed. You can change this in 
-`default.properties`
+Note: This project assumes you have SDK 10 with Google APIs (2.3.3) installed. You can change this in 
+`build.properties`.
 
 ## 2. New Project based on AndroidIntelliJStarter
 **Don't open IntelliJ yet.**
@@ -132,16 +144,20 @@ You can rerun this command if need to:
 
 You will still need to push this to some external repository URI.
 
-### Generate local.properties
+### Update Android
 Run this:
 
     android update project -p .
 
 *If this fails with the following error* then either install the SDK referenced
-in `default.properties` or change the "target" within that file appropriately.
+in `build.properties` or change the "target" within that file appropriately.
 
     Error: The project either has no target set or the target is invalid.
     Please provide a --target to the 'android update' command.
+
+If this changes `build.xml` then check it out again: 
+
+	    git co build.xml 
 
 ## 3. Robolectric
 **Don't open IntelliJ yet.**
@@ -149,6 +165,9 @@ in `default.properties` or change the "target" within that file appropriately.
 Robolectric is a git submodule in this project. By default, submodules/robolectric is a non-pushable clone of
 http://github.com/pivotal/robolectric (HEAD). If you want to fork robolectric 
 (recommended) skip to *Forking Robolectric* below.
+
+Note that Robolectric unit test require SDK v10 (2.3.3) with Google APIs. If you do not install this SDK 
+then you will not be able to run Robolectric's own test suite.
 
 ### Initializing Robolectric (HEAD by default)
     git submodule update --init
@@ -196,7 +215,9 @@ using the following instructions. Likely issues include:
 - Are you are not running IntelliJ 10.5
 - Android SDKs are not installed in ~/android-sdk-mac_x86/. Check out that "x"! It's "mac_x86", not "mac_86".
 
-#### Platform Settings: SDKs -- JSDK
+If these are not the issue keep going to the SDK sections below.
+
+### Platform Settings: SDKs -- JSDK
 
 - File => Project Structure
 - Platform Settings => SDKs
@@ -206,14 +227,14 @@ If 1.6 is not listed, add it:
 - Add (plus sign) => JSDK
 - Take the default if you can, deep in /System/Library/.../CurrentJDK/Home
 
-#### Platform Settings: SDKs -- Android SDKs
+### Platform Settings: SDKs -- Android SDKs
 Check your Android SDKs:
 
 - File => Project Structure
 - Platform Settings => SDKs
 
-Your Android SDKs are listed here. You might need to add a few. Note that if you want to run Robolectric
-tests in IntelliJ you will need to add Google APIs (2.3.3). For example: 
+Your Android SDKs are listed here. You might need to add a few. Note that if you want to run Robolectric's
+own test suite you will need to add Google APIs (2.3.3). For example: 
 
 - Add (plus sign) => Android SDK
 - locate and choose ~/android-sdk-mac_x86
@@ -223,7 +244,7 @@ tests in IntelliJ you will need to add Google APIs (2.3.3). For example:
 If you need SDKs that are not listed you will need to install it via the
 Android SDK and AVD Manager. See above.
 
-#### Module SDKs
+### Module SDKs
 You might need to fix the Module SDKs for YourProject and Robolectric:
 
 - File => Project Structure
