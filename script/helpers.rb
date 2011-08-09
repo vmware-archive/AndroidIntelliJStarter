@@ -111,7 +111,7 @@ def init_git_repo
     reset_robolectric
 
     system "git add ."
-    system "git ci -am 'Initial Commit'"
+    system "git commit -am 'Initial Commit'"
     puts "\nNew repository created. It is a local repo only. Add a remote and push it somewhere."
   else 
     puts "!!! You typed '#{should_init}'. Leaving existing git repository."
