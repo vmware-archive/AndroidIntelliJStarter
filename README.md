@@ -294,6 +294,20 @@ To handle C2DM notifications you will need to implement C2DMReceiver, which is s
 - Delete com.google.android.c2dm
 - Remove the C2DM Section of AndroidManifest.xml
 
+### Great Expectations
+great-expectations (https://github.com/xian/great-expectations) provides Jasmine-style test expectations for Java.
+While the framework is a little rough around the edges, we love this style of expectation assertions; see
+`com.example.android.sampleapp.StarterActivityTestWithGreatExpectations.java`.
+
+#### Adding Custom Android Matcher Classes
+You can add custom matchers for great-expectations. We are particularly excited about adding Android matchers.
+
+1. Add your Matcher class. See `com.example.android.sampleapp.test.support.matchers.android.ViewMatcher.java`.
+2. Add your Matcher to the list in `com.example.android.sampleapp.test.support.RunnableExpectGenerator.matcherClasses()`
+3. Regenerate `Expect.java` by running "Add custom great-expectation Matchers by Regenerating Expect.java"
+or execute the `RunnableExpectGenerator.main()` yourself.
+
+
 ## Lots of Jars
 We have added many handy Jars, such as apache commons, google's Guava, the Jackson JSON parsing libraries,
 and more. Check them out in `libs/main/` and `libs/test`-- keep them or delete them.
