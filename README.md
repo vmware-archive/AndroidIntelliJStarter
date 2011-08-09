@@ -157,7 +157,7 @@ in `build.properties` or change the "target" within that file appropriately.
 
 If this changes `build.xml` then check it out again: 
 
-	    git co build.xml 
+	    git checkout build.xml 
 
 ## 3. Robolectric
 **Don't open IntelliJ yet.**
@@ -294,12 +294,12 @@ To handle C2DM notifications you will need to implement C2DMReceiver, which is s
 - Delete com.google.android.c2dm
 - Remove the C2DM Section of AndroidManifest.xml
 
-### Great Expectations
+## Great Expectations
 great-expectations (https://github.com/xian/great-expectations) provides Jasmine-style test expectations for Java.
 While the framework is a little rough around the edges, we love this style of expectation assertions; see
 `com.example.android.sampleapp.StarterActivityTestWithGreatExpectations.java`.
 
-#### Adding Custom Android Matcher Classes
+### Adding Custom Matcher Classes
 You can add custom matchers for great-expectations. We are particularly excited about adding Android matchers.
 
 1. Add your Matcher class. See `com.example.android.sampleapp.test.support.matchers.android.ViewMatcher.java`.
@@ -313,8 +313,9 @@ We have added many handy Jars, such as apache commons, google's Guava, the Jacks
 and more. Check them out in `libs/main/` and `libs/test`-- keep them or delete them.
 
 ## Scripts
-These Ruby scripts should help make your life easier. Feel free to edit and to these scripts. They assume ruby 
-lives in `/usr/bin/ruby` so you might need to edit their `#!/usr/bin/ruby` if yours is different. 
+These Ruby scripts should make your life easier. Feel free to edit them. They assume ruby 
+lives in `/usr/bin/ruby` so you might need to edit their `#!/usr/bin/ruby` if yours is different. Alternatively 
+these scripts can be run with ruby explicitly: `ruby script/[the script]`.
 
 - `script/gp` -- "Git Pull" script. This pulls and rebases your project and robolectric.
 - `script/gpp` -- "Git Pull Push" script. Same as script/gp but also runs all tests in robolectric.
