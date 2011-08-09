@@ -44,11 +44,11 @@ So you know what you're doing, eh? Let's do this thing!
 This will destroy your existing IntelliJ settings!
 
 Notes:
+
 - "Import Settings" should have fixed the global Project SDKs and Module SDKs. Fix them if they are still broken.
 See "4. IntelliJ: Some Manual Configuration" below.
 - Robolectric's unit test suite requires SDK 10 with Google APIs (2.3.3). If you do not install this SDK you cannot run Robolectric's tests.
 - ***We recommend that you fork robolectric. See "3. Robolectric" below.***
-
 
 In IntelliJ, Run Unit Tests, Robolectric Unit Tests, and launch StarterApp and make sure they work.
 
