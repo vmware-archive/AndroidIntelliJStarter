@@ -33,8 +33,12 @@ public class RunnableExpectGenerator extends ExpectGenerator {
      * 
      */
     public static void generateCustomExpect() throws FileNotFoundException {
-        RunnableExpectGenerator expectGenerator = new RunnableExpectGenerator("com.example.android.sampleapp.test.support");
-        expectGenerator.setOut(new PrintStream(new File("test/java/com/example/android/sampleapp/test/support/Expect.java")));
+        String packageName = Expect.class.getPackage().getName();
+        String path = "test/java/" + packageName.replace(".", "/") + "/Expect.java";
+        System.out.println("path = " + path);
+        System.out.println("packagename = " + packageName);
+        RunnableExpectGenerator expectGenerator = new RunnableExpectGenerator(packageName);
+        expectGenerator.setOut(new PrintStream(new File(path)));
         expectGenerator.generate();
     }
     

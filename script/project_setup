@@ -8,5 +8,6 @@ def usage
 end
 
 new_project_name = ARGV.shift
+
 usage unless new_project_name
 project_setup(new_project_name)
