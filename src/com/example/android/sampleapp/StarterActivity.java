@@ -20,7 +20,7 @@ public class StarterActivity extends RoboActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.home);
         title.setText("Hello World");
         currentTimeText.setText(String.valueOf(currentTime.currentTimeMillis()));
     }
