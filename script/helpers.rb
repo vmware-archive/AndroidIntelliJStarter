@@ -89,8 +89,7 @@ def rename_package
   replace_package(Dir.glob("test/java/#{SAMPLE_PACKAGE_DIR}/**/*.java"), package, SAMPLE_PACKAGE)
 
   move_source_files("src/#{SAMPLE_PACKAGE_DIR}/*", "src/#{package_path}")
-
-  FileUtils.mv Dir.glob("test/java/#{SAMPLE_PACKAGE_DIR}/**/*.java"), "test/java/#{package_path}/"
+  move_source_files("test/java/#{SAMPLE_PACKAGE_DIR}/*", "test/java/#{package_path}/")
 
   FileUtils.rm_rf "src/com/example"
   FileUtils.rm_rf "test/java/com/example"
