@@ -4,7 +4,7 @@ SAMPLE_PACKAGE = "com.example.android.sampleapp"
 SAMPLE_PACKAGE_DIR = SAMPLE_PACKAGE.gsub('.', "/")
 
 def bail_with(project)
-  puts ">>>> #{project} failed! <<<<"
+  puts ">>> #{project} failed! <<<"
     exit(1)
 end
 
@@ -58,7 +58,7 @@ def validate_package(package)
     puts "!!! invalid package name: '#{package}'. Using default package."
     return false
   elsif package.nil? || package.length == 0
-    puts ">>>> Using default package."
+    puts ">>> Using default package."
     return false
   end
 
@@ -70,6 +70,7 @@ def replace_package(files, new_package, old_package)
 end
 
 def move_source_files(old_package_path, new_package_path)
+  puts ">>> Moving #{old_package_path} to #{new_package_path}"
   FileUtils.mv Dir.glob(old_package_path),  new_package_path
 end
 
@@ -89,7 +90,7 @@ def rename_package
   replace_package(Dir.glob("test/java/#{SAMPLE_PACKAGE_DIR}/**/*.java"), package, SAMPLE_PACKAGE)
 
   move_source_files("src/#{SAMPLE_PACKAGE_DIR}/*", "src/#{package_path}")
-  move_source_files("test/java/#{SAMPLE_PACKAGE_DIR}/*", "test/java/#{package_path}/")
+  move_source_files("test/java/#{SAMPLE_PACKAGE_DIR}/*", "test/java/#{package_path}")
 
   FileUtils.rm_rf "src/com/example"
   FileUtils.rm_rf "test/java/com/example"
@@ -135,7 +136,7 @@ def init_robolectric_default
   system "git submodule update --init"
   system "(cd submodules/robolectric && git checkout master)"
   system "(cd submodules/robolectric && ant compile)"
-  puts ">>>> Default robolectric initialized. Change to your fork later."
+  puts ">>> Default robolectric initialized. Change to your fork later."
 end
 
 

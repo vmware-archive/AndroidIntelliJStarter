@@ -1,0 +1,3 @@
+#!/usr/bin/ruby
+require "script/helpers"
+rename_package

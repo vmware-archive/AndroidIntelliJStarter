@@ -98,54 +98,47 @@ Note: This project assumes you have SDK 10 with Google APIs (2.3.3) installed. Y
 **Don't open IntelliJ yet.**
 
 You will likely fork and rename this repository on Github. 
-If you clone this repo be sure to use the *read-only* url to avoid accidentally making 
-changes to this template project.
+If you clone `pivotal/AndroidIntelliJStarter` be sure to use the *read-only* URI to avoid accidentally pushing 
+changes to it.
 
     git clone git://github.com/pivotal/AndroidIntelliJStarter YourProject # or your fork
     cd YourProject
 
 ### Project Setup Script
-Many files and file contents need to change from AndroidIntelliJStarter to YourProject. We have a 
-script for this:
+`./script/project_setup YourProject` will rename the many files and file contents need changed from 
+AndroidIntelliJStarter to YourProject. 
 
     pivotal$ ./script/project_setup YourProject
 
-Follow the instructions. The output will look like this:
-	
-	pivotal$ ./script/project_setup YourProject
-	Searching: AndroidIntelliJStarter.iml,.idea/.name, [snip... lots of files here]
-	>>> Replaced 'AndroidIntelliJStarter' in .idea/.name with 'YourProject'
-	>>> Replaced 'AndroidIntelliJStarter' in .idea/modules.xml with 'YourProject'
-	>>> Replaced 'AndroidIntelliJStarter' in .idea/runConfigurations/StarterApp.xml with 'YourProject'
-	>>> Replaced 'AndroidIntelliJStarter' in .idea/runConfigurations/Unit_Tests.xml with 'YourProject'
-	>>> Renamed 'AndroidIntelliJStarter.iml' to 'YourProject.iml'
+This will perform the renaming and also run the following sub-scripts. Read on to learn about them.
 
-	!!! Do you want to create a new git repository? 
-	!!! Type 'yes' to back up your .git directory and create a new git repository
-	> yes
-	!!! Moving .git to .git.bak. Delete this if you don't want it.
-	!!! Initializing a new git repository!
-	Initialized empty Git repository in /Users/pivotal/workspace/YourProject/.git/
-	
-	[snip... lots of git output here.]
-	
-	pivotal$
+#### Set Package Name Script
+`script/set_package` will change base Java package structure of this project from 
+`com.example.android.sampleapp` to the provided package name. Leave blank to keep the default.
 
-### New Git Repository Script
-Notice the the output from above `script/project_setup`: 
+    # ./script/set_package
+    > Please provide a package name, such as com.example.yourproject
+    > Leave blank to change this later.
+    > 
 
+### Sub-Scripts
+`script/set_package` will run the following for you, but you might want to run them again or run them later.
+
+#### New Git Repository Script
+`script/init_git_repo` lets you create a new, empty local git repository for YourProject.
+This will remove the history for AndroidIntelliJStarter. 
+
+The current `.git` directory is saved as `.git.bak` if you want to undo this.
+
+    # ./script/init_git_repo
     !!! Do you want to create a new git repository? 
     !!! Type 'yes' to back up your .git directory and create a new git repository
     > 
 
-You can rerun this command if need to: 
+You will still need to add a git remote and push this to some external repository URI.
 
-    ./script/init_git # or ruby script/init_git 
-
-You will still need to push this to some external repository URI.
-
-### Update Android
-Run this:
+#### Update Android
+You might need to occasionally re-run this:
 
     android update project -p .
 
@@ -307,7 +300,6 @@ You can add custom matchers for great-expectations. We are particularly excited 
 3. Regenerate `Expect.java` by running "Add custom great-expectation Matchers by Regenerating Expect.java"
 or execute the `RunnableExpectGenerator.main()` yourself.
 
-
 ## Lots of Jars
 We have added many handy Jars, such as apache commons, google's Guava, the Jackson JSON parsing libraries,
 and more. Check them out in `libs/main/` and `libs/test`-- keep them or delete them.
@@ -317,11 +309,14 @@ These Ruby scripts should make your life easier. Feel free to edit them. They as
 lives in `/usr/bin/ruby` so you might need to edit their `#!/usr/bin/ruby` if yours is different. Alternatively 
 these scripts can be run with ruby explicitly: `ruby script/[the script]`.
 
+Be sure to check out "Project Setup Script", above, for more details on many of these scripts.
+
 - `script/gp` -- "Git Pull" script. This pulls and rebases your project and robolectric.
 - `script/gpp` -- "Git Pull Push" script. Same as script/gp but also runs all tests in robolectric.
 and your project. If they pass it will `git push`.
 - `script/project_setup [YourProject]` -- changes this project from being configured for 
 AndroidIntelliJStarter to YourProject, including a creating a new local git repo if desired.
+- `script/set_package` -- Change the Java package from the default to the provided package name.
 - `script/init_git_repo` -- create a new local git repository. Existing `.git` directory safely moved to `.git.bak`.
 
 ## ant
