@@ -1,13 +1,27 @@
 #!/usr/bin/ruby
+
 require "script/helpers"
+
 def usage
-  puts "Please provide a new ProjectName"
-  puts "Usage: "
-  puts "> setup_project [NewProjectName"
+  puts <<-eos
+  Usage:
+     setup_project <new_project_name> <existing_project_directory>
+
+  Example:
+     setup_project MyAndroidApp /Users/pivotal/workspace/my-android-app
+     
+     This command will copy all of the starter project's files to
+     your my-android-app directory, rename the IntelliJ project to
+     be MyAndroidApp, commit the new files to your project repo, and
+     add robolectric as a git submodule to your project directory.
+     It assumes that your project directory is already a git repo.
+  eos
   exit(1)
 end
 
 new_project_name = ARGV.shift
+project_directory = ARGV.shift
 
-usage unless new_project_name
-project_setup(new_project_name)
+usage unless new_project_name && project_directory
+
+project_setup(new_project_name, project_directory)
