@@ -238,24 +238,18 @@ great-expectations (https://github.com/xian/great-expectations) provides Jasmine
 While the framework is a little rough around the edges, we love this style of expectation assertions; see
 `com.example.android.sampleapp.StarterActivityTestWithGreatExpectations.java`.
 
-## Robolectric-gem (Robolectric Great Expectations Matchers)
-Matcher classes for using great-expectations in Robolectric-powered unit tests.  For example:
+### Robolectric-gem (Robolectric Great Expectations Matchers)
+Robolectric-gem is a library of matcher classes for using great-expectations in Robolectric-powered unit tests.
+For example, it provides a matcher on `View` called `toBeVisible()`:
 
-    expect(view).toBeVisible();
+    TextView titleView = (TextView) activity.findViewById(R.id.title);
+    expect(titleView).toBeVisible();
 
 You can add your own matcher classes too. Add the robolectric-gem repo as a submodule instead of using the jar,
 or keep it as a jar file and add your own matcher classes by subclassing RunnableExpectGenerator and running that
 class to create your own Expect.java in your project.
 
 For more information, see https://github.com/pivotal/robolectric-gem
-
-### Adding Custom Matcher Classes
-You can add custom matchers for great-expectations. We are particularly excited about adding Android matchers.
-
-1. Add your Matcher class. See `com.example.android.sampleapp.test.support.matchers.android.ViewMatcher.java`.
-2. Add your Matcher to the list in `com.example.android.sampleapp.test.support.RunnableExpectGenerator.matcherClasses()`
-3. Regenerate `Expect.java` by running "Add custom great-expectation Matchers by Regenerating Expect.java"
-or execute the `RunnableExpectGenerator.main()` yourself.
 
 ## Lots of Jars
 We have added many handy Jars, such as apache commons, google's Guava, the Jackson JSON parsing libraries,
