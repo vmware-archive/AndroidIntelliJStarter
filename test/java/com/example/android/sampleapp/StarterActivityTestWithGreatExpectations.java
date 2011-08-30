@@ -7,7 +7,8 @@ import org.junit.runner.RunWith;
 
 import java.io.FileNotFoundException;
 
-import static com.example.android.sampleapp.test.support.Expect.expect;
+import static com.pivotallabs.robolectricgem.expect.Expect.expect;
+
 
 @RunWith(RobolectricTestRunner.class)
 public class StarterActivityTestWithGreatExpectations {
