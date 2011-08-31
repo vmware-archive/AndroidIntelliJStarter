@@ -23,5 +23,6 @@ The following are used during testing only, not redistributed as part of any bin
     ASM (core), Copyright (c) 2000-2005 INRIA, France Telecom, http://asm.ow2.org/license.html
     ASM (commons), Copyright (c) 2000-2005 INRIA, France Telecom, http://asm.ow2.org/license.html
     great-expectations, MIT License, https://github.com/xian/great-expectations
+    robolectric-gem, MIT License, https://github.com/pivotal/robolectric-gem
     JUnit, Common Public License - v 1.0, http://www.junit.org/
 
