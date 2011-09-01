@@ -10,6 +10,9 @@ public class JsonEditorTest {
     @Test
     public void exampleOfUsingThisClassToEditJson() throws Exception {
         String json = "[1, 2, {\"a\": [[7, 8], 3, 4]}, 5, 999]";
+        String expectedEditedJson = "[1.5,\"hello\",{\"a\":[[true,8],3,4],\"new_prop\":\"value\"},[\"more_json\"]]";
+
+        // extreme chaining example
         String editedJson = new JsonEditor(json)
                 .set(0, 1.5)
                 .set(1, "hello")
@@ -21,7 +24,19 @@ public class JsonEditorTest {
                 .set(3, new JsonEditor("[\"more_json\"]"))
                 .remove(4)
                 .toJson();
-        expect(editedJson).toEqual("[1.5,\"hello\",{\"a\":[[true,8],3,4],\"new_prop\":\"value\"},[\"more_json\"]]");
+
+        expect(editedJson).toEqual(expectedEditedJson);
+
+        // same example with less chaining
+        JsonEditor e = new JsonEditor(json);
+        e.root().set(0, 1.5);
+        e.root().set(1, "hello");
+        e.root().child(2).set("new_prop", "value");
+        e.root().child(2).child("a").child(0).set(0, true);
+        e.root().set(3, new JsonEditor("[\"more_json\"]"));
+        e.root().remove(4);
+
+        expect(e.toJson()).toEqual(expectedEditedJson);
     }
 
     @Test(expected = JsonEditor.JsonEditorException.class)
