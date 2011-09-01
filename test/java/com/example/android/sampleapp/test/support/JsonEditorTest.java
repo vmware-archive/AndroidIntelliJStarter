@@ -9,16 +9,17 @@ public class JsonEditorTest {
 
     @Test
     public void exampleOfUsingThisClassToEditJson() throws Exception {
-        String json = "[1, 2, {\"a\": [[7, 8], 3, 4]}, 5]";
+        String json = "[1, 2, {\"a\": [[7, 8], 3, 4]}, 5, 999]";
         String editedJson = new JsonEditor(json)
                 .set(0, 1.5)
                 .set(1, "hello")
                 .child(2) // move the current position of the editor to the third child
                 .set("new_prop", "value")
-                .child("a").child(0) // move deeper
+                .child("a").child(0) // move deeper in the tree
                 .set(0, true)
                 .root() // move back to the root node
                 .set(3, new JsonEditor("[\"more_json\"]"))
+                .remove(4)
                 .toJson();
         expect(editedJson).toEqual("[1.5,\"hello\",{\"a\":[[true,8],3,4],\"new_prop\":\"value\"},[\"more_json\"]]");
     }
@@ -295,6 +296,25 @@ public class JsonEditorTest {
     public void objectSetJsonEditor_shouldNotCrash_whenCreatingAPotentialLoopInTheDom() throws Exception {
         JsonEditor editor = new JsonEditor("{\"a\": 0}");
         expect(editor.set("a", editor).toJson()).toEqual("{\"a\":{\"a\":0}}");
+    }
+
+    @Test
+    public void arrayRemove_shouldRemoveTheSpecifiedIndexFromTheArray() throws Exception {
+        JsonEditor editor = new JsonEditor("[0, 1, 2]");
+        expect(editor.remove(1).toJson()).toEqual("[0,2]");
+    }
+
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    public void arrayRemove_shouldThrowException_whenIndexIsOutOfBounds() throws Exception {
+        JsonEditor editor = new JsonEditor("[0, 1, 2]");
+        expect(editor.remove(5).toJson()).toEqual("[0,2]");
+    }
+
+    @Test
+    public void objectRemove_shouldRemoveTheSpecifiedPropertyFromTheObject() throws Exception {
+        JsonEditor editor = new JsonEditor("{\"a\": 0, \"b\": 1}");
+        expect(editor.remove("a").toJson()).toEqual("{\"b\":1}");
+        expect(editor.remove("does not exist").toJson()).toEqual("{\"b\":1}");
     }
 
     @Test

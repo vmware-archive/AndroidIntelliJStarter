@@ -100,6 +100,17 @@ public class JsonEditor {
         return this;
     }
 
+    public JsonEditor remove(int index) {
+        assertArrayHasIndex(index);
+        ((ArrayNode) focusedNode).remove(index);
+        return this;
+    }
+
+    public JsonEditor remove(String propertyName) {
+        ((ObjectNode) focusedNode).remove(propertyName);
+        return this;
+    }
+
     public Number valueAsNumber() {
         if (focusedNode.isNumber()) {
             return focusedNode.getNumberValue();
