@@ -34,13 +34,13 @@ public class JsonEditor {
         return focusedNode.toString();
     }
 
-    public JsonEditor get(int index) {
+    public JsonEditor child(int index) {
         assertArrayHasIndex(index);
         focusedNode = focusedNode.get(index);
         return this;
     }
 
-    public JsonEditor get(String propertyName) {
+    public JsonEditor child(String propertyName) {
         if (!focusedNode.isObject()) {
             throw new NotAnObjectNodeException();
         }
