@@ -166,6 +166,19 @@ public class JsonEditorTest {
     }
 
     @Test
+    public void arraySetInt_shouldSupportChainedCalls_toTraverseTheDomTree() throws Exception {
+        String arrayJson = "[1, 2, 3]";
+
+        JsonEditor editor = new JsonEditor(arrayJson);
+        expect(editor.set(0, 4).get(0).valueAsNumber()).toEqual(4);
+
+        editor = new JsonEditor(arrayJson);
+        editor.set(0, 4).set(1, 5);
+        expect(editor.get(0).valueAsNumber()).toEqual(4);
+        expect(editor.root().get(1).valueAsNumber()).toEqual(5);
+    }
+
+    @Test
     public void arraySetDouble_shouldChangeTheValueAtTheGivenIndexInTheArray() throws Exception {
         JsonEditor editor = new JsonEditor("[1]");
         editor.set(0, 3.66);
@@ -187,28 +200,22 @@ public class JsonEditorTest {
     }
 
     @Test
-    public void arraySetInt_shouldSupportChainedCalls_toTraverseTheDomTree() throws Exception {
-        String arrayJson = "[1, 2, 3]";
-
-        JsonEditor editor = new JsonEditor(arrayJson);
-        expect(editor.set(0, 4).get(0).valueAsNumber()).toEqual(4);
-
-        editor = new JsonEditor(arrayJson);
-        editor.set(0, 4).set(1, 5);
-        expect(editor.get(0).valueAsNumber()).toEqual(4);
-        expect(editor.root().get(1).valueAsNumber()).toEqual(5);
+    public void arraySetJsonEditor_shouldChangeTheValueAtTheGivenIndexInTheArray_basedOnTheCurrentPositionOfTheEditor() throws Exception {
+        JsonEditor editor = new JsonEditor("[1]");
+        editor.set(0, new JsonEditor("[1, [2, 3]]").get(1));
+        expect(editor.get(0).get(1).valueAsNumber()).toEqual(3);
+        expect(editor.root().toJson()).toEqual("[[2,3]]");
     }
 
     @Test
-    public void root_shouldReturnTheEditorBackToTheRootOfTheDomTree() throws Exception {
-        String json = "[1, {\"a\": 2}]";
-        expect(new JsonEditor(json).get(1).get("a").root().get(0).valueAsNumber()).toEqual(1);
+    public void arraySetJsonEditor_shouldNotCrash_whenCreatingAPotentialLoopInTheDom() throws Exception {
+        JsonEditor editor = new JsonEditor("[1]");
+        expect(editor.set(0, editor).toJson()).toEqual("[[1]]");
     }
 
     @Test(expected = JsonEditor.NotAnArrayNodeException.class)
-    public void arraySet_shouldThrowException_whenItIsUsedOnAnObject() throws Exception {
-        String emptyObjectJson = "{}";
-        new JsonEditor(emptyObjectJson).set(0, 2);
+    public void arraySet_shouldThrowException_whenItIsNotUsedOnAnArray() throws Exception {
+        new JsonEditor("{}").set(0, 2);
     }
 
     @Test(expected = ArrayIndexOutOfBoundsException.class)
@@ -217,11 +224,46 @@ public class JsonEditorTest {
         new JsonEditor(emptyArrayJson).set(0, 2);
     }
 
-// TODO: this is what we're aiming for
-//        new JsonEditor(arrayContainingNestedObjectsJson).get(0).get("b").set("c", 67).root().set(1, "new string").toJson();
-//
-//        editor = new JsonEditor(arrayContainingNestedObjectsJson).get(0).get("b").set("c", 67);
-//        editor.set(1, "new string");
-//        editor.toJson();
+    @Test(expected = JsonEditor.NotAnObjectNodeException.class)
+    public void objectSet_shouldThrowException_whenItIsNotUsedOnAnObject() throws Exception {
+        new JsonEditor("[]").set("a", 2);
+    }
 
+    @Test
+    public void objectSetInt_shouldChangeTheValueAtTheGivenPropertyInTheObject() throws Exception {
+        JsonEditor editor = new JsonEditor("{\"a\": 0}");
+        editor.set("a", 3);
+        expect(editor.get("a").valueAsNumber()).toEqual(3);
+    }
+
+    @Test
+    public void objectSetInt_shouldSupportChainedCalls_toTraverseTheDomTree() throws Exception {
+        String objectJson = "{\"a\": 2, \"b\": 3}";
+
+        JsonEditor editor = new JsonEditor(objectJson);
+        expect(editor.set("a", 4).get("a").valueAsNumber()).toEqual(4);
+
+        editor = new JsonEditor(objectJson);
+        editor.set("a", 4).set("b", 5);
+        expect(editor.get("a").valueAsNumber()).toEqual(4);
+        expect(editor.root().get("b").valueAsNumber()).toEqual(5);
+    }
+
+    @Test
+    public void root_shouldReturnTheEditorBackToTheRootOfTheDomTree() throws Exception {
+        String json = "[1, {\"a\": 2}]";
+        expect(new JsonEditor(json).get(1).get("a").root().get(0).valueAsNumber()).toEqual(1);
+    }
+
+    @Test
+    public void toJson_shouldConvertTheCurrentNodeOfTheDomToJson_whenThatNodeIsAnArrayOrObject() throws Exception {
+        String json = "[1, {\"a\": 2}]";
+        expect(new JsonEditor(json).get(1).get("a").root().toJson()).toEqual(json.replace(" ", ""));
+        expect(new JsonEditor(json).get(1).toJson()).toEqual("{\"a\":2}");
+    }
+
+    @Test(expected = JsonEditor.NotAnArrayOrObjectNodeException.class)
+    public void toJson_shouldThrowException_whenTheCurrentNodeIsNotAnArrayOrObject() throws Exception {
+        new JsonEditor("[1, {\"a\": 2}]").get(1).get("a").toJson();
+    }
 }

@@ -7,6 +7,7 @@ import org.codehaus.jackson.node.BooleanNode;
 import org.codehaus.jackson.node.DoubleNode;
 import org.codehaus.jackson.node.IntNode;
 import org.codehaus.jackson.node.LongNode;
+import org.codehaus.jackson.node.ObjectNode;
 import org.codehaus.jackson.node.TextNode;
 
 import java.io.IOException;
@@ -17,18 +18,20 @@ public class JsonEditor {
     private JsonNode focusedNode;
 
     public JsonEditor(String jsonString) {
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            rootNode = mapper.readValue(jsonString, JsonNode.class);
-            focusedNode = rootNode;
-        } catch (IOException e) {
-            throw new JsonEditorException(e);
-        }
+        rootNode = parseJson(jsonString);
+        focusedNode = rootNode;
     }
 
     public JsonEditor root() {
         focusedNode = rootNode;
         return this;
+    }
+
+    public String toJson() {
+        if (!focusedNode.isContainerNode()) {
+            throw new NotAnArrayOrObjectNodeException();
+        }
+        return focusedNode.toString();
     }
 
     public JsonEditor get(int index) {
@@ -48,24 +51,32 @@ public class JsonEditor {
         return this;
     }
 
-    public JsonEditor set(int index, int newValue) {
-        setAtArrayIndex(index, new IntNode(newValue));
+    public JsonEditor set(String propertyName, int newValue) {
+        if (!focusedNode.isObject()) {
+            throw new NotAnObjectNodeException();
+        }
+        ((ObjectNode) focusedNode).put(propertyName, newValue);
         return this;
+    }
+
+    public JsonEditor set(int index, JsonEditor newValueFromCurrentPositionOfEditor) {
+        return setAtArrayIndex(index, parseJson(newValueFromCurrentPositionOfEditor.focusedNode.toString()));
+    }
+
+    public JsonEditor set(int index, int newValue) {
+        return setAtArrayIndex(index, new IntNode(newValue));
     }
 
     public JsonEditor set(int index, long newValue) {
-        setAtArrayIndex(index, new LongNode(newValue));
-        return this;
+        return setAtArrayIndex(index, new LongNode(newValue));
     }
 
     public JsonEditor set(int index, double newValue) {
-        setAtArrayIndex(index, new DoubleNode(newValue));
-        return this;
+        return setAtArrayIndex(index, new DoubleNode(newValue));
     }
 
     public JsonEditor set(int index, boolean newValue) {
-        setAtArrayIndex(index, newValue ? BooleanNode.TRUE : BooleanNode.FALSE);
-        return this;
+        return setAtArrayIndex(index, newValue ? BooleanNode.TRUE : BooleanNode.FALSE);
     }
 
     public JsonEditor set(int index, String newValue) {
@@ -113,13 +124,15 @@ public class JsonEditor {
     public static class NotABooleanNodeException extends JsonEditorException {}
     public static class NotANumericNodeException extends JsonEditorException {}
     public static class NotAStringNodeException extends JsonEditorException {}
+    public static class NotAnArrayOrObjectNodeException extends JsonEditorException {}
     public static class NotAnArrayNodeException extends JsonEditorException {}
     public static class NotAnObjectNodeException extends JsonEditorException {}
     public static class NoSuchPropertyException extends JsonEditorException {}
 
-    private void setAtArrayIndex(int index, JsonNode newNode) {
+    private JsonEditor setAtArrayIndex(int index, JsonNode newNode) {
         assertArrayHasIndex(index);
         ((ArrayNode) focusedNode).set(index, newNode);
+        return this;
     }
 
     private void assertArrayHasIndex(int index) {
@@ -128,6 +141,15 @@ public class JsonEditor {
         }
         if (!focusedNode.has(index)) {
             throw new ArrayIndexOutOfBoundsException();
+        }
+    }
+
+    private JsonNode parseJson(String jsonString) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            return mapper.readValue(jsonString, JsonNode.class);
+        } catch (IOException e) {
+            throw new JsonEditorException(e);
         }
     }
 }
