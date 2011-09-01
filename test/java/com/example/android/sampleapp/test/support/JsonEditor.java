@@ -2,6 +2,12 @@ package com.example.android.sampleapp.test.support;
 
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.node.ArrayNode;
+import org.codehaus.jackson.node.BooleanNode;
+import org.codehaus.jackson.node.DoubleNode;
+import org.codehaus.jackson.node.IntNode;
+import org.codehaus.jackson.node.LongNode;
+import org.codehaus.jackson.node.TextNode;
 
 import java.io.IOException;
 
@@ -20,13 +26,13 @@ public class JsonEditor {
         }
     }
 
+    public JsonEditor root() {
+        focusedNode = rootNode;
+        return this;
+    }
+
     public JsonEditor get(int index) {
-        if (!focusedNode.isArray()) {
-            throw new NotAnArrayNodeException();
-        }
-        if (!focusedNode.has(index)) {
-            throw new ArrayIndexOutOfBoundsException();
-        }
+        assertArrayHasIndex(index);
         focusedNode = focusedNode.get(index);
         return this;
     }
@@ -39,6 +45,31 @@ public class JsonEditor {
             throw new NoSuchPropertyException();
         }
         focusedNode = focusedNode.get(propertyName);
+        return this;
+    }
+
+    public JsonEditor set(int index, int newValue) {
+        setAtArrayIndex(index, new IntNode(newValue));
+        return this;
+    }
+
+    public JsonEditor set(int index, long newValue) {
+        setAtArrayIndex(index, new LongNode(newValue));
+        return this;
+    }
+
+    public JsonEditor set(int index, double newValue) {
+        setAtArrayIndex(index, new DoubleNode(newValue));
+        return this;
+    }
+
+    public JsonEditor set(int index, boolean newValue) {
+        setAtArrayIndex(index, newValue ? BooleanNode.TRUE : BooleanNode.FALSE);
+        return this;
+    }
+
+    public JsonEditor set(int index, String newValue) {
+        setAtArrayIndex(index, new TextNode(newValue));
         return this;
     }
 
@@ -78,10 +109,25 @@ public class JsonEditor {
             super(throwable);
         }
     }
+    
     public static class NotABooleanNodeException extends JsonEditorException {}
     public static class NotANumericNodeException extends JsonEditorException {}
     public static class NotAStringNodeException extends JsonEditorException {}
     public static class NotAnArrayNodeException extends JsonEditorException {}
     public static class NotAnObjectNodeException extends JsonEditorException {}
     public static class NoSuchPropertyException extends JsonEditorException {}
+
+    private void setAtArrayIndex(int index, JsonNode newNode) {
+        assertArrayHasIndex(index);
+        ((ArrayNode) focusedNode).set(index, newNode);
+    }
+
+    private void assertArrayHasIndex(int index) {
+        if (!focusedNode.isArray()) {
+            throw new NotAnArrayNodeException();
+        }
+        if (!focusedNode.has(index)) {
+            throw new ArrayIndexOutOfBoundsException();
+        }
+    }
 }

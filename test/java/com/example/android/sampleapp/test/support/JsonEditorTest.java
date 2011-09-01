@@ -140,17 +140,88 @@ public class JsonEditorTest {
     }
 
     @Test
-    public void isNullValue_should_checkIfTheNodeIsANullNode() throws Exception {
+    public void isNullValue_shouldCheckIfTheNodeIsANullNode() throws Exception {
         String arrayJson = "[null, 1]";
         expect(new JsonEditor(arrayJson).get(0).isNullValue()).toBeTrue();
         expect(new JsonEditor(arrayJson).get(1).isNullValue()).toBeFalse();
     }
 
+    @Test
+    public void arraySetBoolean_shouldChangeTheValueAtTheGivenIndexInTheArray() throws Exception {
+        JsonEditor editor = new JsonEditor("[1]");
+        expect(editor.root().get(0).valueAsNumber()).toEqual(1);
+
+        editor.root().set(0, true);
+        expect(editor.root().get(0).valueAsBoolean()).toBeTrue();
+
+        editor.root().set(0, false);
+        expect(editor.root().get(0).valueAsBoolean()).toBeFalse();
+    }
+
+    @Test
+    public void arraySetInt_shouldChangeTheValueAtTheGivenIndexInTheArray() throws Exception {
+        JsonEditor editor = new JsonEditor("[1]");
+        editor.set(0, 3);
+        expect(editor.get(0).valueAsNumber()).toEqual(3);
+    }
+
+    @Test
+    public void arraySetDouble_shouldChangeTheValueAtTheGivenIndexInTheArray() throws Exception {
+        JsonEditor editor = new JsonEditor("[1]");
+        editor.set(0, 3.66);
+        expect(editor.get(0).valueAsNumber()).toEqual(3.66);
+    }
+
+    @Test
+    public void arraySetLong_shouldChangeTheValueAtTheGivenIndexInTheArray() throws Exception {
+        JsonEditor editor = new JsonEditor("[1]");
+        editor.set(0, 344L);
+        expect(editor.get(0).valueAsNumber()).toEqual(344L);
+    }
+
+    @Test
+    public void arraySetString_shouldChangeTheValueAtTheGivenIndexInTheArray() throws Exception {
+        JsonEditor editor = new JsonEditor("[1]");
+        editor.set(0, "new value");
+        expect(editor.get(0).valueAsString()).toEqual("new value");
+    }
+
+    @Test
+    public void arraySetInt_shouldSupportChainedCalls_toTraverseTheDomTree() throws Exception {
+        String arrayJson = "[1, 2, 3]";
+
+        JsonEditor editor = new JsonEditor(arrayJson);
+        expect(editor.set(0, 4).get(0).valueAsNumber()).toEqual(4);
+
+        editor = new JsonEditor(arrayJson);
+        editor.set(0, 4).set(1, 5);
+        expect(editor.get(0).valueAsNumber()).toEqual(4);
+        expect(editor.root().get(1).valueAsNumber()).toEqual(5);
+    }
+
+    @Test
+    public void root_shouldReturnTheEditorBackToTheRootOfTheDomTree() throws Exception {
+        String json = "[1, {\"a\": 2}]";
+        expect(new JsonEditor(json).get(1).get("a").root().get(0).valueAsNumber()).toEqual(1);
+    }
+
+    @Test(expected = JsonEditor.NotAnArrayNodeException.class)
+    public void arraySet_shouldThrowException_whenItIsUsedOnAnObject() throws Exception {
+        String emptyObjectJson = "{}";
+        new JsonEditor(emptyObjectJson).set(0, 2);
+    }
+
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    public void arraySet_shouldThrowException_whenArrayIsEmpty() throws Exception {
+        String emptyArrayJson = "[]";
+        new JsonEditor(emptyArrayJson).set(0, 2);
+    }
+
 // TODO: this is what we're aiming for
-//        new JsonEditor(arrayContainingNestedObjectsJson).get(0).get("b").set("c", 67).root().setAt(1, "new string").toJson();
+//        new JsonEditor(arrayContainingNestedObjectsJson).get(0).get("b").set("c", 67).root().set(1, "new string").toJson();
 //
 //        editor = new JsonEditor(arrayContainingNestedObjectsJson).get(0).get("b").set("c", 67);
-//        editor.setAt(1, "new string");
+//        editor.set(1, "new string");
 //        editor.toJson();
 
 }
