@@ -7,6 +7,22 @@ import static com.pivotallabs.robolectricgem.expect.Expect.expect;
 
 public class JsonEditorTest {
 
+    @Test
+    public void exampleOfUsingThisClassToEditJson() throws Exception {
+        String json = "[1, 2, {\"a\": [[7, 8], 3, 4]}, 5]";
+        String editedJson = new JsonEditor(json)
+                .set(0, 1.5)
+                .set(1, "hello")
+                .child(2) // move the current position of the editor to the third child
+                .set("new_prop", "value")
+                .child("a").child(0) // move deeper
+                .set(0, true)
+                .root() // move back to the root node
+                .set(3, new JsonEditor("[\"more_json\"]"))
+                .toJson();
+        expect(editedJson).toEqual("[1.5,\"hello\",{\"a\":[[true,8],3,4],\"new_prop\":\"value\"},[\"more_json\"]]");
+    }
+
     @Test(expected = JsonEditor.JsonEditorException.class)
     public void constructor_shouldThrowException_whenJsonIsInvalid() throws Exception {
         String invalidJson = "this is not valid json";
@@ -231,9 +247,7 @@ public class JsonEditorTest {
 
     @Test
     public void objectSetInt_shouldChangeTheValueAtTheGivenPropertyInTheObject() throws Exception {
-        JsonEditor editor = new JsonEditor("{\"a\": 0}");
-        editor.set("a", 3);
-        expect(editor.child("a").valueAsNumber()).toEqual(3);
+        expect(new JsonEditor("{\"a\": 0}").set("a", 3).child("a").valueAsNumber()).toEqual(3);
     }
 
     @Test
@@ -247,6 +261,40 @@ public class JsonEditorTest {
         editor.set("a", 4).set("b", 5);
         expect(editor.child("a").valueAsNumber()).toEqual(4);
         expect(editor.root().child("b").valueAsNumber()).toEqual(5);
+    }
+
+    @Test
+    public void objectSetLong_shouldChangeTheValueAtTheGivenPropertyInTheObject() throws Exception {
+        expect(new JsonEditor("{\"a\": 0}").set("a", 3L).child("a").valueAsNumber()).toEqual(3L);
+    }
+
+    @Test
+    public void objectSetBoolean_shouldChangeTheValueAtTheGivenPropertyInTheObject() throws Exception {
+        expect(new JsonEditor("{\"a\": 0}").set("a", false).child("a").valueAsBoolean()).toBeFalse();
+    }
+
+    @Test
+    public void objectSetDouble_shouldChangeTheValueAtTheGivenPropertyInTheObject() throws Exception {
+        expect(new JsonEditor("{\"a\": 0}").set("a", 9.55).child("a").valueAsNumber()).toEqual(9.55);
+    }
+
+    @Test
+    public void objectSetString_shouldChangeTheValueAtTheGivenPropertyInTheObject() throws Exception {
+        expect(new JsonEditor("{\"a\": 0}").set("a", "new value").child("a").valueAsString()).toEqual("new value");
+    }
+
+    @Test
+    public void objectSetJsonEditor_shouldChangeTheValueAtTheGivenIndexInTheArray_basedOnTheCurrentPositionOfTheEditor() throws Exception {
+        JsonEditor editor = new JsonEditor("{\"a\": 0}");
+        editor.set("a", new JsonEditor("[1, [2, 3]]").child(1));
+        expect(editor.child("a").child(1).valueAsNumber()).toEqual(3);
+        expect(editor.root().toJson()).toEqual("{\"a\":[2,3]}");
+    }
+
+    @Test
+    public void objectSetJsonEditor_shouldNotCrash_whenCreatingAPotentialLoopInTheDom() throws Exception {
+        JsonEditor editor = new JsonEditor("{\"a\": 0}");
+        expect(editor.set("a", editor).toJson()).toEqual("{\"a\":{\"a\":0}}");
     }
 
     @Test

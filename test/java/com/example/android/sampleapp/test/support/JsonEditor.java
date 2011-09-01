@@ -51,12 +51,28 @@ public class JsonEditor {
         return this;
     }
 
+    public JsonEditor set(String propertyName, JsonEditor newValueFromCurrentPositionOfEditor) {
+        return setValueOfObjectProperty(propertyName, parseJson(newValueFromCurrentPositionOfEditor.focusedNode.toString()));
+    }
+
     public JsonEditor set(String propertyName, int newValue) {
-        if (!focusedNode.isObject()) {
-            throw new NotAnObjectNodeException();
-        }
-        ((ObjectNode) focusedNode).put(propertyName, newValue);
-        return this;
+        return setValueOfObjectProperty(propertyName, new IntNode(newValue));
+    }
+
+    public JsonEditor set(String propertyName, long newValue) {
+        return setValueOfObjectProperty(propertyName, new LongNode(newValue));
+    }
+
+    public JsonEditor set(String propertyName, double newValue) {
+        return setValueOfObjectProperty(propertyName, new DoubleNode(newValue));
+    }
+
+    public JsonEditor set(String propertyName, boolean newValue) {
+        return setValueOfObjectProperty(propertyName, booleanNodeForValue(newValue));
+    }
+
+    public JsonEditor set(String propertyName, String newValue) {
+        return setValueOfObjectProperty(propertyName, new TextNode(newValue));
     }
 
     public JsonEditor set(int index, JsonEditor newValueFromCurrentPositionOfEditor) {
@@ -76,7 +92,7 @@ public class JsonEditor {
     }
 
     public JsonEditor set(int index, boolean newValue) {
-        return setAtArrayIndex(index, newValue ? BooleanNode.TRUE : BooleanNode.FALSE);
+        return setAtArrayIndex(index, booleanNodeForValue(newValue));
     }
 
     public JsonEditor set(int index, String newValue) {
@@ -135,6 +151,14 @@ public class JsonEditor {
         return this;
     }
 
+    private JsonEditor setValueOfObjectProperty(String propertyName, JsonNode newNode) {
+        if (!focusedNode.isObject()) {
+            throw new NotAnObjectNodeException();
+        }
+        ((ObjectNode) focusedNode).put(propertyName, newNode);
+        return this;
+    }
+
     private void assertArrayHasIndex(int index) {
         if (!focusedNode.isArray()) {
             throw new NotAnArrayNodeException();
@@ -151,5 +175,9 @@ public class JsonEditor {
         } catch (IOException e) {
             throw new JsonEditorException(e);
         }
+    }
+
+    private BooleanNode booleanNodeForValue(boolean newValue) {
+        return newValue ? BooleanNode.TRUE : BooleanNode.FALSE;
     }
 }
