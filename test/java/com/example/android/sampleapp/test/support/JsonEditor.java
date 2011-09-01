@@ -47,6 +47,30 @@ public class JsonEditor {
         return this;
     }
 
+    public JsonEditor set(String propertyName, JsonEditor newValueFromCurrentPositionOfEditor) {
+        return setValueOfObjectProperty(propertyName, parseJson(newValueFromCurrentPositionOfEditor.focusedNode.toString()));
+    }
+
+    public JsonEditor set(String propertyName, int newValue) {
+        return setValueOfObjectProperty(propertyName, new IntNode(newValue));
+    }
+
+    public JsonEditor set(String propertyName, long newValue) {
+        return setValueOfObjectProperty(propertyName, new LongNode(newValue));
+    }
+
+    public JsonEditor set(String propertyName, double newValue) {
+        return setValueOfObjectProperty(propertyName, new DoubleNode(newValue));
+    }
+
+    public JsonEditor set(String propertyName, boolean newValue) {
+        return setValueOfObjectProperty(propertyName, booleanNodeForValue(newValue));
+    }
+
+    public JsonEditor set(String propertyName, String newValue) {
+        return setValueOfObjectProperty(propertyName, new TextNode(newValue));
+    }
+
     public JsonEditor put(String propertyName, JsonEditor newValueFromCurrentPositionOfEditor) {
         return putValueOfObjectProperty(propertyName, parseJson(newValueFromCurrentPositionOfEditor.focusedNode.toString()));
     }
@@ -184,12 +208,12 @@ public class JsonEditor {
         return this;
     }
 
-//    private JsonEditor setValueOfObjectProperty(String propertyName, JsonNode newNode) {
-//        assertNodeIsObjectNode();
-//        assertObjectNodeHasProperty(propertyName);
-//        putPropertyOnObjectNode(propertyName, newNode);
-//        return this;
-//    }
+    private JsonEditor setValueOfObjectProperty(String propertyName, JsonNode newNode) {
+        assertNodeIsObjectNode();
+        assertObjectNodeHasProperty(propertyName);
+        putPropertyOnObjectNode(propertyName, newNode);
+        return this;
+    }
 
     private void putPropertyOnObjectNode(String propertyName, JsonNode newNode) {
         ((ObjectNode) focusedNode).put(propertyName, newNode);
