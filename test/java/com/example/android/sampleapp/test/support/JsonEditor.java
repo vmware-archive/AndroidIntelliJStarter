@@ -35,14 +35,13 @@ public class JsonEditor {
     }
 
     public JsonEditor child(int index) {
-        assertArrayHasIndex(index);
+        assertNodeIsArrayNodeAndHasIndex(index);
         focusedNode = focusedNode.get(index);
         return this;
     }
 
     public JsonEditor child(String propertyName) {
-        assertNodeIsObjectNode();
-        assertObjectNodeHasProperty(propertyName);
+        assertNodeIsObjectNodeAndHasProperty(propertyName);
         focusedNode = focusedNode.get(propertyName);
         return this;
     }
@@ -120,7 +119,7 @@ public class JsonEditor {
     }
 
     public JsonEditor remove(int index) {
-        assertArrayHasIndex(index);
+        assertNodeIsArrayNodeAndHasIndex(index);
         ((ArrayNode) focusedNode).remove(index);
         return this;
     }
@@ -159,23 +158,23 @@ public class JsonEditor {
     }
 
     public static class JsonEditorException extends RuntimeException {
+
         public JsonEditorException() {
         }
-
         public JsonEditorException(Throwable throwable) {
             super(throwable);
         }
+
     }
-    
     public static class NotABooleanNodeException extends JsonEditorException {}
+
     public static class NotANumericNodeException extends JsonEditorException {}
     public static class NotAStringNodeException extends JsonEditorException {}
     public static class NotAnArrayOrObjectNodeException extends JsonEditorException {}
     public static class NotAnArrayNodeException extends JsonEditorException {}
     public static class NotAnObjectNodeException extends JsonEditorException {}
     public static class NoSuchPropertyException extends JsonEditorException {}
-
-    private void assertArrayHasIndex(int index) {
+    private void assertNodeIsArrayNodeAndHasIndex(int index) {
         if (!focusedNode.isArray()) {
             throw new NotAnArrayNodeException();
         }
@@ -196,8 +195,13 @@ public class JsonEditor {
         }
     }
 
+    private void assertNodeIsObjectNodeAndHasProperty(String propertyName) {
+        assertNodeIsObjectNode();
+        assertObjectNodeHasProperty(propertyName);
+    }
+
     private JsonEditor setAtArrayIndex(int index, JsonNode newNode) {
-        assertArrayHasIndex(index);
+        assertNodeIsArrayNodeAndHasIndex(index);
         ((ArrayNode) focusedNode).set(index, newNode);
         return this;
     }
@@ -209,8 +213,7 @@ public class JsonEditor {
     }
 
     private JsonEditor setValueOfObjectProperty(String propertyName, JsonNode newNode) {
-        assertNodeIsObjectNode();
-        assertObjectNodeHasProperty(propertyName);
+        assertNodeIsObjectNodeAndHasProperty(propertyName);
         putPropertyOnObjectNode(propertyName, newNode);
         return this;
     }
