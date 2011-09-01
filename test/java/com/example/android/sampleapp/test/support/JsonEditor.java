@@ -41,38 +41,34 @@ public class JsonEditor {
     }
 
     public JsonEditor child(String propertyName) {
-        if (!focusedNode.isObject()) {
-            throw new NotAnObjectNodeException();
-        }
-        if (!focusedNode.has(propertyName)) {
-            throw new NoSuchPropertyException();
-        }
+        assertNodeIsObjectNode();
+        assertObjectNodeHasProperty(propertyName);
         focusedNode = focusedNode.get(propertyName);
         return this;
     }
 
-    public JsonEditor set(String propertyName, JsonEditor newValueFromCurrentPositionOfEditor) {
-        return setValueOfObjectProperty(propertyName, parseJson(newValueFromCurrentPositionOfEditor.focusedNode.toString()));
+    public JsonEditor put(String propertyName, JsonEditor newValueFromCurrentPositionOfEditor) {
+        return putValueOfObjectProperty(propertyName, parseJson(newValueFromCurrentPositionOfEditor.focusedNode.toString()));
     }
 
-    public JsonEditor set(String propertyName, int newValue) {
-        return setValueOfObjectProperty(propertyName, new IntNode(newValue));
+    public JsonEditor put(String propertyName, int newValue) {
+        return putValueOfObjectProperty(propertyName, new IntNode(newValue));
     }
 
-    public JsonEditor set(String propertyName, long newValue) {
-        return setValueOfObjectProperty(propertyName, new LongNode(newValue));
+    public JsonEditor put(String propertyName, long newValue) {
+        return putValueOfObjectProperty(propertyName, new LongNode(newValue));
     }
 
-    public JsonEditor set(String propertyName, double newValue) {
-        return setValueOfObjectProperty(propertyName, new DoubleNode(newValue));
+    public JsonEditor put(String propertyName, double newValue) {
+        return putValueOfObjectProperty(propertyName, new DoubleNode(newValue));
     }
 
-    public JsonEditor set(String propertyName, boolean newValue) {
-        return setValueOfObjectProperty(propertyName, booleanNodeForValue(newValue));
+    public JsonEditor put(String propertyName, boolean newValue) {
+        return putValueOfObjectProperty(propertyName, booleanNodeForValue(newValue));
     }
 
-    public JsonEditor set(String propertyName, String newValue) {
-        return setValueOfObjectProperty(propertyName, new TextNode(newValue));
+    public JsonEditor put(String propertyName, String newValue) {
+        return putValueOfObjectProperty(propertyName, new TextNode(newValue));
     }
 
     public JsonEditor set(int index, JsonEditor newValueFromCurrentPositionOfEditor) {
@@ -96,8 +92,7 @@ public class JsonEditor {
     }
 
     public JsonEditor set(int index, String newValue) {
-        setAtArrayIndex(index, new TextNode(newValue));
-        return this;
+        return setAtArrayIndex(index, new TextNode(newValue));
     }
 
     public JsonEditor remove(int index) {
@@ -156,20 +151,6 @@ public class JsonEditor {
     public static class NotAnObjectNodeException extends JsonEditorException {}
     public static class NoSuchPropertyException extends JsonEditorException {}
 
-    private JsonEditor setAtArrayIndex(int index, JsonNode newNode) {
-        assertArrayHasIndex(index);
-        ((ArrayNode) focusedNode).set(index, newNode);
-        return this;
-    }
-
-    private JsonEditor setValueOfObjectProperty(String propertyName, JsonNode newNode) {
-        if (!focusedNode.isObject()) {
-            throw new NotAnObjectNodeException();
-        }
-        ((ObjectNode) focusedNode).put(propertyName, newNode);
-        return this;
-    }
-
     private void assertArrayHasIndex(int index) {
         if (!focusedNode.isArray()) {
             throw new NotAnArrayNodeException();
@@ -179,6 +160,45 @@ public class JsonEditor {
         }
     }
 
+    private void assertNodeIsObjectNode() {
+        if (!focusedNode.isObject()) {
+            throw new NotAnObjectNodeException();
+        }
+    }
+
+    private void assertObjectNodeHasProperty(String propertyName) {
+        if (!focusedNode.has(propertyName)) {
+            throw new NoSuchPropertyException();
+        }
+    }
+
+    private JsonEditor setAtArrayIndex(int index, JsonNode newNode) {
+        assertArrayHasIndex(index);
+        ((ArrayNode) focusedNode).set(index, newNode);
+        return this;
+    }
+
+    private JsonEditor putValueOfObjectProperty(String propertyName, JsonNode newNode) {
+        assertNodeIsObjectNode();
+        putPropertyOnObjectNode(propertyName, newNode);
+        return this;
+    }
+
+//    private JsonEditor setValueOfObjectProperty(String propertyName, JsonNode newNode) {
+//        assertNodeIsObjectNode();
+//        assertObjectNodeHasProperty(propertyName);
+//        putPropertyOnObjectNode(propertyName, newNode);
+//        return this;
+//    }
+
+    private void putPropertyOnObjectNode(String propertyName, JsonNode newNode) {
+        ((ObjectNode) focusedNode).put(propertyName, newNode);
+    }
+
+    private BooleanNode booleanNodeForValue(boolean newValue) {
+        return newValue ? BooleanNode.TRUE : BooleanNode.FALSE;
+    }
+
     private JsonNode parseJson(String jsonString) {
         try {
             ObjectMapper mapper = new ObjectMapper();
@@ -186,9 +206,5 @@ public class JsonEditor {
         } catch (IOException e) {
             throw new JsonEditorException(e);
         }
-    }
-
-    private BooleanNode booleanNodeForValue(boolean newValue) {
-        return newValue ? BooleanNode.TRUE : BooleanNode.FALSE;
     }
 }

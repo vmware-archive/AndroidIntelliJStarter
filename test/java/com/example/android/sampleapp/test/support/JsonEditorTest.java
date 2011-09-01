@@ -17,7 +17,7 @@ public class JsonEditorTest {
                 .set(0, 1.5)
                 .set(1, "hello")
                 .child(2) // move the current position of the editor to the third child
-                .set("new_prop", "value")
+                .put("new_prop", "value")
                 .child("a").child(0) // move deeper in the tree
                 .set(0, true)
                 .root() // move back to the root node
@@ -31,7 +31,7 @@ public class JsonEditorTest {
         JsonEditor e = new JsonEditor(json);
         e.root().set(0, 1.5);
         e.root().set(1, "hello");
-        e.root().child(2).set("new_prop", "value");
+        e.root().child(2).put("new_prop", "value");
         e.root().child(2).child("a").child(0).set(0, true);
         e.root().set(3, new JsonEditor("[\"more_json\"]"));
         e.root().remove(4);
@@ -257,60 +257,60 @@ public class JsonEditorTest {
     }
 
     @Test(expected = JsonEditor.NotAnObjectNodeException.class)
-    public void objectSet_shouldThrowException_whenItIsNotUsedOnAnObject() throws Exception {
-        new JsonEditor("[]").set("a", 2);
+    public void objectPut_shouldThrowException_whenItIsNotUsedOnAnObject() throws Exception {
+        new JsonEditor("[]").put("a", 2);
     }
 
     @Test
-    public void objectSetInt_shouldChangeTheValueAtTheGivenPropertyInTheObject() throws Exception {
-        expect(new JsonEditor("{\"a\": 0}").set("a", 3).child("a").valueAsNumber()).toEqual(3);
+    public void objectPutInt_shouldChangeTheValueAtTheGivenPropertyInTheObject() throws Exception {
+        expect(new JsonEditor("{\"a\": 0}").put("a", 3).child("a").valueAsNumber()).toEqual(3);
     }
 
     @Test
-    public void objectSetInt_shouldSupportChainedCalls_toTraverseTheDomTree() throws Exception {
+    public void objectPutInt_shouldSupportChainedCalls_toTraverseTheDomTree() throws Exception {
         String objectJson = "{\"a\": 2, \"b\": 3}";
 
         JsonEditor editor = new JsonEditor(objectJson);
-        expect(editor.set("a", 4).child("a").valueAsNumber()).toEqual(4);
+        expect(editor.put("a", 4).child("a").valueAsNumber()).toEqual(4);
 
         editor = new JsonEditor(objectJson);
-        editor.set("a", 4).set("b", 5);
+        editor.put("a", 4).put("b", 5);
         expect(editor.child("a").valueAsNumber()).toEqual(4);
         expect(editor.root().child("b").valueAsNumber()).toEqual(5);
     }
 
     @Test
-    public void objectSetLong_shouldChangeTheValueAtTheGivenPropertyInTheObject() throws Exception {
-        expect(new JsonEditor("{\"a\": 0}").set("a", 3L).child("a").valueAsNumber()).toEqual(3L);
+    public void objectPutLong_shouldChangeTheValueAtTheGivenPropertyInTheObject() throws Exception {
+        expect(new JsonEditor("{\"a\": 0}").put("a", 3L).child("a").valueAsNumber()).toEqual(3L);
     }
 
     @Test
-    public void objectSetBoolean_shouldChangeTheValueAtTheGivenPropertyInTheObject() throws Exception {
-        expect(new JsonEditor("{\"a\": 0}").set("a", false).child("a").valueAsBoolean()).toBeFalse();
+    public void objectPutBoolean_shouldChangeTheValueAtTheGivenPropertyInTheObject() throws Exception {
+        expect(new JsonEditor("{\"a\": 0}").put("a", false).child("a").valueAsBoolean()).toBeFalse();
     }
 
     @Test
-    public void objectSetDouble_shouldChangeTheValueAtTheGivenPropertyInTheObject() throws Exception {
-        expect(new JsonEditor("{\"a\": 0}").set("a", 9.55).child("a").valueAsNumber()).toEqual(9.55);
+    public void objectPutDouble_shouldChangeTheValueAtTheGivenPropertyInTheObject() throws Exception {
+        expect(new JsonEditor("{\"a\": 0}").put("a", 9.55).child("a").valueAsNumber()).toEqual(9.55);
     }
 
     @Test
-    public void objectSetString_shouldChangeTheValueAtTheGivenPropertyInTheObject() throws Exception {
-        expect(new JsonEditor("{\"a\": 0}").set("a", "new value").child("a").valueAsString()).toEqual("new value");
+    public void objectPutString_shouldChangeTheValueAtTheGivenPropertyInTheObject() throws Exception {
+        expect(new JsonEditor("{\"a\": 0}").put("a", "new value").child("a").valueAsString()).toEqual("new value");
     }
 
     @Test
-    public void objectSetJsonEditor_shouldChangeTheValueAtTheGivenIndexInTheArray_basedOnTheCurrentPositionOfTheEditor() throws Exception {
+    public void objectPutJsonEditor_shouldChangeTheValueAtTheGivenPropertyInTheObject_basedOnTheFocusedNodeOfTheEditor() throws Exception {
         JsonEditor editor = new JsonEditor("{\"a\": 0}");
-        editor.set("a", new JsonEditor("[1, [2, 3]]").child(1));
+        editor.put("a", new JsonEditor("[1, [2, 3]]").child(1));
         expect(editor.child("a").child(1).valueAsNumber()).toEqual(3);
         expect(editor.root().toJson()).toEqual("{\"a\":[2,3]}");
     }
 
     @Test
-    public void objectSetJsonEditor_shouldNotCrash_whenCreatingAPotentialLoopInTheDom() throws Exception {
+    public void objectPutJsonEditor_shouldNotCrash_whenCreatingAPotentialLoopInTheDom() throws Exception {
         JsonEditor editor = new JsonEditor("{\"a\": 0}");
-        expect(editor.set("a", editor).toJson()).toEqual("{\"a\":{\"a\":0}}");
+        expect(editor.put("a", editor).toJson()).toEqual("{\"a\":{\"a\":0}}");
     }
 
     @Test
