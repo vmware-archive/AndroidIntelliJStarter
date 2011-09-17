@@ -42,26 +42,22 @@ public class JsonEditorTest {
 
     @Test(expected = JsonEditor.JsonEditorException.class)
     public void constructor_shouldThrowException_whenJsonIsInvalid() throws Exception {
-        String invalidJson = "this is not valid json";
-        new JsonEditor(invalidJson);
+        new JsonEditor("this is not valid json");
     }
 
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void arrayChild_shouldThrowException_whenArrayIsEmpty() throws Exception {
-        String emptyArrayJson = "[]";
-        new JsonEditor(emptyArrayJson).child(0);
+        new JsonEditor("[]").child(0);
     }
 
     @Test(expected = JsonEditor.NotAnArrayNodeException.class)
     public void arrayChild_shouldThrowException_whenItIsUsedOnAnObject() throws Exception {
-        String emptyObjectJson = "{}";
-        new JsonEditor(emptyObjectJson).child(0);
+        new JsonEditor("{}").child(0);
     }
 
     @Test(expected = JsonEditor.NotAnArrayNodeException.class)
     public void arrayChild_shouldThrowException_whenItIsUsedOnABasicDataType() throws Exception {
-        String arrayJson = "[1]";
-        new JsonEditor(arrayJson).child(0).child(0);
+        new JsonEditor("[1]").child(0).child(0);
     }
 
     @Test
@@ -84,20 +80,17 @@ public class JsonEditorTest {
 
     @Test(expected = JsonEditor.NotAnObjectNodeException.class)
     public void objectChild_shouldThrowException_whenNodeIsNotAnObject() throws Exception {
-        String emptyArrayJson = "[]";
-        new JsonEditor(emptyArrayJson).child("property_name");
+        new JsonEditor("[]").child("property_name");
     }
 
     @Test(expected = JsonEditor.NoSuchPropertyException.class)
     public void objectChild_shouldThrowException_whenPropertyDoesNotExistOnObject() throws Exception {
-        String objectJson = "{\"a\": 1}";
-        new JsonEditor(objectJson).child("this property does not exist");
+        new JsonEditor("{\"a\": 1}").child("this property does not exist");
     }
 
     @Test
     public void objectChild_shouldMoveTheCurrentNodeToTheValueOfThatPropertyOfTheObject() throws Exception {
-        String objectJson = "{\"a\": 1}";
-        expect(new JsonEditor(objectJson).child("a").valueAsNumber()).toEqual(1);
+        expect(new JsonEditor("{\"a\": 1}").child("a").valueAsNumber()).toEqual(1);
     }
 
     @Test
@@ -124,14 +117,12 @@ public class JsonEditorTest {
 
     @Test(expected = JsonEditor.NotANumericNodeException.class)
     public void valueAsNumber_shouldThrowException_whenTheNodeIsNotANumericNode() throws Exception {
-        String arrayJson = "[false]";
-        new JsonEditor(arrayJson).child(0).valueAsNumber();
+        new JsonEditor("[false]").child(0).valueAsNumber();
     }
 
     @Test(expected = JsonEditor.NotANumericNodeException.class)
     public void valueAsNumber_shouldThrowException_whenTheNodeIsANullNode() throws Exception {
-        String arrayJson = "[null]";
-        new JsonEditor(arrayJson).child(0).valueAsNumber();
+        new JsonEditor("[null]").child(0).valueAsNumber();
     }
 
     @Test
@@ -143,14 +134,12 @@ public class JsonEditorTest {
 
     @Test(expected = JsonEditor.NotABooleanNodeException.class)
     public void valueAsBoolean_shouldThrowException_whenTheNodeIsNotABooleanNode() throws Exception {
-        String arrayJson = "[1]";
-        new JsonEditor(arrayJson).child(0).valueAsBoolean();
+        new JsonEditor("[1]").child(0).valueAsBoolean();
     }
 
     @Test(expected = JsonEditor.NotABooleanNodeException.class)
     public void valueAsBoolean_shouldThrowException_whenTheNodeIsANullNode() throws Exception {
-        String arrayJson = "[null]";
-        new JsonEditor(arrayJson).child(0).valueAsBoolean();
+        new JsonEditor("[null]").child(0).valueAsBoolean();
     }
 
     @Test
@@ -162,14 +151,12 @@ public class JsonEditorTest {
 
     @Test(expected = JsonEditor.NotAStringNodeException.class)
     public void valueAsString_shouldThrowException_whenTheNodeIsNotAStringNode() throws Exception {
-        String arrayJson = "[1]";
-        new JsonEditor(arrayJson).child(0).valueAsString();
+        new JsonEditor("[1]").child(0).valueAsString();
     }
 
     @Test(expected = JsonEditor.NotAStringNodeException.class)
     public void valueAsString_shouldThrowException_whenTheNodeIsANullNode() throws Exception {
-        String arrayJson = "[null]";
-        new JsonEditor(arrayJson).child(0).valueAsString();
+        new JsonEditor("[null]").child(0).valueAsString();
     }
 
     @Test
@@ -253,8 +240,7 @@ public class JsonEditorTest {
 
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void arraySet_shouldThrowException_whenArrayIsEmpty() throws Exception {
-        String emptyArrayJson = "[]";
-        new JsonEditor(emptyArrayJson).set(0, 2);
+        new JsonEditor("[]").set(0, 2);
     }
 
     @Test(expected = JsonEditor.NotAnObjectNodeException.class)
@@ -396,7 +382,7 @@ public class JsonEditorTest {
     @Test
     public void objectPutJsonEditor_shouldPutTheValueAtTheGivenPropertyInTheObject_basedOnTheFocusedNodeOfTheEditor() throws Exception {
         JsonEditor editor = new JsonEditor("{\"a\": 0}");
-        
+
         editor.put("a", new JsonEditor("[1, [2, 3]]").child(1));
         expect(editor.child("a").child(1).valueAsNumber()).toEqual(3);
         expect(editor.root().toJson()).toEqual("{\"a\":[2,3]}");
@@ -405,7 +391,7 @@ public class JsonEditorTest {
         editor.put("no such property", new JsonEditor("[111, [2222, 3333]]").child(1));
         expect(editor.child("no such property").child(0).valueAsNumber()).toEqual(2222);
         expect(editor.root().toJson()).toEqual("{\"a\":0,\"no such property\":[2222,3333]}");
-        
+
     }
 
     @Test
@@ -450,4 +436,99 @@ public class JsonEditorTest {
     public void toJson_shouldThrowException_whenTheCurrentNodeIsNotAnArrayOrObject() throws Exception {
         new JsonEditor("[1, {\"a\": 2}]").child(1).child("a").toJson();
     }
+
+    @Test
+    public void arrayAppendInt_shouldAddAnElementToTheEndOfAnArray() {
+        JsonEditor editor = new JsonEditor("{\"a\": [1, 2]}");
+        expect(editor.child("a").append(42).root().toJson()).toEqual("{\"a\":[1,2,42]}");
+    }
+
+    @Test
+    public void arrayAppendString_shouldAddAnElementToTheEndOfAnArray() {
+        JsonEditor editor = new JsonEditor("{\"a\": [1, 2]}");
+        expect(editor.child("a").append("foo").root().toJson()).toEqual("{\"a\":[1,2,\"foo\"]}");
+    }
+
+    @Test
+    public void arrayAppendBoolean_shouldAddAnElementToTheEndOfAnArray() {
+        JsonEditor editor = new JsonEditor("{\"a\": [1, 2]}");
+        expect(editor.child("a").append(true).root().toJson()).toEqual("{\"a\":[1,2,true]}");
+    }
+
+    @Test
+    public void arrayAppendDouble_shouldAddAnElementToTheEndOfAnArray() {
+        JsonEditor editor = new JsonEditor("{\"a\": [1, 2]}");
+        expect(editor.child("a").append(42.2).root().toJson()).toEqual("{\"a\":[1,2,42.2]}");
+    }
+
+    @Test
+    public void arrayAppendLong_shouldAddAnElementToTheEndOfAnArray() {
+        JsonEditor editor = new JsonEditor("{\"a\": [1, 2]}");
+        expect(editor.child("a").append(42L).root().toJson()).toEqual("{\"a\":[1,2,42]}");
+    }
+
+    @Test
+    public void arrayInsertString_shouldInsertAnElementIntoAnArray() {
+        JsonEditor editor = new JsonEditor("{\"a\": [1, 2]}");
+        expect(editor.child("a").insert(1, "foo").root().toJson()).toEqual("{\"a\":[1,\"foo\",2]}");
+    }
+
+    @Test
+    public void arrayInsertBoolean_shouldInsertAnElementIntoAnArray() {
+        JsonEditor editor = new JsonEditor("{\"a\": [1, 2]}");
+        expect(editor.child("a").insert(1, true).root().toJson()).toEqual("{\"a\":[1,true,2]}");
+    }
+
+    @Test
+    public void arrayInsertDouble_shouldInsertAnElementIntoAnArray() {
+        JsonEditor editor = new JsonEditor("{\"a\": [1, 2]}");
+        expect(editor.child("a").insert(1, 42.2).root().toJson()).toEqual("{\"a\":[1,42.2,2]}");
+    }
+
+    @Test
+    public void arrayInsertLong_shouldInsertAnElementIntoAnArray() {
+        JsonEditor editor = new JsonEditor("{\"a\": [1, 2]}");
+        expect(editor.child("a").insert(1, 42L).root().toJson()).toEqual("{\"a\":[1,42,2]}");
+    }
+
+    @Test
+    public void arrayInsertInt_shouldInsertAnElementIntoAnArray() {
+        JsonEditor editor = new JsonEditor("{\"a\": [1, 3, 4]}");
+        expect(editor.child("a").insert(1, 2).root().toJson()).toEqual("{\"a\":[1,2,3,4]}");
+        expect(new JsonEditor("[]").insert(0, 44).root().toJson()).toEqual("[44]");
+    }
+
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    public void arrayInsertInt_withIndexTooLarge_shouldThrow() {
+        new JsonEditor("[1, 2]").insert(2, 2);
+    }
+
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    public void arrayInsertInt_withIndexBelowZero_shouldThrow() {
+        new JsonEditor("[1, 2]").insert(-1, 2);
+    }
+
+    @Test(expected = JsonEditor.NotAnArrayNodeException.class)
+    public void arrayInsertInt_onAnObject_shouldThrow() {
+        new JsonEditor("{}").insert(0, 2);
+    }
+
+    @Test
+    public void arrayLength_shouldReturnTheLengthOfAnArray() {
+        expect(new JsonEditor("[]").length()).toEqual(0);
+        expect(new JsonEditor("{\"a\": [1, 2, 3, 4]}").child("a").length()).toEqual(4);
+    }
+
+    @Test(expected = JsonEditor.NotAnArrayNodeException.class)
+    public void arrayLength_onAnObject_shouldThrow() {
+        new JsonEditor("{}").length();
+    }
+
+    // TODO: boolean isArray();
+    // TODO: boolean isObject();
+    // TODO: JsonEditor append(JsonEditor);
+    // TODO: JsonEditor insert(int atIndex, JsonEditor);
+    // TODO: Set<String> keySet();
+    // TODO: void removeAll(); -- works on arrays and objects
+    
 }

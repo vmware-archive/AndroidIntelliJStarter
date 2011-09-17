@@ -2,13 +2,7 @@ package com.example.android.sampleapp.test.support;
 
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.node.ArrayNode;
-import org.codehaus.jackson.node.BooleanNode;
-import org.codehaus.jackson.node.DoubleNode;
-import org.codehaus.jackson.node.IntNode;
-import org.codehaus.jackson.node.LongNode;
-import org.codehaus.jackson.node.ObjectNode;
-import org.codehaus.jackson.node.TextNode;
+import org.codehaus.jackson.node.*;
 
 import java.io.IOException;
 
@@ -118,6 +112,46 @@ public class JsonEditor {
         return setAtArrayIndex(index, new TextNode(newValue));
     }
 
+    public JsonEditor append(int newValue) {
+        return appendToArray(new IntNode(newValue));
+    }
+
+    public JsonEditor append(long newValue) {
+        return appendToArray(new LongNode(newValue));
+    }
+
+    public JsonEditor append(double newValue) {
+        return appendToArray(new DoubleNode(newValue));
+    }
+
+    public JsonEditor append(boolean newValue) {
+        return appendToArray(booleanNodeForValue(newValue));
+    }
+
+    public JsonEditor append(String newValue) {
+        return appendToArray(new TextNode(newValue));
+    }
+
+    public JsonEditor insert(int atIndex, int newValue) {
+        return insertAtArrayIndex(atIndex, new IntNode(newValue));
+    }
+
+    public JsonEditor insert(int atIndex, long newValue) {
+        return insertAtArrayIndex(atIndex, new LongNode(newValue));
+    }
+
+    public JsonEditor insert(int atIndex, double newValue) {
+        return insertAtArrayIndex(atIndex, new DoubleNode(newValue));
+    }
+
+    public JsonEditor insert(int atIndex, boolean newValue) {
+        return insertAtArrayIndex(atIndex, booleanNodeForValue(newValue));
+    }
+
+    public JsonEditor insert(int atIndex, String newValue) {
+        return insertAtArrayIndex(atIndex, new TextNode(newValue));
+    }
+
     public JsonEditor remove(int index) {
         assertNodeIsArrayNodeAndHasIndex(index);
         ((ArrayNode) focusedNode).remove(index);
@@ -157,27 +191,36 @@ public class JsonEditor {
         return focusedNode.isNull();
     }
 
-    public static class JsonEditorException extends RuntimeException {
+    public int length() {
+        assertNodeIsArrayNode();
+        return focusedNode.size();
+    }
 
+    public static class JsonEditorException extends RuntimeException {
         public JsonEditorException() {
         }
+
         public JsonEditorException(Throwable throwable) {
             super(throwable);
         }
-
     }
-    public static class NotABooleanNodeException extends JsonEditorException {}
 
+    public static class NotABooleanNodeException extends JsonEditorException {}
     public static class NotANumericNodeException extends JsonEditorException {}
     public static class NotAStringNodeException extends JsonEditorException {}
     public static class NotAnArrayOrObjectNodeException extends JsonEditorException {}
     public static class NotAnArrayNodeException extends JsonEditorException {}
     public static class NotAnObjectNodeException extends JsonEditorException {}
     public static class NoSuchPropertyException extends JsonEditorException {}
-    private void assertNodeIsArrayNodeAndHasIndex(int index) {
+
+    private void assertNodeIsArrayNode() {
         if (!focusedNode.isArray()) {
             throw new NotAnArrayNodeException();
         }
+    }
+
+    private void assertNodeIsArrayNodeAndHasIndex(int index) {
+        assertNodeIsArrayNode();
         if (!focusedNode.has(index)) {
             throw new ArrayIndexOutOfBoundsException();
         }
@@ -203,6 +246,25 @@ public class JsonEditor {
     private JsonEditor setAtArrayIndex(int index, JsonNode newNode) {
         assertNodeIsArrayNodeAndHasIndex(index);
         ((ArrayNode) focusedNode).set(index, newNode);
+        return this;
+    }
+
+    private JsonEditor insertAtArrayIndex(int index, JsonNode newNode) {
+        if (index < 0) {
+            throw new ArrayIndexOutOfBoundsException("negative index: " + index);
+        }
+        if (index > 0) {
+            assertNodeIsArrayNodeAndHasIndex(index);
+        } else {
+            assertNodeIsArrayNode();
+        }
+        ((ArrayNode) focusedNode).insert(index, newNode);
+        return this;
+    }
+
+    private JsonEditor appendToArray(JsonNode newNode) {
+        assertNodeIsArrayNode();
+        ((ArrayNode) focusedNode).add(newNode);
         return this;
     }
 
