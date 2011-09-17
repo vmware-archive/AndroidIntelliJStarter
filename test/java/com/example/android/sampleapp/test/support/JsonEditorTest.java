@@ -2,7 +2,7 @@ package com.example.android.sampleapp.test.support;
 
 import org.junit.Test;
 
-import static com.pivotallabs.robolectricgem.expect.Expect.expect;
+import static com.pivotallabs.expect.Expect.expect;
 
 
 public class JsonEditorTest {
@@ -43,6 +43,11 @@ public class JsonEditorTest {
     @Test(expected = JsonEditor.JsonEditorException.class)
     public void constructor_shouldThrowException_whenJsonIsInvalid() throws Exception {
         new JsonEditor("this is not valid json");
+    }
+
+    @Test(expected = JsonEditor.JsonEditorException.class)
+    public void constructor_shouldThrowException_whenJsonIsInvalid2() throws Exception {
+        new JsonEditor("42");
     }
 
     @Test(expected = ArrayIndexOutOfBoundsException.class)
@@ -468,6 +473,27 @@ public class JsonEditorTest {
     }
 
     @Test
+    public void arrayAppendJsonEditor_shouldAppendTheValueToTheEndOfTheArray_basedOnTheCurrentPositionOfTheEditor() throws Exception {
+        JsonEditor editor = new JsonEditor("[1]");
+        editor.append(new JsonEditor("[1, [2, 3]]").child(1)).root();
+        expect(editor.toJson()).toEqual("[1,[2,3]]");
+    }
+
+    @Test
+    public void arrayAppendJsonEditor_shouldAppendValueNodesToTheEndOfTheArray_basedOnTheCurrentPositionOfTheEditor() throws Exception {
+        JsonEditor editor = new JsonEditor("[1]");
+        editor.append(new JsonEditor("[2]").child(0)).root();
+        expect(editor.toJson()).toEqual("[1,2]");
+    }
+
+    @Test
+    public void arrayInsertJsonEditor_shouldInsertTheValueAtTheGivenIndexInTheArray_basedOnTheCurrentPositionOfTheEditor() throws Exception {
+        JsonEditor editor = new JsonEditor("[1]");
+        editor.insert(0, new JsonEditor("[1, [2, 3]]").child(1)).root();
+        expect(editor.toJson()).toEqual("[[2,3],1]");
+    }
+
+    @Test
     public void arrayInsertString_shouldInsertAnElementIntoAnArray() {
         JsonEditor editor = new JsonEditor("{\"a\": [1, 2]}");
         expect(editor.child("a").insert(1, "foo").root().toJson()).toEqual("{\"a\":[1,\"foo\",2]}");
@@ -524,11 +550,75 @@ public class JsonEditorTest {
         new JsonEditor("{}").length();
     }
 
-    // TODO: boolean isArray();
-    // TODO: boolean isObject();
-    // TODO: JsonEditor append(JsonEditor);
-    // TODO: JsonEditor insert(int atIndex, JsonEditor);
-    // TODO: Set<String> keySet();
-    // TODO: void removeAll(); -- works on arrays and objects
-    
+    @Test
+    public void isArray_shouldReturnTrueOnlyForArrays() {
+        JsonEditor editor = new JsonEditor("{\"a\": [{}, 2]}");
+        expect(editor.child("a").isArray()).toBeTrue();
+        expect(editor.root().child("a").child(0).isArray()).toBeFalse();
+        expect(editor.root().child("a").child(1).isArray()).toBeFalse();
+    }
+
+    @Test
+    public void isObject_shouldReturnTrueOnlyForObjects() {
+        JsonEditor editor = new JsonEditor("{\"a\": [{}, 2]}");
+        expect(editor.isObject()).toBeTrue();
+        expect(editor.child("a").isObject()).toBeFalse();
+    }
+
+    @Test(expected = JsonEditor.RootNodeHasNoParent.class)
+    public void parent_whenUsedOnRootNode_shouldThrow() {
+        new JsonEditor("[]").parent();
+    }
+
+    @Test(expected = JsonEditor.RootNodeHasNoParent.class)
+    public void parent_whenUsedOnRootNodeAfterTraversingBackAndForth_shouldThrow() {
+        String jsonString = "{\"a\":[1,{\"b\":42}],\"c\":[[44]]}";
+        JsonEditor editor = new JsonEditor(jsonString);
+        editor.root().child("c").child(0).child(0).root().child("a").parent().parent();
+    }
+
+    @Test
+    public void parent_shouldNavigateBackToTheParentOfTheCurrentNode() {
+        String jsonString = "{\"a\":[1,{\"b\":42}],\"c\":[[44]]}";
+        JsonEditor editor = new JsonEditor(jsonString);
+        expect(editor.child("a").parent().toJson()).toEqual(jsonString);
+        expect(editor.root().child("a").child(0).parent().toJson()).toEqual("[1,{\"b\":42}]");
+        expect(editor.root().child("a").child(1).child("b").parent().toJson()).toEqual("{\"b\":42}");
+    }
+
+    @Test
+    public void removeAll_shouldClearObjectNodesAndArrayNodes() {
+        expect(new JsonEditor("[]").removeAll().toJson()).toEqual("[]");
+        expect(new JsonEditor("[1, 2]").removeAll().toJson()).toEqual("[]");
+        expect(new JsonEditor("{}").removeAll().toJson()).toEqual("{}");
+        expect(new JsonEditor("{\"a\": 1}").removeAll().toJson()).toEqual("{}");
+    }
+
+    @Test(expected = JsonEditor.NotAnArrayOrObjectNodeException.class)
+    public void removeAll_whenUsedOnNonContainer_shouldThrow() {
+        new JsonEditor("[42]").child(0).removeAll();
+    }
+
+    @Test(expected = JsonEditor.NotAnObjectNodeException.class)
+    public void keySet_whenUsedOnNonObject_shouldThrow() {
+        new JsonEditor("[42]").child(0).keySet();
+    }
+
+    @Test
+    public void keySet_shouldReturnAllKeysAsASet() {
+        expect(new JsonEditor("{\"c\":1, \"a\":2, \"b\":3}").keySet()).toContain("a", "b", "c");
+        expect(new JsonEditor("{}").keySet()).toBeEmpty();
+    }
+
+    @Test
+    public void toString_shouldShowPathToCurrentNode() {
+        String jsonString = "{\"a\":[1,{\"b\":42}],\"c\":[[44]]}";
+        JsonEditor editor = new JsonEditor(jsonString);
+        expect(editor.toString()).toContain("focus=ROOT}");
+        expect(editor.child("a").toString()).toContain("focus=ROOT['a']}");
+        expect(editor.child(0).toString()).toContain("focus=ROOT['a'][0]}");
+        expect(editor.parent().toString()).toContain("focus=ROOT['a']}");
+        expect(editor.root().toString()).toContain("focus=ROOT}");
+    }
+
 }
