@@ -5,6 +5,6 @@
     </CLASSES>
     <JAVADOC />
     <SOURCES />
-    <jarDirectory url="file://$PROJECT_DIR$/libs/test" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/libs/test" recursive="true" />
   </library>
 </component>

@@ -4,6 +4,17 @@
           android:versionCode="1"
           android:versionName="1.0">
 
+    <!-- These permissions are required for C2DM -->
+    <!-- Only this application can receive the messages and registration result -->
+    <permission android:name="com.example.android.sampleapp.permission.C2D_MESSAGE"
+                android:protectionLevel="signature"/>
+    <uses-permission android:name="com.example.android.sampleapp.permission.C2D_MESSAGE"/>
+    <!-- This app has permission to register and receive message -->
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
+    <!-- Send the registration id to the server. Many apps will want this permission even when C2DM is not needed. -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- End of C2DM permissions -->
+    
     <application
         android:label="@string/app_name"
         android:icon="@drawable/icon"
@@ -18,17 +29,6 @@
 
         <!-- C2DM START C2DM START C2DM START C2DM START C2DM START C2DM START C2DM START -->
         <!-- C2DM Note: C2DM is only supported in API v2.2 and above but is safely ignored in lower versions -->
-        <!-- Only this application can receive the messages and registration result -->
-        <permission android:name="com.example.android.sampleapp.permission.C2D_MESSAGE"
-                    android:protectionLevel="signature"/>
-        <uses-permission android:name="com.example.android.sampleapp.permission.C2D_MESSAGE"/>
-
-        <!-- This app has permission to register and receive message -->
-        <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
-
-        <!-- Send the registration id to the server -->
-        <uses-permission android:name="android.permission.INTERNET"/>
-
         <!--NOTE FOR C2DM: Read http://code.google.com/android/c2dm/#manifest but note that the XML is wrong!  -->
         <!--Use this pattern instead.-->
         <service android:name=".C2DMReceiver"/>
