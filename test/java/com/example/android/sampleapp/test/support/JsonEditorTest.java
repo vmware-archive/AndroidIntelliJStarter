@@ -2,8 +2,7 @@ package com.example.android.sampleapp.test.support;
 
 import org.junit.Test;
 
-import static com.pivotallabs.expect.Expect.expect;
-
+import static com.pivotallabs.robolectricgem.expect.Expect.expect;
 
 public class JsonEditorTest {
 

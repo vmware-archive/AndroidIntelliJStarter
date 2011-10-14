@@ -74,6 +74,9 @@
 
     <!-- Copied from ~/android-sdk-mac_x86/tools/ant/main_rules.xml -->
     <target name="clean" description="Removes output files created by other targets.">
+        <subant target="clean">
+            <fileset dir="submodules/robolectric/" includes="build.xml" />
+        </subant>
         <!-- copied since you can't override and reference the original... -->
         <delete dir="${out.absolute.dir}" verbose="${verbose}"/>
         <delete dir="${gen.absolute.dir}" verbose="${verbose}"/>
@@ -92,6 +95,10 @@
 
     <!-- Mostly a copy of the compile target from ~/android-sdk-mac_x86/tools/ant/main_rules.xml -->
     <target name="compile.tests" depends="compile">
+        <subant target="compile">
+          <fileset dir="submodules/robolectric/" includes="build.xml" />
+        </subant>
+
         <mkdir dir="${out.test.classes.absolute.dir}"/>
         <!-- directories customized for our test dirs -->
         <!-- NOTE: setting includeantruntime="false" as advised at http://ant.apache.org/manual/Tasks/javac.html-->
