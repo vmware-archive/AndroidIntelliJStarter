@@ -7,11 +7,11 @@
       <sourceFolder url="file://$MODULE_DIR$/submodules/robolectric/src/test/java" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/submodules/robolectric/out" />
     </content>
-    <orderEntry type="jdk" jdkName="1.6" jdkType="JavaSDK" />
     <orderEntry type="library" name="Robolectric main libs" level="project" />
     <orderEntry type="library" scope="TEST" name="Robolectric test libs" level="project" />
     <orderEntry type="library" name="Android 2.3.3 Google API libs" level="project" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="jdk" jdkName="Android 2.3.3 Google APIs" jdkType="Android SDK" />
   </component>
 </module>
 
