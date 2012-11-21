@@ -29,9 +29,9 @@ So you know what you're doing, eh? Let's do this thing!
 
 - **Don't open IntelliJ yet.** Did you already launch it? Close it.
 - Install Android to ~/android-sdk-macosx/
-- Install Android platform tools and Android 2.3.3 with Google APIs. You change the Android version for your project later.
+- Install Android platform tools, Android 2.3.3 with Google APIs, and Android 4.1.2 with Google APIs (needed for Robolectric). You change the Android version for your project later.
 
-        android update sdk -u --filter platform-tools,android-10,addon-google_apis-google-10,extra-android-support
+        android update sdk -u --filter platform-tools,android-10,addon-google_apis-google-10,extra-android-support,android-16,addon-google_apis-google-16
 
 - Create a local git repo for your new project, or create one on GitHub and clone it. http://help.github.com/create-a-repo/
 - Optionally, fork the robolectric repo on GitHub if you wish to use a fork for your project to make it easy to contribute changes back to robolectric.
