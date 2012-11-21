@@ -28,6 +28,15 @@
          -->
     <property file="ant.properties" />
 
+    <!-- if sdk.dir was not set from one of the property file, then
+         get it from the ANDROID_HOME env var.
+         This must be done before we load project.properties since
+         the proguard config can use sdk.dir -->
+    <property environment="env" />
+    <condition property="sdk.dir" value="${env.ANDROID_HOME}">
+        <isset property="env.ANDROID_HOME" />
+    </condition>
+
     <!-- The project.properties file is created and updated by the 'android'
          tool, as well as ADT.
 
@@ -41,25 +50,23 @@
 
     <!-- quick check on sdk.dir -->
     <fail
-            message="sdk.dir is missing. Make sure to generate local.properties using 'android update project' or to inject it through an env var"
+            message="sdk.dir is missing. Make sure to generate local.properties using 'android update project' or to inject it through the ANDROID_HOME environment variable."
             unless="sdk.dir"
     />
 
-
-<!-- extension targets. Uncomment the ones where you want to do custom work
-     in between standard targets -->
-<!--
-    <target name="-pre-build">
-    </target>
-    <target name="-pre-compile">
-    </target>
-
-    /* This is typically used for code obfuscation.
-       Compiled code location: ${out.classes.absolute.dir}
-       If this is not done in place, override ${out.dex.input.absolute.dir} */
-    <target name="-post-compile">
-    </target>
--->
+    <!--
+        Import per project custom build rules if present at the root of the project.
+        This is the place to put custom intermediary targets such as:
+            -pre-build
+            -pre-compile
+            -post-compile (This is typically used for code obfuscation.
+                           Compiled code location: ${out.classes.absolute.dir}
+                           If this is not done in place, override ${out.dex.input.absolute.dir})
+            -post-package
+            -post-build
+            -pre-clean
+    -->
+    <import file="custom_rules.xml" optional="true" />
 
     <!-- Import the actual build file.
 
@@ -82,7 +89,7 @@
     <!-- version-tag: 1 -->
     <import file="${sdk.dir}/tools/ant/build.xml" />
 
-    <!-- Copied from ~/android-sdk-macosx/ant/main_rules.xml -->
+    <!-- Copied from ~/android-sdk-macosx/tools/ant/main_rules.xml -->
     <target name="clean" description="Removes output files created by other targets.">
         <subant target="clean">
             <fileset dir="submodules/robolectric/" includes="build.xml" />
@@ -91,9 +98,11 @@
         <delete dir="${out.absolute.dir}" verbose="${verbose}"/>
         <delete dir="${gen.absolute.dir}" verbose="${verbose}"/>
 
-        <!-- deleting output dirs we added -->
-        <delete dir="out" verbose="${verbose}"/>
         <delete file="tmp/cached-robolectric-classes.jar" verbose="${verbose}"/>
+    </target>
+
+    <target name="fullclean" depends="clean" description="Regular clean, plus clean IDE tmp files too">
+        <delete dir="out" verbose="${verbose}"/>
     </target>
 
     <target name="-pre-compile">
@@ -103,13 +112,20 @@
         <property name="out.test.classes.absolute.dir" location="${out.dir}/testClasses" />
     </target>
 
-    <!-- Mostly a copy of the compile target from ~/android-sdk-macosx/ant/main_rules.xml -->
-    <target name="compile.tests" depends="-compile">
+    <!-- Mostly a copy of the compile target from ~/android-sdk-macosx/tools/ant/main_rules.xml -->
+    <target name="compile.tests" depends="-set-debug-files, -set-debug-mode, -compile">
         <subant target="compile">
             <fileset dir="submodules/robolectric/" includes="build.xml" />
         </subant>
 
         <mkdir dir="${out.test.classes.absolute.dir}"/>
+
+        <path id="project.javac.classpath">
+            <path refid="project.all.jars.path"/>
+            <path refid="tested.project.classpath"/>
+            <pathelement path="${sdk.dir}/extras/android/support/v4/android-support-v4.jar"/>
+        </path>
+
         <!-- directories customized for our test dirs -->
         <!-- NOTE: setting includeantruntime="false" as advised at http://ant.apache.org/manual/Tasks/javac.html-->
         <javac encoding="${java.encoding}"
@@ -118,9 +134,9 @@
                debug="true"
                extdirs=""
                destdir="${out.test.classes.absolute.dir}"
-               bootclasspathref="android.target.classpath"
+               bootclasspathref="project.target.class.path"
                verbose="${verbose}"
-               classpath="${extensible.classpath}"
+               classpathref="project.javac.classpath"
                includeantruntime="false">
             <src path="${source.absolute.dir}" />
             <src path="${gen.absolute.dir}" />
@@ -130,8 +146,8 @@
             <classpath>
                 <pathelement path="${out.classes.absolute.dir}"/>
                 <pathelement path="submodules/robolectric/bin/mainClasses"/>
-                <fileset dir="${extensible.libs.classpath}" includes="*.jar"/>
-                <fileset dir="${extensible.libs.classpath}/test" includes="**/*.jar"/>
+                <fileset dir="${jar.libs.dir}" includes="*.jar"/>
+                <fileset dir="${jar.libs.dir}/test" includes="**/*.jar"/>
             </classpath>
         </javac>
     </target>
@@ -152,7 +168,7 @@
                 <fileset dir="${test.external.libs.absolute.dir}" includes="*.jar"/>
                 <fileset dir="${robolectric.sample.external.libs.dir}" includes="*.jar"/>
 
-                <path refid="android.target.classpath"/>
+                <path refid="project.target.class.path"/>
             </classpath>
         </junit>
         <fail if="junit.failure" message="Unit test(s) failed.  See reports!"/>
@@ -174,14 +190,15 @@
                 <!-- Project -->
                 <pathelement path="${out.classes.absolute.dir}"/>
                 <pathelement path="${out.test.classes.absolute.dir}"/>
-                <fileset dir="${extensible.libs.classpath}" includes="**/*.jar"/>
+                <fileset dir="${jar.libs.dir}" includes="**/*.jar"/>
 
                 <!-- Robolectric -->
                 <fileset dir="submodules/robolectric/lib/main" includes="*.jar"/>
                 <pathelement path="submodules/robolectric/bin/mainClasses"/>
 
                 <!-- Android -->
-                <path refid="android.target.classpath"/>
+                <path refid="project.target.class.path"/>
+                <pathelement path="${sdk.dir}/extras/android/support/v4/android-support-v4.jar"/>
             </classpath>
         </junit>
         <fail if="junit.failure" message="Unit test(s) failed.  See reports!"/>
@@ -189,3 +206,4 @@
 
 
 </project>
+
