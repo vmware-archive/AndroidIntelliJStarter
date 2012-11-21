@@ -18,7 +18,7 @@ We make the following assumptions. Feel free to deviate but you will likely need
 things as you go.
 
 - You are working on a Mac
-- Your android SDK is in ~/android-sdk-mac_x86, or you are going to put it there, or create a symlink, etc.
+- Your android SDK is in ~/android-sdk-macosx, or you are going to put it there, or create a symlink, etc.
 - Robolectric will live in submodules/robolectric
 - You have java, ruby and git installed
 
@@ -28,7 +28,7 @@ things as you go.
 So you know what you're doing, eh? Let's do this thing!
 
 - **Don't open IntelliJ yet.** Did you already launch it? Close it.
-- Install Android to ~/android-sdk-mac_x86/
+- Install Android to ~/android-sdk-macosx/
 - Install SDKs -- this project assumes SDK 10 with Google APIs (2.3.3). You change this later.
 - Create a local git repo for your new project, or create one on GitHub and clone it. http://help.github.com/create-a-repo/
 - Optionally, fork the robolectric repo on GitHub if you wish to use a fork for your project to make it easy to contribute changes back to robolectric.
@@ -72,14 +72,14 @@ Salvation lies within.
 
 Download the latest Mac SDK: http://developer.android.com/sdk/index.html
 
-Unzip the archive and move the android-sdk-mac_x86 dir to ~/android-sdk-mac_x86. 
-*This project assumes that android lives in ~/android-sdk-mac_x86*. You will need to 
+Unzip the archive and move the android-sdk-macosx dir to ~/android-sdk-macosx. 
+*This project assumes that android lives in ~/android-sdk-macosx*. You will need to 
 fix paths in several places if you choose a different location.
 
 Add the android tools to the PATH. 
 
     # Note: change .bash_profile to .bashrc or something else if needed
-    echo 'export PATH="$PATH:$HOME/android-sdk-mac_x86/tools:$HOME/android-sdk-mac_x86/platform-tools"' >> $HOME/.bash_profile
+    echo 'export PATH="$PATH:$HOME/android-sdk-macosx/tools:$HOME/android-sdk-macosx/platform-tools"' >> $HOME/.bash_profile
 
 Open a new Terminal window and run `android`:
  
@@ -152,7 +152,7 @@ Something about your machine's configuration does not match our settings. Manual
 using the following instructions. Likely issues include: 
 
 - Are you are not running IntelliJ 10.5
-- Android SDKs are not installed in ~/android-sdk-mac_x86/. Check out that "x"! It's "mac_x86", not "mac_86".
+- Android SDKs are not installed in ~/android-sdk-macosx/.
 
 If these are not the issue keep going to the SDK sections below.
 
@@ -176,7 +176,7 @@ Your Android SDKs are listed here. You might need to add a few. Note that if you
 own test suite you will need to add Google APIs (2.3.3). For example: 
 
 - Add (plus sign) => Android SDK
-- locate and choose ~/android-sdk-mac_x86
+- locate and choose ~/android-sdk-macosx
 - Select internal Java Platform: 1.6
 - Create new Android SDK: Google APIs (2.3.3)
   

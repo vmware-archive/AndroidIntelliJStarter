@@ -82,7 +82,7 @@
     <!-- version-tag: 1 -->
     <import file="${sdk.dir}/tools/ant/build.xml" />
 
-    <!-- Copied from ~/android-sdk-mac_x86/tools/ant/main_rules.xml -->
+    <!-- Copied from ~/android-sdk-macosx/ant/main_rules.xml -->
     <target name="clean" description="Removes output files created by other targets.">
         <subant target="clean">
             <fileset dir="submodules/robolectric/" includes="build.xml" />
@@ -103,7 +103,7 @@
         <property name="out.test.classes.absolute.dir" location="${out.dir}/testClasses" />
     </target>
 
-    <!-- Mostly a copy of the compile target from ~/android-sdk-mac_x86/tools/ant/main_rules.xml -->
+    <!-- Mostly a copy of the compile target from ~/android-sdk-macosx/ant/main_rules.xml -->
     <target name="compile.tests" depends="-compile">
         <subant target="compile">
             <fileset dir="submodules/robolectric/" includes="build.xml" />

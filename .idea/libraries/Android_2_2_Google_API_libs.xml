@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="Android 2.2 Google API libs">
     <CLASSES>
-      <root url="jar://$USER_HOME$/android-sdk-mac_x86/platforms/android-8/android.jar!/" />
-      <root url="jar://$USER_HOME$/android-sdk-mac_x86/add-ons/addon-google_apis-google-8/libs/maps.jar!/" />
+      <root url="jar://$USER_HOME$/android-sdk-macosx/android-8/android.jar!/" />
+      <root url="jar://$USER_HOME$/android-sdk-macosx-ons/addon-google_apis-google-8/libs/maps.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

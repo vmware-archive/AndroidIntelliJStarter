@@ -17,7 +17,7 @@
       <value defaultName="singleModule" />
     </option>
     <envs>
-      <env name="ANDROID_HOME" value="$USER_HOME$/android-sdk-mac_x86" />
+      <env name="ANDROID_HOME" value="$USER_HOME$/android-sdk-macosx" />
     </envs>
     <patterns />
     <RunnerSettings RunnerId="Run" />
