@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="Android 2.3.3 Google API libs">
     <CLASSES>
-      <root url="jar://$USER_HOME$/android-sdk-macosx/android-10/android.jar!/" />
-      <root url="jar://$USER_HOME$/android-sdk-macosx-ons/addon-google_apis-google-10/libs/maps.jar!/" />
+      <root url="jar://$USER_HOME$/android-sdk-macosx/platforms/android-10/android.jar!/" />
+      <root url="jar://$USER_HOME$/android-sdk-macosx/add-ons/addon-google_apis-google-10/libs/maps.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
