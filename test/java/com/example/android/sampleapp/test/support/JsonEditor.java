@@ -2,17 +2,9 @@ package com.example.android.sampleapp.test.support;
 
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.node.ArrayNode;
-import org.codehaus.jackson.node.BooleanNode;
-import org.codehaus.jackson.node.ContainerNode;
-import org.codehaus.jackson.node.DoubleNode;
-import org.codehaus.jackson.node.IntNode;
-import org.codehaus.jackson.node.LongNode;
-import org.codehaus.jackson.node.ObjectNode;
-import org.codehaus.jackson.node.TextNode;
+import org.codehaus.jackson.node.*;
 
 import java.io.IOException;
-import java.util.Deque;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -55,8 +47,8 @@ public class JsonEditor {
 
     private JsonNode rootNode;
     private JsonNode focusedNode;
-    private Deque<JsonNode> focusStack = new LinkedList<JsonNode>();
-    private Deque<String> toStringStack = new LinkedList<String>();
+    private LinkedList<JsonNode> focusStack = new LinkedList<JsonNode>();
+    private LinkedList<String> toStringStack = new LinkedList<String>();
 
     public JsonEditor(String jsonString) {
         rootNode = parseObjectOrArrayJson(jsonString);

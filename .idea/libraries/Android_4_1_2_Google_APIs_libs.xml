@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Android 4.1.2 Google APIs libs">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/android-sdk-macosx/platforms/android-16/android.jar!/" />
+      <root url="jar://$USER_HOME$/android-sdk-macosx/add-ons/addon-google_apis-google-16/libs/maps.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
