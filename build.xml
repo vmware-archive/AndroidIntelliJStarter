@@ -89,16 +89,12 @@
     <!-- version-tag: 1 -->
     <import file="${sdk.dir}/tools/ant/build.xml" />
 
-    <!-- Copied from ~/android-sdk-macosx/tools/ant/main_rules.xml -->
-    <target name="clean" description="Removes output files created by other targets.">
+    <target name="-pre-clean">
         <subant target="clean">
             <fileset dir="submodules/robolectric/" includes="build.xml" />
         </subant>
-        <!-- copied since you can't override and reference the original... -->
-        <delete dir="${out.absolute.dir}" verbose="${verbose}"/>
-        <delete dir="${gen.absolute.dir}" verbose="${verbose}"/>
-
-        <delete file="tmp/cached-robolectric-classes.jar" verbose="${verbose}"/>
+        <delete dir="${out.absolute.dir}/testClasses"/>
+        <delete dir="tmp"/>
     </target>
 
     <target name="fullclean" depends="clean" description="Regular clean, plus clean IDE tmp files too">
@@ -152,29 +148,6 @@
         </javac>
     </target>
 
-    <target name="rstest" depends="compile.tests" description="test all">
-        <mkdir dir="${basedir}/out/reports/tests"/>
-        <junit showoutput="true" failureproperty="junit.failure">
-            <formatter type="plain"/>
-            <formatter type="xml"/>
-            <batchtest todir="${basedir}/out/reports/tests">
-                <fileset dir="${test.absolute.dir}">
-                    <include name="**/*Test.java"/>
-                </fileset>
-            </batchtest>
-            <classpath>
-                <pathelement path="${out.classes.absolute.dir}"/>
-                <pathelement path="${out.test-classes.absolute.dir}"/>
-                <fileset dir="${test.external.libs.absolute.dir}" includes="*.jar"/>
-                <fileset dir="${robolectric.sample.external.libs.dir}" includes="*.jar"/>
-
-                <path refid="project.target.class.path"/>
-            </classpath>
-        </junit>
-        <fail if="junit.failure" message="Unit test(s) failed.  See reports!"/>
-    </target>
-
-    <!-- Modified version of https://github.com/pivotal/RobolectricSample/blob/master/build.xml -->
     <target name="test" depends="compile.tests" description="test all">
         <mkdir dir="${out.dir}/out/reports/tests"/>
         <junit showoutput="true" failureproperty="junit.failure">
@@ -203,7 +176,6 @@
         </junit>
         <fail if="junit.failure" message="Unit test(s) failed.  See reports!"/>
     </target>
-
 
 </project>
 
