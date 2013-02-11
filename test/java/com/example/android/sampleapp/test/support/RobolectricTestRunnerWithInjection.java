@@ -1,11 +1,12 @@
 package com.example.android.sampleapp.test.support;
 
+import com.example.android.sampleapp.ApplicationModule;
 import com.example.android.sampleapp.MySampleApplication;
 import com.example.android.sampleapp.util.CurrentTime;
 import com.xtremelabs.robolectric.Robolectric;
 import com.xtremelabs.robolectric.RobolectricTestRunner;
 import org.junit.runners.model.InitializationError;
-import roboguice.config.AbstractAndroidModule;
+import roboguice.RoboGuice;
 
 public class RobolectricTestRunnerWithInjection extends RobolectricTestRunner {
 
@@ -16,14 +17,20 @@ public class RobolectricTestRunnerWithInjection extends RobolectricTestRunner {
     @Override
     public void prepareTest(Object test) {
         MySampleApplication application = (MySampleApplication) Robolectric.application;
-        application.setModule(new TestApplicationModule());
-        application.getInjector().injectMembers(test);
+
+
+        RoboGuice.setBaseApplicationInjector(application, RoboGuice.DEFAULT_STAGE,
+                RoboGuice.newDefaultRoboModule(application), new TestApplicationModule());
+
+        RoboGuice.getInjector(application).injectMembers(test);
     }
 
-    public static class TestApplicationModule extends AbstractAndroidModule {
+    public static class TestApplicationModule extends ApplicationModule {
         @Override
-        protected void configure() {
+        public void configure() {
             bind(CurrentTime.class).toInstance(new FakeCurrentTime());
+
+            super.configure();
         }
     }
 
