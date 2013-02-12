@@ -24,4 +24,8 @@ public class StarterActivity extends RoboActivity {
         title.setText("Hello World");
         currentTimeText.setText(String.valueOf(currentTime.currentTimeMillis()));
     }
+
+    public CurrentTime getCurrentTime() {
+        return currentTime;
+    }
 }
