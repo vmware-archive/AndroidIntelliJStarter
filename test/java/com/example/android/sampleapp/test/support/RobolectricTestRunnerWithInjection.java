@@ -6,6 +6,7 @@ import com.example.android.sampleapp.util.CurrentTime;
 import com.xtremelabs.robolectric.Robolectric;
 import com.xtremelabs.robolectric.RobolectricTestRunner;
 import org.junit.runners.model.InitializationError;
+import org.mockito.MockitoAnnotations;
 import roboguice.RoboGuice;
 
 public class RobolectricTestRunnerWithInjection extends RobolectricTestRunner {
@@ -23,6 +24,7 @@ public class RobolectricTestRunnerWithInjection extends RobolectricTestRunner {
                 RoboGuice.newDefaultRoboModule(application), new TestApplicationModule());
 
         RoboGuice.getInjector(application).injectMembers(test);
+        MockitoAnnotations.initMocks(test);
     }
 
     public static class TestApplicationModule extends ApplicationModule {
