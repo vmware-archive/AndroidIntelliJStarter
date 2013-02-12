@@ -22,10 +22,8 @@ things as you go.
 - Robolectric will live in submodules/robolectric
 - You have java, ruby and git installed
 
-# Summary Instructions (for Power Users)
 **Don't open IntelliJ yet.**
-
-So you know what you're doing, eh? Let's do this thing!
+# Summary Instructions (for Power Users)
 
 - **Don't open IntelliJ yet.** Did you already launch it? Close it.
 - Install Android to ~/android-sdk-macosx/
@@ -50,8 +48,6 @@ So you know what you're doing, eh? Let's do this thing!
 		# Run tests: 
     	cd path_to_your_project_repo && (cd submodules/robolectric && ant clean findAndroidUnix && ant test) && ant clean test
 
-    	# Update local.properties
-    	android update project -p .
 
 - **Open YourProject in IntelliJ 10.5 or higher**.
 - Import IntelliJ Settings: File => Import Settings => YourProject/support/IntellijSettings.jar. 
@@ -66,7 +62,7 @@ See "4. IntelliJ: Some Manual Configuration" below.
 
 In IntelliJ, Run Unit Tests, Robolectric Unit Tests, and launch StarterApp and make sure they work.
 
-At least glace at the stuff below about robojuice, C2DM, gp and gpp, forking robolectric, etc.
+At least glance at the stuff below about robojuice, C2DM, gp and gpp, forking robolectric, etc.
 
 Stuck? Keep reading!
 

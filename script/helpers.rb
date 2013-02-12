@@ -2,6 +2,7 @@ require "fileutils"
 
 SAMPLE_PACKAGE = "com.example.android.sampleapp"
 SAMPLE_PACKAGE_DIR = SAMPLE_PACKAGE.gsub('.', "/")
+STARTER_PROJECT_DIR = Dir.getwd
 
 def bail_with(project)
   puts ">>> #{project} failed! <<<"
@@ -18,12 +19,15 @@ end
 
 def project_setup(name, project_directory)
   raise "Error: project directory is not a git repo" unless is_git_repo?(project_directory)
-  raise "Error: project directory has uncommited changes. Please commit or revert and try again." if has_uncommited_changes?(project_directory)
 
-  init_android
-  rename_project_to(name)
-  rename_package
   copy_starter_files_to_project_directory(project_directory)
+
+  in_dir project_directory do
+    init_android
+    rename_project_to(name)
+    rename_package
+  end
+
   init_robolectric_as_a_project_submodule(project_directory)
 
   puts "#{project_directory} has been prepared and is ready to go. Enjoy!"
@@ -45,7 +49,7 @@ def init_android
   system! "android update project -p ."
 
   # android update wrongly stomps build.xml
-  system! "git checkout build.xml"
+  system( 'cp -ai ' + STARTER_PROJECT_DIR + ' build.xml .' )
 end
 
 def config_files
@@ -115,15 +119,11 @@ def rename_package
 end
 
 def copy_starter_files_to_project_directory(project_directory)
-  puts "Copying starter files to #{project_directory} and committing them"
+  puts "Copying starter files to #{project_directory}"
 
   # copy everything excluding .git, .gitmodules, and submodules
   system( 'cp -ai `ls -a | egrep -v \'^\.$|^\.\.$|^\.git$|^\.gitmodules$|^submodules$\'` ' + project_directory )
 
-  in_dir project_directory do
-    system! "git add ."
-    system! "git commit -m 'added files from AndroidIntelliJStarter project'"
-  end
 end
 
 def init_robolectric_as_a_project_submodule(project_directory)
@@ -143,7 +143,6 @@ def init_robolectric_as_a_project_submodule(project_directory)
     system! "git submodule add #{remote_repo} submodules/robolectric"
     system! "git submodule update --init"
 
-    system! "git commit -m 'added robolectric submodule'"
   end
 end
 
