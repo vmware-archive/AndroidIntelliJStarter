@@ -50,6 +50,9 @@ So you know what you're doing, eh? Let's do this thing!
 		# Run tests: 
     	cd path_to_your_project_repo && (cd submodules/robolectric && ant clean findAndroidUnix && ant test) && ant clean test
 
+    	# Update local.properties
+    	android update project -p .
+
 - **Open YourProject in IntelliJ 10.5 or higher**.
 - Import IntelliJ Settings: File => Import Settings => YourProject/support/IntellijSettings.jar. 
 This will destroy your existing IntelliJ settings!
