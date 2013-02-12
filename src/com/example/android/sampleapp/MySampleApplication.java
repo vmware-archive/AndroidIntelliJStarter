@@ -1,31 +1,14 @@
 package com.example.android.sampleapp;
 
-import com.google.inject.Module;
-import roboguice.application.RoboInjectableApplication;
-import roboguice.config.AbstractAndroidModule;
+import android.app.Application;
+import roboguice.RoboGuice;
 
-import java.util.List;
-
-public class MySampleApplication extends RoboInjectableApplication {
-    private Module module = new ApplicationModule();
-
+public class MySampleApplication extends Application {
     @Override
-    protected void addApplicationModules(List<Module> modules) {
-        modules.add(module);
-    }
+    public void onCreate() {
+        super.onCreate();
 
-    /* just for test injection */
-    public void setModule(Module module) {
-        this.module = module;
-    }
-
-    public static class ApplicationModule extends AbstractAndroidModule {
-        @Override
-        protected void configure() {
-            /*Samples of injection binding*/
-            //        bind(FooBar.class).in(Scopes.SINGLETON);
-            //        bind(Date.class).toProvider(FakeDateProvider.class);
-            //        bind(Ln.BaseConfig.class).toInstance(new SampleLoggerConfig());
-        }
+        RoboGuice.setBaseApplicationInjector(this, RoboGuice.DEFAULT_STAGE,
+                RoboGuice.newDefaultRoboModule(this), new ApplicationModule());
     }
 }

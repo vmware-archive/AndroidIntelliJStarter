@@ -5,27 +5,6 @@
     </CLASSES>
     <JAVADOC />
     <SOURCES>
-      <root url="jar://$PROJECT_DIR$/libs-src/guice-2.0-src.zip!/guice-2.0-src/extensions/assistedinject/src" />
-      <root url="jar://$PROJECT_DIR$/libs-src/guice-2.0-src.zip!/guice-2.0-src/extensions/jmx/test" />
-      <root url="jar://$PROJECT_DIR$/libs-src/guice-2.0-src.zip!/guice-2.0-src/extensions/jmx/src" />
-      <root url="jar://$PROJECT_DIR$/libs-src/guice-2.0-src.zip!/guice-2.0-src/src" />
-      <root url="jar://$PROJECT_DIR$/libs-src/guice-2.0-src.zip!/guice-2.0-src/spring/src" />
-      <root url="jar://$PROJECT_DIR$/libs-src/guice-2.0-src.zip!/guice-2.0-src/extensions/throwingproviders/src" />
-      <root url="jar://$PROJECT_DIR$/libs-src/guice-2.0-src.zip!/guice-2.0-src/spring/test" />
-      <root url="jar://$PROJECT_DIR$/libs-src/guice-2.0-src.zip!/guice-2.0-src/extensions/throwingproviders/test" />
-      <root url="jar://$PROJECT_DIR$/libs-src/guice-2.0-src.zip!/guice-2.0-src/struts2/example/src" />
-      <root url="jar://$PROJECT_DIR$/libs-src/guice-2.0-src.zip!/guice-2.0-src/extensions/grapher/src" />
-      <root url="jar://$PROJECT_DIR$/libs-src/guice-2.0-src.zip!/guice-2.0-src/extensions/jndi/src" />
-      <root url="jar://$PROJECT_DIR$/libs-src/guice-2.0-src.zip!/guice-2.0-src/extensions/assistedinject/test" />
-      <root url="jar://$PROJECT_DIR$/libs-src/guice-2.0-src.zip!/guice-2.0-src/extensions/grapher/test" />
-      <root url="jar://$PROJECT_DIR$/libs-src/guice-2.0-src.zip!/guice-2.0-src/test" />
-      <root url="jar://$PROJECT_DIR$/libs-src/guice-2.0-src.zip!/guice-2.0-src/servlet/src" />
-      <root url="jar://$PROJECT_DIR$/libs-src/guice-2.0-src.zip!/guice-2.0-src/examples/src" />
-      <root url="jar://$PROJECT_DIR$/libs-src/roboguice-1.1.2-sources.jar!/" />
-      <root url="jar://$PROJECT_DIR$/libs-src/guice-2.0-src.zip!/guice-2.0-src/servlet/test" />
-      <root url="jar://$PROJECT_DIR$/libs-src/guice-2.0-src.zip!/guice-2.0-src/extensions/multibindings/src" />
-      <root url="jar://$PROJECT_DIR$/libs-src/guice-2.0-src.zip!/guice-2.0-src/extensions/multibindings/test" />
-      <root url="jar://$PROJECT_DIR$/libs-src/guice-2.0-src.zip!/guice-2.0-src/struts2/plugin/src" />
       <root url="jar://$PROJECT_DIR$/libs-src/guava-src-r09.zip!/" />
       <root url="jar://$PROJECT_DIR$/libs-src/jackson-src-1.8.4-min.zip!/jackson-src-1.8.4/src/smile/java" />
       <root url="jar://$PROJECT_DIR$/libs-src/jackson-src-1.8.4-min.zip!/jackson-src-1.8.4/src/sample" />
@@ -36,6 +15,8 @@
       <root url="jar://$PROJECT_DIR$/libs-src/jackson-src-1.8.4-min.zip!/jackson-src-1.8.4/src/perf" />
       <root url="jar://$PROJECT_DIR$/libs-src/jackson-src-1.8.4-min.zip!/jackson-src-1.8.4/src/mapper/java" />
       <root url="jar://$PROJECT_DIR$/libs-src/jackson-src-1.8.4-min.zip!/jackson-src-1.8.4/src/test" />
+      <root url="jar://$PROJECT_DIR$/libs-src/guice-3.0-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs-src/roboguice-2.0-sources.jar!/" />
     </SOURCES>
     <jarDirectory url="file://$PROJECT_DIR$/libs" recursive="false" />
     <jarDirectory url="file://$PROJECT_DIR$/libs/main" recursive="false" />
