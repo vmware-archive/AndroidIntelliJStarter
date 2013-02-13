@@ -3,6 +3,7 @@ require "fileutils"
 SAMPLE_PACKAGE = "com.example.android.sampleapp"
 SAMPLE_PACKAGE_DIR = SAMPLE_PACKAGE.gsub('.', "/")
 STARTER_PROJECT_DIR = Dir.getwd
+ANDROID_HOME = `which android | sed 's|/tools/android$||'`.chomp
 
 def bail_with(project)
   puts ">>> #{project} failed! <<<"
@@ -19,11 +20,12 @@ end
 
 def project_setup(name, project_directory)
   raise "Error: project directory is not a git repo" unless is_git_repo?(project_directory)
+  raise "Error: We couldn't find 'android' in your path" if ANDROID_HOME.empty?
 
   copy_starter_files_to_project_directory(project_directory)
 
   in_dir project_directory do
-    init_android
+    create_local_properties_file(".")
     rename_project_to(name)
     rename_package
   end
@@ -43,13 +45,6 @@ def has_uncommited_changes?(project_directory)
     has_changes = ! system("git diff --quiet HEAD")
   end
   has_changes
-end
-
-def init_android
-  system! "android update project -p ."
-
-  # android update wrongly stomps build.xml
-  system( 'cp -ai ' + STARTER_PROJECT_DIR + ' build.xml .' )
 end
 
 def config_files
@@ -142,8 +137,13 @@ def init_robolectric_as_a_project_submodule(project_directory)
   in_dir project_directory do
     system! "git submodule add #{remote_repo} submodules/robolectric"
     system! "git submodule update --init"
-
+    create_local_properties_file("submodules/robolectric");
   end
+end
+
+def create_local_properties_file(directory)
+  puts directory
+  File.open(directory + "/local.properties", 'w') {|f| f.write("sdk.dir=" + ANDROID_HOME) }
 end
 
 def system!(command)
