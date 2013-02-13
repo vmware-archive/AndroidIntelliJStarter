@@ -22,7 +22,7 @@ public class InjectMockAnnotations {
 
     private static <T extends Object> void addMockToModule(Field field, InjectMockModule injectMockModule, Object testInstance) {
         Class<T> type = (Class<T>) field.getType();
-        T mock = Mockito.mock(type);
+        T mock = Mockito.mock(type, "@InjectMock(" + type.getSimpleName() + ")");
         injectMockModule.addBindingForMock(type, mock);
         try {
             new FieldSetter(testInstance, field).set(mock);
