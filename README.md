@@ -3,23 +3,23 @@
 - Build release apks without requiring a password. This will enable auto-generation of apks in continuous integration.
 
 # Android IntelliJ Starter
-This is a "template" IntelliJ project created to bootstrap Android development. 
-We have included as many of our go-to tools and as much hard earned 
-configuration knowledge as possible to aid new projects. This includes out-of-the-box support for 
+This is a "template" IntelliJ project created to bootstrap Android development.
+We have included as many of our go-to tools and as much hard earned
+configuration knowledge as possible to aid new projects. This includes out-of-the-box support for
 robolectric, robojuice, C2DM, great-expectations, android source Jars, and other important libraries.
 
 ## Configuration By Deletion
-There is a lot of stuff in here, everything from android source jars to dependency injection; 
-we acknowledge that your project might not want all of it. We encourage your project to remove 
+There is a lot of stuff in here, everything from android source jars to dependency injection;
+we acknowledge that your project might not want all of it. We encourage your project to remove
 whatever you don't want.
 
 ## Assumptions
-We make the following assumptions. Feel free to deviate but you will likely need to fix some 
+We make the following assumptions. Feel free to deviate but you will likely need to fix some
 things as you go.
 
 - You are working on a Mac
 - Your android SDK is in ~/android-sdk-macosx, or you are going to put it there, or create a symlink, etc.
-- Robolectric will live in submodules/robolectric
+- Robolectric will live in submodules/robolectric inside your project directory. (We'll put it there for you.)
 - You have java, ruby and git installed
 
 **Don't open IntelliJ yet.**
@@ -27,7 +27,7 @@ things as you go.
 
 - **Don't open IntelliJ yet.** Did you already launch it? Close it.
 - Install Android to ~/android-sdk-macosx/
-- Install Android platform tools, Android 2.3.3 with Google APIs, and Android 4.1.2 with Google APIs (needed for Robolectric). You change the Android version for your project later.
+- Install Android platform tools, Android 2.3.3 with Google APIs, and the most recent Android with Google APIs (needed for Robolectric). You change the Android version for your project later.
 
         android update sdk -u --filter platform-tools,android-10,addon-google_apis-google-10,extra-android-support,android-16,addon-google_apis-google-16
 
@@ -35,7 +35,7 @@ things as you go.
 - Optionally, fork the robolectric repo on GitHub if you wish to use a fork for your project to make it easy to contribute changes back to robolectric.
   We recommend that you fork robolectric.
   Go to https://github.com/pivotal/robolectric and click the "Fork" button.
-- Clone this project to get the code, then add all of its code to your new project's repo by running:
+- Clone the AndroidIntelliJStarter project, then add all of its code and setup to your new project's repo by running:
 
         git clone git://github.com/pivotal/AndroidIntelliJStarter starter_tmp
         cd starter_tmp
@@ -45,12 +45,12 @@ things as you go.
         # Default package name: com.example.android.sampleapp
         # Default robolectric repo is the read-only offical robolectric repo: git://github.com/pivotal/robolectric.git
 
-		# Run tests: 
+		# To make sure everything is OK, run tests for both Robolectric and your project:
     	cd path_to_your_project_repo && (cd submodules/robolectric && ant clean test) && ant clean test
 
 
 - **Open YourProject in IntelliJ 10.5 or higher**.
-- Import IntelliJ Settings: File => Import Settings => YourProject/support/IntellijSettings.jar. 
+- Import IntelliJ Settings: File => Import Settings => YourProject/support/IntellijSettings.jar.
 This will destroy your existing IntelliJ settings!
 
 Notes:
@@ -74,19 +74,19 @@ Salvation lies within.
 
 Download the latest Mac SDK: http://developer.android.com/sdk/index.html
 
-Unzip the archive and move the android-sdk-macosx dir to ~/android-sdk-macosx. 
-*This project assumes that android lives in ~/android-sdk-macosx*. You will need to 
+Unzip the archive and move the android-sdk-macosx dir to ~/android-sdk-macosx.
+*This project assumes that android lives in ~/android-sdk-macosx*. You will need to
 fix paths in several places if you choose a different location.
 
-Add the android tools to the PATH. 
+Add the android tools to the PATH.
 
     # Note: change .bash_profile to .bashrc or something else if needed
     echo 'export PATH="$PATH:$HOME/android-sdk-macosx/tools:$HOME/android-sdk-macosx/platform-tools"' >> $HOME/.bash_profile
 
 Open a new Terminal window and run `android`:
- 
+
     # in a new Terminal window:
-    android 
+    android
 
 Use the "Android SDK and AVD Manager" to download all of the SDKs. This project assumes SDK v10 (2.3.3) with Google APIs.
 You can change this later.
@@ -99,9 +99,9 @@ To install:
 Install other SDKs using this method.
 
 ### Virtual Devices
-Make at least one Virtual Device (emulator) for the SDK(s) you installed above.
+Make at least one Virtual Device (emulator) for the SDK(s) you installed above.  Instructions at http://developer.android.com/tools/devices/index.html
 
-Note: This project assumes you have SDK 10 with Google APIs (2.3.3) installed. You can change this in 
+Note: This project assumes you have SDK 10 with Google APIs (2.3.3) installed. You can change this in
 `build.properties`.
 
 ## 2. Setting Up Your New Project's Repo
@@ -136,22 +136,22 @@ http://github.com/pivotal/robolectric (HEAD). You can specify your own fork at t
 We recommend that you fork robolectric for your project. For details on how to set up your fork
 to easily sync with pivotal/robolectric, see "Open Source Robolectric" below.
 
-Note that Robolectric unit test require SDK v10 (2.3.3) with Google APIs. If you do not install this SDK 
+Note that Robolectric unit test require SDK v10 (2.3.3) with Google APIs. If you do not install this SDK
 then you will not be able to run Robolectric's own test suite.
 
 ## 3. IntelliJ: Settings, Libraries, and SDKs
 **Open YourProject in IntelliJ 10.5 or higher.**
 
-### Import IntellijSettings.jar 
+### Import IntellijSettings.jar
 Import support/IntellijSettings.jar to automatically configure your SDKs and other important settings:
 
 File => Import Settings => YourProject/support/IntellijSettings.jar
 
 If everything goes well everything will be fixed when IntelliJ restarts.
 
-### My IntelliJ SDKs are Broken!
-Something about your machine's configuration does not match our settings. Manually fix all 
-using the following instructions. Likely issues include: 
+### Troubleshooting: My IntelliJ SDKs are Broken!
+Something about your machine's configuration does not match our settings. Manually fix all
+using the following instructions. Likely issues include:
 
 - Are you are not running IntelliJ 11.X?
 - Android SDKs are not installed in ~/android-sdk-macosx/.
@@ -163,7 +163,7 @@ If these are not the issue keep going to the SDK sections below.
 - File => Project Structure
 - Platform Settings => SDKs
 
-If 1.6 is not listed, add it: 
+If 1.6 is not listed, add it:
 
 - Add (plus sign) => JSDK
 - Take the default if you can, deep in /System/Library/.../CurrentJDK/Home
@@ -175,13 +175,13 @@ Check your Android SDKs:
 - Platform Settings => SDKs
 
 Your Android SDKs are listed here. You might need to add a few. Note that if you want to run Robolectric's
-own test suite you will need to add Google APIs (2.3.3). For example: 
+own test suite you will need to add Google APIs (2.3.3). For example:
 
 - Add (plus sign) => Android SDK
 - locate and choose ~/android-sdk-macosx
 - Select internal Java Platform: 1.6
 - Create new Android SDK: Google APIs (2.3.3)
-  
+
 If you need SDKs that are not listed you will need to install it via the
 Android SDK and AVD Manager. See above.
 
@@ -194,16 +194,16 @@ You might need to fix the Module SDKs for YourProject and Robolectric:
 - Repeat for Modules => Robolectric => Dependencies
 
 # Highlighted Libraries And Tools
-We have included several libraries and configurations that we use on most projects. You are free to 
+We have included several libraries and configurations that we use on most projects. You are free to
 keep them or remove them.
 
 ## Roboguice
-By default this project uses Roboguice for dependency injection. http://code.google.com/p/roboguice/
+By default this project uses Roboguice for dependency injection. https://github.com/roboguice/roboguice
 
-Configure dependency injection in MySampleApplication.ApplicationModule and 
+Configure dependency injection in MySampleApplication.ApplicationModule and
 RobolectricTestRunnerWithInjection.TestApplicationModule.
 
-RobolectricTestRunnerWithInjection is a test runner configured to use Roboguice. 
+RobolectricTestRunnerWithInjection is a test runner configured to use Roboguice.
 See StarterActivityWithRoboguiceTest for example usage.
 
 ### To remove Roboguice:
@@ -214,8 +214,8 @@ See StarterActivityWithRoboguiceTest for example usage.
 - Remove reference to MySampleApplication from AndroidManifest
 
 ## C2DM
-We have added base support for C2DM - http://code.google.com/android/c2dm/. C2DM is Google's push 
-notification service used for Android and is available in API v. 2.2 and above, though it is 
+We have added base support for C2DM - http://code.google.com/android/c2dm/. C2DM is Google's push
+notification service used for Android and is available in API v. 2.2 and above, though it is
 safely ignored in lower versions.
 
 While 2.2 devices support C2DM, Android SKDs do not provide hooks for integrating with the service -- no
@@ -258,8 +258,8 @@ We have added many handy Jars, such as apache commons, google's Guava, the Jacks
 and more. Check them out in `libs/main/` and `libs/test`-- keep them or delete them.
 
 ## Scripts
-These Ruby scripts should make your life easier. Feel free to edit them. They assume ruby 
-lives in `/usr/bin/ruby` so you might need to edit their `#!/usr/bin/ruby` if yours is different. Alternatively 
+These Ruby scripts should make your life easier. Feel free to edit them. They assume ruby
+lives in `/usr/bin/ruby` so you might need to edit their `#!/usr/bin/ruby` if yours is different. Alternatively
 these scripts can be run with ruby explicitly: `ruby script/[the script]`.
 
 Be sure to check out "Project Setup Script", above, for more details on many of these scripts.
@@ -267,26 +267,26 @@ Be sure to check out "Project Setup Script", above, for more details on many of 
 - `script/gp` -- "Git Pull" script. This pulls and rebases your project and robolectric.
 - `script/gpp` -- "Git Pull Push" script. Same as script/gp but also runs all tests in robolectric.
 and your project. If they pass it will `git push`.
-- `script/project_setup [YourProject]` -- changes this project from being configured for 
-AndroidIntelliJStarter to YourProject, including a creating a new local git repo if desired.
+- `script/project_setup [YourProject] [path_to_your_project_repo]` -- Copies AndroidIntelliJStarter into a project
+git repo, and gives the project a name of [YourProject].
 - `script/set_package` -- Change the Java package from the default to the provided package name.
 - `script/init_git_repo` -- create a new local git repository. Existing `.git` directory safely moved to `.git.bak`.
 
 ## ant
-In addition to the build-in Android `ant` tasks you will likely use the following additions often. 
-You can chain them, such as `ant clean test`. Edit `build.xml` at will. In addition to the 
+In addition to the built-in Android `ant` tasks you will likely use the following additions often.
+You can chain them, such as `ant clean test`. Feel free to edit `build.xml` to fit your needs.
 
-- `ant clean` -- deletes up all output dirs
+- `ant clean` -- deletes all output dirs
 - `ant test` -- executes the project tests
 
 ## Open Source Robolectric
-Robolectric is open source and it continuously improves. We recommend that your project fork robolectric. 
-By forking you have the freedom to choose when (if ever) to update to later versions of robolectric, 
-make changes to your fork as needed, and contribute those changes back to pivotal/robolectric using 
+Robolectric is open source and it continuously improves. We recommend that your project fork robolectric.
+By forking you have the freedom to choose when (if ever) to update to later versions of robolectric,
+make changes to your fork as needed, and contribute those changes back to pivotal/robolectric using
 the official github pull-request workflow.
 
 ### Merging in pivotal/robolectric
-The official Github workflow (http://help.github.com/fork-a-repo/) details how to merge another 
+The official Github workflow (http://help.github.com/fork-a-repo/) details how to merge another
 repo's code into your own fork, such as merging pivotal/robolectric into yourproject/robolectric:
 
 Do the following once per machine:
@@ -302,6 +302,8 @@ When you want to merge in upstream:
     git fetch upstream
     git merge --no-commit upstream/master
 
+Then:
+
 - Fix merge conflicts
 - Run robolectric tests
 - Run main project tests
@@ -309,12 +311,8 @@ When you want to merge in upstream:
 - Commit project and push
 
 ### Contributing Back
-***Note: get permission from your client before contributing code back to any open source project.***
 
-Assuming you forked as detailed above, make a pull request as your client user: http://help.github.com/send-pull-requests/
-
-The pull request can be handled by someone with commit right to robolectric, maybe even you!
-See "Managing Pull Requests" at http://help.github.com/send-pull-requests/.
+Make a pull request: http://help.github.com/send-pull-requests/
 
 ### Changing from using the default Robolectric to using your own fork
 If you started with the default (non-pushable submodule) robolectric, you can change your mind later and set up your
@@ -334,5 +332,3 @@ After forking robolectric on Github, add a submodule that points to your robolec
     git submodule add ***YOUR-GIT-REPOSITORY-URI-HERE*** submodules/robolectric
     git submodule init
     (cd submodules/robolectric && ant clean test)
-
-Also see *Open Source Robolectric*.
