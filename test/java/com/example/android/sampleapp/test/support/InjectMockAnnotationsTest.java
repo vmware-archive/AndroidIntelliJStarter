@@ -5,11 +5,11 @@ import com.example.android.sampleapp.StarterActivity;
 import com.example.android.sampleapp.util.CurrentTime;
 import com.xtremelabs.robolectric.Robolectric;
 import com.xtremelabs.robolectric.RobolectricTestRunner;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import roboguice.RoboGuice;
 
+import static org.fest.assertions.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 
 @RunWith(RobolectricTestRunner.class)
@@ -30,8 +30,6 @@ public class InjectMockAnnotationsTest {
     }
 
     @Test
-//todo
-    @Ignore("re-implement with Fest")
     public void fieldAnnotatedWith_InjectMock_shouldBeSetToMocksOfTheCorrectType() throws Exception {
         injectMocks();
         StarterActivity myActivity = new StarterActivity();
@@ -40,6 +38,6 @@ public class InjectMockAnnotationsTest {
 
         verify(mockCurrentTime).currentTimeMillis();
 
-//        expect(myActivity.getCurrentTime()).toEqual(mockCurrentTime);
+        assertThat(myActivity.getCurrentTime()).isEqualTo(mockCurrentTime);
     }
 }

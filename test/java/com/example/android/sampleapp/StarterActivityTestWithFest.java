@@ -2,27 +2,22 @@ package com.example.android.sampleapp;
 
 import android.widget.TextView;
 import com.xtremelabs.robolectric.RobolectricTestRunner;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.FileNotFoundException;
 
+import static org.fest.assertions.api.ANDROID.assertThat;
 
 @RunWith(RobolectricTestRunner.class)
-public class StarterActivityTestWithGreatExpectations {
+public class StarterActivityTestWithFest {
     @Test
-//todo
-    @Ignore("re-implement with Fest")
     public void shouldHaveATitle() throws FileNotFoundException {
         final StarterActivity activity = new StarterActivity();
         activity.onCreate(null);
         TextView title = (TextView) activity.findViewById(R.id.title);
-//        expect(title).not.toBeNull();
-//        expect(title.getText()).toBeInstanceOf(String.class);
-//        expect(title.getText()).toEqual("Hello World");
-
-        // custom matcher!
-//        expect(title).toBeVisible();
+        assertThat(title).isNotNull()
+                .hasText("Hello World")
+                .isVisible();
     }
 }
