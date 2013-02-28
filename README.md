@@ -239,12 +239,19 @@ git repo, and gives the project a name of [YourProject].
 - `script/set_package` -- Change the Java package from the default to the provided package name.
 - `script/init_git_repo` -- create a new local git repository. Existing `.git` directory safely moved to `.git.bak`.
 
-## ant
+## ant (DEPRECATED)
 In addition to the built-in Android `ant` tasks you will likely use the following additions often.
 You can chain them, such as `ant clean test`. Feel free to edit `build.xml` to fit your needs.
 
 - `ant clean` -- deletes all output dirs
 - `ant test` -- executes the project tests
+
+## Maven
+There are a couple of useful maven tasks:
+
+- `mvn clean` -- deletes all output dirs
+- `mvn test` -- executes the project tests
+- `mvn install` -- writes the target (your apk by default) to the local maven repo
 
 ## Open Source Robolectric
 Robolectric is open source and it continuously improves. We recommend that your project fork robolectric.

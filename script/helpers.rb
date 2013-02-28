@@ -4,6 +4,8 @@ SAMPLE_PACKAGE = "com.example.android.sampleapp"
 SAMPLE_PACKAGE_DIR = SAMPLE_PACKAGE.gsub('.', "/")
 STARTER_PROJECT_DIR = Dir.getwd
 ANDROID_HOME = `which android | sed 's|/tools/android$||'`.chomp
+SRC_DIR = "src/main/java"
+TEST_SRC_DIR = "src/test/java"
 
 def bail_with(project)
   puts ">>> #{project} failed! <<<"
@@ -100,18 +102,18 @@ def rename_package
   return unless validate_package(package)
   package_path = package.gsub('.', '/')
 
-  FileUtils.mkdir_p "src/#{package_path}/"
-  FileUtils.mkdir_p "test/java/#{package_path}"
+  FileUtils.mkdir_p "#{SRC_DIR}/#{package_path}/"
+  FileUtils.mkdir_p "#{TEST_SRC_DIR}/#{package_path}"
 
-  replace_package(Dir.glob("src/#{SAMPLE_PACKAGE_DIR}/**/*.java"), package, SAMPLE_PACKAGE)
+  replace_package(Dir.glob("#{SRC_DIR}/#{SAMPLE_PACKAGE_DIR}/**/*.java"), package, SAMPLE_PACKAGE)
   replace_package(config_files, package, SAMPLE_PACKAGE)
-  replace_package(Dir.glob("test/java/#{SAMPLE_PACKAGE_DIR}/**/*.java"), package, SAMPLE_PACKAGE)
+  replace_package(Dir.glob("#{TEST_SRC_DIR}/#{SAMPLE_PACKAGE_DIR}/**/*.java"), package, SAMPLE_PACKAGE)
 
-  move_source_files("src/#{SAMPLE_PACKAGE_DIR}/*", "src/#{package_path}")
-  move_source_files("test/java/#{SAMPLE_PACKAGE_DIR}/*", "test/java/#{package_path}")
+  move_source_files("#{SRC_DIR}/#{SAMPLE_PACKAGE_DIR}/*", "#{SRC_DIR}/#{package_path}")
+  move_source_files("#{TEST_SRC_DIR}/#{SAMPLE_PACKAGE_DIR}/*", "#{TEST_SRC_DIR}/#{package_path}")
 
-  FileUtils.rm_rf "src/com/example" unless package.start_with? "com.example"
-  FileUtils.rm_rf "test/java/com/example" unless package.start_with? "com.example"
+  FileUtils.rm_rf "#{SRC_DIR}/com/example" unless package.start_with? "com.example"
+  FileUtils.rm_rf "#{TEST_SRC_DIR}/com/example" unless package.start_with? "com.example"
 end
 
 def copy_starter_files_to_project_directory(project_directory)

@@ -204,9 +204,6 @@
           <excludes>
             <exclude>**/Test*.java</exclude>
           </excludes>
-          <includes>
-            <include>com/example/android/sampleapp/StarterActivityTest.java</include>
-          </includes>
         </configuration>
       </plugin>
     </plugins>
