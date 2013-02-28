@@ -213,45 +213,12 @@ See StarterActivityWithRoboguiceTest for example usage.
 - Remove all uses of @Inject, @InjectView, etc.
 - Remove reference to MySampleApplication from AndroidManifest
 
-## C2DM
-We have added base support for C2DM - http://code.google.com/android/c2dm/. C2DM is Google's push
-notification service used for Android and is available in API v. 2.2 and above, though it is
-safely ignored in lower versions.
 
-While 2.2 devices support C2DM, Android SKDs do not provide hooks for integrating with the service -- no
-registration, unregistration, or notification-receipt handling code. Google suggests copying code from one of
-their sample projects for this support, which we have done.  See com.google.android.c2dm. Note that we modified
-com.google.android.c2dm.C2DMBaseReceiver to support Roboguice.
+## Fest
+We've included the Fest expectation matchers to provide Jasmine-style expectations to your project. The fest-android
+extensions are also included for simpler android-specific tests.
 
-To handle C2DM notifications you will need to implement C2DMReceiver, which is stubbed-out but heavily documented.
-
-### C2DM Resources:
-- Official C2DM site: http://code.google.com/android/c2dm
-- Pivotal Blog articles: http://pivotallabs.com/blabs/categories/c2dm
-- Source of com.google.android.c2dm: http://www.google.com/codesearch#JWblrwroAxw/trunk/android/c2dm/com/google/android/c2dm/&q=C2DMBaseReceiver&type=cs
-
-### To Remove C2DM:
-- Remove C2DMReceiver and test
-- Delete com.google.android.c2dm
-- Remove the C2DM Section of AndroidManifest.xml
-
-## Great Expectations
-great-expectations (https://github.com/xian/great-expectations) provides Jasmine-style test expectations for Java.
-While the framework is a little rough around the edges, we love this style of expectation assertions; see
-`com.example.android.sampleapp.StarterActivityTestWithGreatExpectations.java`.
-
-### Robolectric-gem (Robolectric Great Expectations Matchers)
-Robolectric-gem is a library of matcher classes for using great-expectations in Robolectric-powered unit tests.
-For example, it provides a matcher on `View` called `toBeVisible()`:
-
-    TextView titleView = (TextView) activity.findViewById(R.id.title);
-    expect(titleView).toBeVisible();
-
-You can add your own matcher classes too. Add the robolectric-gem repo as a submodule instead of using the jar,
-or keep it as a jar file and add your own matcher classes by subclassing RunnableExpectGenerator and running that
-class to create your own Expect.java in your project.
-
-For more information, see https://github.com/pivotal/robolectric-gem
+Further documentation at http://fest.easytesting.org/ and https://github.com/square/fest-android
 
 ## Lots of Jars
 We have added many handy Jars, such as apache commons, google's Guava, the Jackson JSON parsing libraries,
