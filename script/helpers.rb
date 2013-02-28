@@ -126,13 +126,13 @@ end
 
 def init_robolectric_as_a_project_submodule(project_directory)
   puts "\n> Please provide a remote repo for your robolectric fork, such as git@github.com:yourcompany/robolectric.git"
-  puts "> Leave blank to add robolectric as a non-pushable submodule from the main repo."
+  puts "> Leave blank to add robolectric as a submodule from the main repo."
   print "> "
   remote_repo = gets.chomp!
 
   if remote_repo.nil? || remote_repo.length == 0
-    remote_repo = "git://github.com/pivotal/robolectric.git"
-    puts "Adding Robolectric submodule to #{project_directory} as a non-pushable submodule from the main repo"
+    remote_repo = "https://github.com/pivotal/robolectric.git"
+    puts "Adding Robolectric submodule to #{project_directory} as a submodule from the main repo"
   else
     puts "Adding Robolectric submodule to #{project_directory}"
   end
