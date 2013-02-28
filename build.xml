@@ -1,181 +1,181 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="PROJECTNAME" default="help">
 
-    <!-- The local.properties file is created and updated by the 'android' tool.
-         It contains the path to the SDK. It should *NOT* be checked into
-         Version Control Systems. -->
-    <property file="local.properties" />
+  <!-- The local.properties file is created and updated by the 'android' tool.
+       It contains the path to the SDK. It should *NOT* be checked into
+       Version Control Systems. -->
+  <property file="local.properties"/>
 
-    <!-- The ant.properties file can be created by you. It is only edited by the
-         'android' tool to add properties to it.
-         This is the place to change some Ant specific build properties.
-         Here are some properties you may want to change/update:
+  <!-- The ant.properties file can be created by you. It is only edited by the
+       'android' tool to add properties to it.
+       This is the place to change some Ant specific build properties.
+       Here are some properties you may want to change/update:
 
-         source.dir
-             The name of the source directory. Default is 'src'.
-         out.dir
-             The name of the output directory. Default is 'bin'.
+       source.dir
+           The name of the source directory. Default is 'src'.
+       out.dir
+           The name of the output directory. Default is 'bin'.
 
-         For other overridable properties, look at the beginning of the rules
-         files in the SDK, at tools/ant/build.xml
+       For other overridable properties, look at the beginning of the rules
+       files in the SDK, at tools/ant/build.xml
 
-         Properties related to the SDK location or the project target should
-         be updated using the 'android' tool with the 'update' action.
+       Properties related to the SDK location or the project target should
+       be updated using the 'android' tool with the 'update' action.
 
-         This file is an integral part of the build system for your
-         application and should be checked into Version Control Systems.
+       This file is an integral part of the build system for your
+       application and should be checked into Version Control Systems.
 
-         -->
-    <property file="ant.properties" />
+       -->
+  <property file="ant.properties"/>
 
-    <!-- if sdk.dir was not set from one of the property file, then
-         get it from the ANDROID_HOME env var.
-         This must be done before we load project.properties since
-         the proguard config can use sdk.dir -->
-    <property environment="env" />
-    <condition property="sdk.dir" value="${env.ANDROID_HOME}">
-        <isset property="env.ANDROID_HOME" />
-    </condition>
+  <!-- if sdk.dir was not set from one of the property file, then
+       get it from the ANDROID_HOME env var.f
+       This must be done before we load project.properties since
+       the proguard config can use sdk.dir -->
+  <property environment="env"/>
+  <condition property="sdk.dir" value="${env.ANDROID_HOME}">
+    <isset property="env.ANDROID_HOME"/>
+  </condition>
 
-    <!-- The project.properties file is created and updated by the 'android'
-         tool, as well as ADT.
+  <!-- The project.properties file is created and updated by the 'android'
+       tool, as well as ADT.
 
-         This contains project specific properties such as project target, and library
-         dependencies. Lower level build properties are stored in ant.properties
-         (or in .classpath for Eclipse projects).
+       This contains project specific properties such as project target, and library
+       dependencies. Lower level build properties are stored in ant.properties
+       (or in .classpath for Eclipse projects).
 
-         This file is an integral part of the build system for your
-         application and should be checked into Version Control Systems. -->
-    <loadproperties srcFile="project.properties" />
+       This file is an integral part of the build system for your
+       application and should be checked into Version Control Systems. -->
+  <loadproperties srcFile="project.properties"/>
 
-    <!-- quick check on sdk.dir -->
-    <fail
-            message="sdk.dir is missing. Make sure to generate local.properties using 'android update project' or to inject it through the ANDROID_HOME environment variable."
-            unless="sdk.dir"
-    />
+  <!-- quick check on sdk.dir -->
+  <fail
+      message="sdk.dir is missing. Make sure to generate local.properties using 'android update project' or to inject it through the ANDROID_HOME environment variable."
+      unless="sdk.dir"
+      />
 
-    <!--
-        Import per project custom build rules if present at the root of the project.
-        This is the place to put custom intermediary targets such as:
-            -pre-build
-            -pre-compile
-            -post-compile (This is typically used for code obfuscation.
-                           Compiled code location: ${out.classes.absolute.dir}
-                           If this is not done in place, override ${out.dex.input.absolute.dir})
-            -post-package
-            -post-build
-            -pre-clean
-    -->
-    <import file="custom_rules.xml" optional="true" />
+  <!--
+      Import per project custom build rules if present at the root of the project.
+      This is the place to put custom intermediary targets such as:
+          -pre-build
+          -pre-compile
+          -post-compile (This is typically used for code obfuscation.
+                         Compiled code location: ${out.classes.absolute.dir}
+                         If this is not done in place, override ${out.dex.input.absolute.dir})
+          -post-package
+          -post-build
+          -pre-clean
+  -->
+  <import file="custom_rules.xml" optional="true"/>
 
-    <!-- Import the actual build file.
+  <!-- Import the actual build file.
 
-         To customize existing targets, there are two options:
-         - Customize only one target:
-             - copy/paste the target into this file, *before* the
-               <import> task.
-             - customize it to your needs.
-         - Customize the whole content of build.xml
-             - copy/paste the content of the rules files (minus the top node)
-               into this file, replacing the <import> task.
-             - customize to your needs.
+       To customize existing targets, there are two options:
+       - Customize only one target:
+           - copy/paste the target into this file, *before* the
+             <import> task.
+           - customize it to your needs.
+       - Customize the whole content of build.xml
+           - copy/paste the content of the rules files (minus the top node)
+             into this file, replacing the <import> task.
+           - customize to your needs.
 
-         ***********************
-         ****** IMPORTANT ******
-         ***********************
-         In all cases you must update the value of version-tag below to read 'custom' instead of an integer,
-         in order to avoid having your file be overridden by tools such as "android update project"
-    -->
-    <!-- version-tag: 1 -->
-    <import file="${sdk.dir}/tools/ant/build.xml" />
+       ***********************
+       ****** IMPORTANT ******
+       ***********************
+       In all cases you must update the value of version-tag below to read 'custom' instead of an integer,
+       in order to avoid having your file be overridden by tools such as "android update project"
+  -->
+  <!-- version-tag: 1 -->
+  <import file="${sdk.dir}/tools/ant/build.xml"/>
 
-    <target name="-pre-clean">
-        <subant target="clean">
-            <fileset dir="submodules/robolectric/" includes="build.xml" />
-        </subant>
-        <delete dir="${out.absolute.dir}/testClasses"/>
-        <delete dir="tmp"/>
-    </target>
+  <target name="-pre-clean">
+    <subant target="clean">
+      <fileset dir="submodules/robolectric/" includes="build.xml"/>
+    </subant>
+    <delete dir="${out.absolute.dir}/testClasses"/>
+    <delete dir="tmp"/>
+  </target>
 
-    <target name="fullclean" depends="clean" description="Regular clean, plus clean IDE tmp files too">
-        <delete dir="out" verbose="${verbose}"/>
-    </target>
+  <target name="fullclean" depends="clean" description="Regular clean, plus clean IDE tmp files too">
+    <delete dir="out" verbose="${verbose}"/>
+  </target>
 
-    <target name="-pre-compile">
-        <!-- android uses this property for its generated testing framework. We'll set it manually.-->
-        <property name="tested.project.absolute.dir" location="." />
-        <property name="tested.project.test.absolute.dir" location="${tested.project.absolute.dir}/test/java" />
-        <property name="out.test.classes.absolute.dir" location="${out.dir}/testClasses" />
-    </target>
+  <target name="-pre-compile">
+    <!-- android uses this property for its generated testing framework. We'll set it manually.-->
+    <property name="tested.project.absolute.dir" location="."/>
+    <property name="tested.project.test.absolute.dir" location="${tested.project.absolute.dir}/test/java"/>
+    <property name="out.test.classes.absolute.dir" location="${out.dir}/testClasses"/>
+  </target>
 
-    <!-- Mostly a copy of the compile target from ~/android-sdk-macosx/tools/ant/main_rules.xml -->
-    <target name="compile.tests" depends="-set-debug-files, -set-debug-mode, -compile">
-        <subant target="compile">
-            <fileset dir="submodules/robolectric/" includes="build.xml" />
-        </subant>
+  <!-- Mostly a copy of the compile target from ~/android-sdk-macosx/tools/ant/main_rules.xml -->
+  <target name="compile.tests" depends="-set-debug-files, -set-debug-mode, -compile">
+    <subant target="compile">
+      <fileset dir="submodules/robolectric/" includes="build.xml"/>
+    </subant>
 
-        <mkdir dir="${out.test.classes.absolute.dir}"/>
+    <mkdir dir="${out.test.classes.absolute.dir}"/>
 
-        <path id="project.javac.classpath">
-            <path refid="project.all.jars.path"/>
-            <path refid="tested.project.classpath"/>
-            <pathelement path="${sdk.dir}/extras/android/support/v4/android-support-v4.jar"/>
-        </path>
+    <path id="project.javac.classpath">
+      <path refid="project.all.jars.path"/>
+      <path refid="tested.project.classpath"/>
+      <pathelement path="${sdk.dir}/extras/android/support/v4/android-support-v4.jar"/>
+    </path>
 
-        <!-- directories customized for our test dirs -->
-        <!-- NOTE: setting includeantruntime="false" as advised at http://ant.apache.org/manual/Tasks/javac.html-->
-        <javac encoding="${java.encoding}"
-               source="${java.source}"
-               target="${java.target}"
-               debug="true"
-               extdirs=""
-               destdir="${out.test.classes.absolute.dir}"
-               bootclasspathref="project.target.class.path"
-               verbose="${verbose}"
-               classpathref="project.javac.classpath"
-               includeantruntime="false">
-            <src path="${source.absolute.dir}" />
-            <src path="${gen.absolute.dir}" />
+    <!-- directories customized for our test dirs -->
+    <!-- NOTE: setting includeantruntime="false" as advised at http://ant.apache.org/manual/Tasks/javac.html-->
+    <javac encoding="${java.encoding}"
+           source="${java.source}"
+           target="${java.target}"
+           debug="true"
+           extdirs=""
+           destdir="${out.test.classes.absolute.dir}"
+           bootclasspathref="project.target.class.path"
+           verbose="${verbose}"
+           classpathref="project.javac.classpath"
+           includeantruntime="false">
+      <src path="${source.absolute.dir}"/>
+      <src path="${gen.absolute.dir}"/>
 
-            <!-- test src -->
-            <src path="${tested.project.test.absolute.dir}"/>
-            <classpath>
-                <pathelement path="${out.classes.absolute.dir}"/>
-                <pathelement path="submodules/robolectric/bin/mainClasses"/>
-                <fileset dir="${jar.libs.dir}" includes="*.jar"/>
-                <fileset dir="${jar.libs.dir}/test" includes="**/*.jar"/>
-            </classpath>
-        </javac>
-    </target>
+      <!-- test src -->
+      <src path="${tested.project.test.absolute.dir}"/>
+      <classpath>
+        <pathelement path="${out.classes.absolute.dir}"/>
+        <pathelement path="submodules/robolectric/bin/mainClasses"/>
+        <fileset dir="${jar.libs.dir}" includes="*.jar"/>
+        <fileset dir="${jar.libs.dir}/test" includes="**/*.jar"/>
+      </classpath>
+    </javac>
+  </target>
 
-    <target name="test" depends="compile.tests" description="test all">
-        <mkdir dir="${out.dir}/out/reports/tests"/>
-        <junit showoutput="true" failureproperty="junit.failure">
-            <formatter type="plain" usefile="false" if="junit.console.out"/>
-            <formatter type="plain"/>
-            <formatter type="xml"/>
-            <batchtest todir="${out.dir}/out/reports/tests">
-                <fileset dir="${tested.project.test.absolute.dir}">
-                    <include name="**/*Test.java"/>
-                </fileset>
-            </batchtest>
-            <classpath>
-                <!-- Project -->
-                <pathelement path="${out.classes.absolute.dir}"/>
-                <pathelement path="${out.test.classes.absolute.dir}"/>
-                <fileset dir="${jar.libs.dir}" includes="**/*.jar"/>
+  <target name="test" depends="compile.tests" description="test all">
+    <mkdir dir="${out.dir}/out/reports/tests"/>
+    <junit showoutput="true" failureproperty="junit.failure">
+      <formatter type="plain" usefile="false" if="junit.console.out"/>
+      <formatter type="plain"/>
+      <formatter type="xml"/>
+      <batchtest todir="${out.dir}/out/reports/tests">
+        <fileset dir="${tested.project.test.absolute.dir}">
+          <include name="**/*Test.java"/>
+        </fileset>
+      </batchtest>
+      <classpath>
+        <!-- Project -->
+        <pathelement path="${out.classes.absolute.dir}"/>
+        <pathelement path="${out.test.classes.absolute.dir}"/>
+        <fileset dir="${jar.libs.dir}" includes="**/*.jar"/>
 
-                <!-- Robolectric -->
-                <fileset dir="submodules/robolectric/lib/main" includes="*.jar"/>
-                <pathelement path="submodules/robolectric/bin/mainClasses"/>
+        <!-- Robolectric -->
+        <fileset dir="submodules/robolectric/lib/main" includes="*.jar"/>
+        <pathelement path="submodules/robolectric/bin/mainClasses"/>
 
-                <!-- Android -->
-                <path refid="project.target.class.path"/>
-                <pathelement path="${sdk.dir}/extras/android/support/v4/android-support-v4.jar"/>
-            </classpath>
-        </junit>
-        <fail if="junit.failure" message="Unit test(s) failed.  See reports!"/>
-    </target>
+        <!-- Android -->
+        <path refid="project.target.class.path"/>
+        <pathelement path="${sdk.dir}/extras/android/support/v4/android-support-v4.jar"/>
+      </classpath>
+    </junit>
+    <fail if="junit.failure" message="Unit test(s) failed.  See reports!"/>
+  </target>
 
 </project>
 

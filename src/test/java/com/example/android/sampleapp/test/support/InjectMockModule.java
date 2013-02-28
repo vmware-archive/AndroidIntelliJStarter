@@ -7,6 +7,7 @@ import java.util.Map;
 
 public class InjectMockModule extends AbstractModule {
     Map<Class, Object> bindingMap = new HashMap<Class, Object>();
+
     @Override
     protected void configure() {
         for (Class mockClass : bindingMap.keySet()) {

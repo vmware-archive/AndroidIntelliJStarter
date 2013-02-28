@@ -12,7 +12,8 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(RobolectricTestRunnerWithInjection.class)
 public class StarterActivityWithRoboguiceTest {
-    @Inject CurrentTime currentTime;
+    @Inject
+    CurrentTime currentTime;
 
     @Test
     public void testCurrentTimeIsInjected() throws Exception {

@@ -91,6 +91,7 @@ def move_source_files(old_package_path, new_package_path)
   FileUtils.mv Dir.glob(old_package_path),  new_package_path
 end
 
+# todo change group id and artifact id in pom.xml
 def rename_package
   puts "\n> Please provide a package name, such as com.yourcompany.yourproject"
   puts "> Leave blank to change this later."

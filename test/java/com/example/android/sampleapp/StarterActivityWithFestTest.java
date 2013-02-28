@@ -10,7 +10,7 @@ import java.io.FileNotFoundException;
 import static org.fest.assertions.api.ANDROID.assertThat;
 
 @RunWith(RobolectricTestRunner.class)
-public class StarterActivityTestWithFest {
+public class StarterActivityWithFestTest {
     @Test
     public void shouldHaveATitle() throws FileNotFoundException {
         final StarterActivity activity = new StarterActivity();

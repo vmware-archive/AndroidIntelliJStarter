@@ -2,7 +2,14 @@ package com.example.android.sampleapp.test.support;
 
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.node.*;
+import org.codehaus.jackson.node.ArrayNode;
+import org.codehaus.jackson.node.BooleanNode;
+import org.codehaus.jackson.node.ContainerNode;
+import org.codehaus.jackson.node.DoubleNode;
+import org.codehaus.jackson.node.IntNode;
+import org.codehaus.jackson.node.LongNode;
+import org.codehaus.jackson.node.ObjectNode;
+import org.codehaus.jackson.node.TextNode;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -12,34 +19,34 @@ import java.util.Set;
 
 /**
  * A simple class for programmatic editing of JSON strings.
- *
+ * <p/>
  * Construct with a JSON string.  The JSON string should represent an array or object.
- *
+ * <p/>
  * Traverse the JSON string's tree with child(index), child(key), parent(), and root() to change the
  * node which is currently focused by the editor.  Most methods operate on the currently focused node.
  * After calling child() on an instance, don't forget to use parent() or root() to traverse back up
  * if you want to make edits to other branches of the tree.
- *
+ * <p/>
  * If the focused node is an array, edit it with set(index, value), append(value), insert(index, value),
  * remove(index), and removeAll().  Get its length with length().
- *
+ * <p/>
  * If the focused node is an object, edit it with set(key, value), put(key, value), remove(key),
  * and removeAll().  Get all of its keys with keySet().
- *
+ * <p/>
  * Add sub-trees into the JSON tree by passing another JsonEditor to the editing methods.
  * The whole tree (or simply the value node) represented by the other JsonEditor's currently
  * focused node will be added.
- *
+ * <p/>
  * For focused object nodes and array nodes, convert them back to JSON with toJson().
- *
+ * <p/>
  * For focused value nodes, use the valueAsXXX() methods to get the value, and isNullValue()
  * to check if its value is null.
- *
+ * <p/>
  * For any focused node, isArray() and isObject() will report the data type of the focused node.
- *
+ * <p/>
  * All edit and traversal methods support method chaining to let you walk the tree and edit along the way,
  * all in the same line of code.  Getting carried away with this can make unreadable code.
- *
+ * <p/>
  * Because this class was designed to be used in unit tests for things like tweaking JSON fixture
  * data within a test, it is strict and throws exceptions whenever something unexpected happens.
  */
@@ -96,6 +103,7 @@ public class JsonEditor {
 
     /**
      * Debugging aid.
+     *
      * @return String which shows path to currently focused node.
      */
     public String toString() {
@@ -311,14 +319,29 @@ public class JsonEditor {
         }
     }
 
-    public static class NotABooleanNodeException extends JsonEditorException {}
-    public static class NotANumericNodeException extends JsonEditorException {}
-    public static class NotAStringNodeException extends JsonEditorException {}
-    public static class NotAnArrayOrObjectNodeException extends JsonEditorException {}
-    public static class NotAnArrayNodeException extends JsonEditorException {}
-    public static class NotAnObjectNodeException extends JsonEditorException {}
-    public static class NoSuchPropertyException extends JsonEditorException {}
-    public static class RootNodeHasNoParent extends JsonEditorException {}
+    public static class NotABooleanNodeException extends JsonEditorException {
+    }
+
+    public static class NotANumericNodeException extends JsonEditorException {
+    }
+
+    public static class NotAStringNodeException extends JsonEditorException {
+    }
+
+    public static class NotAnArrayOrObjectNodeException extends JsonEditorException {
+    }
+
+    public static class NotAnArrayNodeException extends JsonEditorException {
+    }
+
+    public static class NotAnObjectNodeException extends JsonEditorException {
+    }
+
+    public static class NoSuchPropertyException extends JsonEditorException {
+    }
+
+    public static class RootNodeHasNoParent extends JsonEditorException {
+    }
 
     private void assertNodeIsArrayNode() {
         if (!focusedNode.isArray()) {

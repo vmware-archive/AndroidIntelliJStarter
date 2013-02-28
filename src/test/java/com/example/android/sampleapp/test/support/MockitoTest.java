@@ -10,7 +10,8 @@ import static org.mockito.Mockito.verify;
 
 @RunWith(RobolectricTestRunnerWithInjection.class)
 public class MockitoTest {
-    @Mock ArrayList mockList;
+    @Mock
+    ArrayList mockList;
 
     @Test
     public void testMockitoWorks() throws Exception {
