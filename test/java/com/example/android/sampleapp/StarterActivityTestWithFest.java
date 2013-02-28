@@ -1,9 +1,9 @@
 package com.example.android.sampleapp;
 
 import android.widget.TextView;
-import com.xtremelabs.robolectric.RobolectricTestRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
 
 import java.io.FileNotFoundException;
 

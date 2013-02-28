@@ -3,10 +3,10 @@ package com.example.android.sampleapp.test.support;
 import com.example.android.sampleapp.MySampleApplication;
 import com.example.android.sampleapp.StarterActivity;
 import com.example.android.sampleapp.util.CurrentTime;
-import com.xtremelabs.robolectric.Robolectric;
-import com.xtremelabs.robolectric.RobolectricTestRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.Robolectric;
+import org.robolectric.RobolectricTestRunner;
 import roboguice.RoboGuice;
 
 import static org.fest.assertions.api.Assertions.assertThat;

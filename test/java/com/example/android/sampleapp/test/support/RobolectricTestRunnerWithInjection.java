@@ -3,10 +3,10 @@ package com.example.android.sampleapp.test.support;
 import com.example.android.sampleapp.ApplicationModule;
 import com.example.android.sampleapp.MySampleApplication;
 import com.example.android.sampleapp.util.CurrentTime;
-import com.xtremelabs.robolectric.Robolectric;
-import com.xtremelabs.robolectric.RobolectricTestRunner;
 import org.junit.runners.model.InitializationError;
 import org.mockito.MockitoAnnotations;
+import org.robolectric.Robolectric;
+import org.robolectric.RobolectricTestRunner;
 import roboguice.RoboGuice;
 
 public class RobolectricTestRunnerWithInjection extends RobolectricTestRunner {
