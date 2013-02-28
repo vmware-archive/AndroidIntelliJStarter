@@ -105,7 +105,7 @@
   <target name="-pre-compile">
     <!-- android uses this property for its generated testing framework. We'll set it manually.-->
     <property name="tested.project.absolute.dir" location="."/>
-    <property name="tested.project.test.absolute.dir" location="${tested.project.absolute.dir}/test/java"/>
+    <property name="tested.project.test.absolute.dir" location="${tested.project.absolute.dir}/src/test/java"/>
     <property name="out.test.classes.absolute.dir" location="${out.dir}/testClasses"/>
   </target>
 
@@ -135,10 +135,6 @@
            verbose="${verbose}"
            classpathref="project.javac.classpath"
            includeantruntime="false">
-      <src path="${source.absolute.dir}"/>
-      <src path="${gen.absolute.dir}"/>
-
-      <!-- test src -->
       <src path="${tested.project.test.absolute.dir}"/>
       <classpath>
         <pathelement path="${out.classes.absolute.dir}"/>
