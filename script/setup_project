@@ -2,7 +2,7 @@
 
 require "script/helpers"
 
-def usage
+def display_help_message
   puts <<-eos
   Usage:
      setup_project <new_project_name> <existing_project_directory>
@@ -22,6 +22,6 @@ end
 new_project_name = ARGV.shift
 project_directory = ARGV.shift
 
-usage unless new_project_name && project_directory
+display_help_message unless new_project_name && project_directory
 
 project_setup(new_project_name, project_directory)
