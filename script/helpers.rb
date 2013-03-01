@@ -34,6 +34,8 @@ def project_setup(name, project_directory)
 
   init_robolectric_as_a_project_submodule(project_directory)
 
+  clear_out_license_file(project_directory)
+
   puts "#{project_directory} has been prepared and is ready to go. Enjoy!"
 end
 
@@ -147,6 +149,10 @@ end
 def create_local_properties_file(directory)
   puts directory
   File.open(directory + "/local.properties", 'w') {|f| f.write("sdk.dir=" + ANDROID_HOME) }
+end
+
+def clear_out_license_file(project_directory)
+  File.open(File.join(project_directory, 'LICENSE.txt'), 'w') {|file| file.truncate(0) }
 end
 
 def system!(command)
