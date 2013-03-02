@@ -1,0 +1,7 @@
+#!/usr/bin/ruby
+require "script/helpers"
+
+system! 'git submodule update --merge'
+in_dir "submodules/robolectric" do
+    system! 'mvn clean install'
+end
