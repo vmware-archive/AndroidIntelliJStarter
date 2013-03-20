@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/AndroidIntelliJStarter.iml" filepath="$PROJECT_DIR$/AndroidIntelliJStarter.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Robolectric.iml" filepath="$PROJECT_DIR$/Robolectric.iml" />
+      <module fileurl="file://$PROJECT_DIR$/androidintellijstarter.iml" filepath="$PROJECT_DIR$/androidintellijstarter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../robolectric/robolectric.iml" filepath="$PROJECT_DIR$/../robolectric/robolectric.iml" />
     </modules>
   </component>
 </project>

@@ -117,6 +117,7 @@
       <scope>test</scope>
     </dependency>
 
+    <!-- this needs to come above fest-reflect or we pick up the wrong org.fest.util.Strings -->
     <dependency>
       <groupId>org.easytesting</groupId>
       <artifactId>fest-assert-core</artifactId>
@@ -126,9 +127,8 @@
 
     <dependency>
       <groupId>org.easytesting</groupId>
-      <artifactId>fest-util</artifactId>
-      <version>1.2.3</version>
-      <scope>test</scope>
+      <artifactId>fest-reflect</artifactId>
+      <version>1.4</version>
     </dependency>
 
     <dependency>
