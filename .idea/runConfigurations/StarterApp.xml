@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="StarterApp" type="AndroidRunConfigurationType" factoryName="Android Application">
-    <module name="AndroidIntelliJStarter" />
+    <module name="androidintellijstarter" />
     <option name="ACTIVITY_CLASS" value="" />
     <option name="MODE" value="default_activity" />
     <option name="DEPLOY" value="true" />

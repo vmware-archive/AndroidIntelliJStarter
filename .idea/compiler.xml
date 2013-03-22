@@ -29,12 +29,10 @@
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
         <module name="androidintellijstarter" />
-        <module name="robolectric" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="androidintellijstarter" target="1.6" />
-      <module name="robolectric" target="1.6" />
     </bytecodeTargetLevel>
   </component>
 </project>

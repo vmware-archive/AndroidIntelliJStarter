@@ -129,6 +129,7 @@
       <groupId>org.easytesting</groupId>
       <artifactId>fest-reflect</artifactId>
       <version>1.4</version>
+      <scope>test</test>
     </dependency>
 
     <dependency>
@@ -149,6 +150,7 @@
       <groupId>javax.annotation</groupId>
       <artifactId>jsr250-api</artifactId>
       <version>1.0</version>
+      <scope>test</scope>
     </dependency>
 
     <!--android & robolectric-->
