@@ -61,13 +61,13 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.apache.httpcomponents:httpclient:4.0.3" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: com.squareup:fest-android:1.0.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.easytesting:fest-assert-core:2.0M9" level="project" />
-    <orderEntry type="library" name="Maven: org.easytesting:fest-util:1.2.4" level="project" />
-    <orderEntry type="library" name="Maven: org.easytesting:fest-reflect:1.4" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.easytesting:fest-util:1.2.4" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.easytesting:fest-reflect:1.4" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.8.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.mockito:mockito-core:1.9.5" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.hamcrest:hamcrest-core:1.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.objenesis:objenesis:1.0" level="project" />
-    <orderEntry type="library" name="Maven: javax.annotation:jsr250-api:1.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: javax.annotation:jsr250-api:1.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.robolectric:robolectric:2.0-alpha-3-SNAPSHOT" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.xerial:sqlite-jdbc:3.7.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.javassist:javassist:3.14.0-GA" level="project" />

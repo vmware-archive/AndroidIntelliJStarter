@@ -129,7 +129,7 @@
       <groupId>org.easytesting</groupId>
       <artifactId>fest-reflect</artifactId>
       <version>1.4</version>
-      <scope>test</test>
+      <scope>test</scope>
     </dependency>
 
     <dependency>
