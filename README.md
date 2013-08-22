@@ -39,7 +39,7 @@ things as you go.
 
         git clone git://github.com/pivotal/AndroidIntelliJStarter starter_tmp
         cd starter_tmp
-        ./script/project_setup YourProjectName path_to_your_project_repo #or ruby script/project_setup ...
+        ./script/setup_project YourProjectName path_to_your_project_repo #or ruby script/setup_project ...
 
         # This script will prompt you for a package name and a robolectric repo, both are optional.
         # Default package name: com.example.android.sampleapp
@@ -121,11 +121,11 @@ changes to it.
     git clone git://github.com/pivotal/AndroidIntelliJStarter starter_tmp
 
 ### Project Setup Script
-`project_setup` will rename the files and file contents that need to be changed from
+`setup_project` will rename the files and file contents that need to be changed from
 AndroidIntelliJStarter to YourProject and copy/commit all of the files into your project's repo.
 
     cd starter_tmp
-    ./script/project_setup YourProject path_to_your_project_repo
+    ./script/setup_project YourProject path_to_your_project_repo
 
 This script will prompt you for a package name and a robolectric repo, both are optional.
 
@@ -234,7 +234,7 @@ Be sure to check out "Project Setup Script", above, for more details on many of 
 - `script/gp` -- "Git Pull" script. This pulls and rebases your project and robolectric.
 - `script/gpp` -- "Git Pull Push" script. Same as script/gp but also runs all tests in robolectric.
 and your project. If they pass it will `git push`.
-- `script/project_setup [YourProject] [path_to_your_project_repo]` -- Copies AndroidIntelliJStarter into a project
+- `script/setup_project [YourProject] [path_to_your_project_repo]` -- Copies AndroidIntelliJStarter into a project
 git repo, and gives the project a name of [YourProject].
 - `script/set_package` -- Change the Java package from the default to the provided package name.
 - `script/init_git_repo` -- create a new local git repository. Existing `.git` directory safely moved to `.git.bak`.
