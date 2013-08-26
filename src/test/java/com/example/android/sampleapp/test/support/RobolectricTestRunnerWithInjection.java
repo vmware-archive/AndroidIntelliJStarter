@@ -8,7 +8,7 @@ import org.mockito.MockitoAnnotations;
 import org.robolectric.DefaultTestLifecycle;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.internal.TestLifecycle;
+import org.robolectric.TestLifecycle;
 import roboguice.RoboGuice;
 
 public class RobolectricTestRunnerWithInjection extends RobolectricTestRunner {

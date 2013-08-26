@@ -46,7 +46,7 @@ things as you go.
         # Default robolectric repo is the read-only offical robolectric repo: git://github.com/pivotal/robolectric.git
 
 		# To make sure everything is OK, run tests for both Robolectric and your project:
-    	cd path_to_your_project_repo && (cd submodules/robolectric && ant clean test) && ant clean test
+    	cd path_to_your_project_repo && git submodule init && git submodule update && (cd submodules/robolectric && mvn clean test) && mvn clean test
 
 
 - **Open YourProject in IntelliJ 10.5 or higher**.

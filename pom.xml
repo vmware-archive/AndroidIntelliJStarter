@@ -17,7 +17,7 @@
   <description>The most important project of all.</description>
 
   <properties>
-    <robolectric.version>2.0-alpha-3-SNAPSHOT</robolectric.version>
+    <robolectric.version>2.2-SNAPSHOT</robolectric.version>
   </properties>
 
   <dependencies>
@@ -184,7 +184,7 @@
       <plugin>
         <groupId>com.jayway.maven.plugins.android.generation2</groupId>
         <artifactId>android-maven-plugin</artifactId>
-        <version>3.5.0</version>
+        <version>3.6.1</version>
         <configuration>
           <sdk>
             <!-- platform or api level (api level 4 = platform 1.6)-->
