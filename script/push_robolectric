@@ -1,5 +1,5 @@
 #!/usr/bin/ruby
-require "script/helpers"
+require_relative "helpers"
 
 in_dir "submodules/robolectric" do
     system! 'git push'

@@ -1,6 +1,5 @@
 #!/usr/bin/ruby
-
-require "script/helpers"
+require_relative "helpers"
 
 def display_help_message
   puts <<-eos
@@ -9,7 +8,7 @@ def display_help_message
 
   Example:
      setup_project MyAndroidApp /Users/pivotal/workspace/my-android-app
-     
+
      This command will copy all of the starter project's files to
      your my-android-app directory, rename the IntelliJ project to
      be MyAndroidApp, commit the new files to your project repo, and
