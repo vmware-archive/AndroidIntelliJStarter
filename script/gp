@@ -1,6 +1,5 @@
 #!/usr/bin/ruby
-
-require "script/helpers"
+require_relative "helpers"
 
 puts <<ART
 
